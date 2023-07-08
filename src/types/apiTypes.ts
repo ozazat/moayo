@@ -24,6 +24,7 @@ export type categoryRes = string[];
 //GET /expenses/search?q={keyword}&userId={userId}
 //requestBody 없음
 //응답데이터
+
 export type searchRes = search[];
 interface search {
   _id: string;
