@@ -62,7 +62,6 @@ const IPhoneImg = styled.div/*css*/ `
   right: 0;
   margin: 0 auto;
   display: flex;
-  z-index: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
