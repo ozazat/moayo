@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyles = createGlobalStyle` 
+const GlobalStyles = createGlobalStyle/* css */ ` 
 	:root {
 		--base-color-white: #f5f5f5;
 		--base-color-lightgrey: #f2f2f2;
@@ -10,18 +10,37 @@ const GlobalStyles = createGlobalStyle`
 		--point-color-yellow: #ffc952;
 		--point-color-green: #34be3a;
 		--point-color-red: #ff7473;
+		
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		position : relative;
+		top: calc(50% - 422px);
+		bottom: 0;
+		left: 0;
+		right: 0;
+		margin: 0 auto;
+		width: 390px;
+		height: 844px;
+		
+		/* background-color: var(--base-color-black); */
+		/* box-shadow: 0 4px 10px -4px var(--point-color-green); */
 	}
-	*{
+
+	* {
 		font-family: 'SUITE Variable', 'sans-serif';
 		box-sizing: border-box;
 	}
-
+	
 	h1 {
 		font-weight: 700;
 	}
+
 	h3 {
 		font-weight: 400;
 	}
+	
 	div {
 		font-weight: 400;
 	}

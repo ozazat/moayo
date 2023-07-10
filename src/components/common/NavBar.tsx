@@ -1,18 +1,10 @@
 import { Link } from "react-router-dom";
+import styled from "styled-components";
 
 export const NavBar = () => {
   return (
     <>
-      <div
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          height: "80px",
-          backgroundColor: "#fff",
-          padding: "0 20px"
-        }}
-      >
+      <NavContainer>
         <Link to="/main/daily">
           <div>메인</div>
         </Link>
@@ -25,7 +17,17 @@ export const NavBar = () => {
         <Link to="/sub/account">
           <div>계정</div>
         </Link>
-      </div>
+      </NavContainer>
     </>
   );
 };
+
+const NavContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  max-width: 390px;
+  max-height: 80px;
+  padding: 0 20px;
+  background-color: #ffffff;
+`;
