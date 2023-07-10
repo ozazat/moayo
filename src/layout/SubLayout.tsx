@@ -24,6 +24,6 @@ const SubContainer = styled.div`
   justify-content: center;
   align-items: center;
   max-width: 390px;
-  background-color: yellow;
+  /* background-color: yellow; */
 `;
 
