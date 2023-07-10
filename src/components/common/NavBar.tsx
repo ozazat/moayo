@@ -16,13 +16,13 @@ export const NavBar = () => {
         <Link to="/main/daily">
           <div>메인</div>
         </Link>
-        <Link to="calendar">
+        <Link to="/sub/calendar">
           <div>캘린더</div>
         </Link>
-        <Link to="statistics">
+        <Link to="/sub/chart">
           <div>통계</div>
         </Link>
-        <Link to="account">
+        <Link to="/sub/account">
           <div>계정</div>
         </Link>
       </div>
