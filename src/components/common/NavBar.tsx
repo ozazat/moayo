@@ -120,4 +120,5 @@ const NavContainer = styled.div`
   max-width: 390px;
   max-height: 80px;
   background-color: #ffffff;
+  // z-index: 9;
 `;
