@@ -26,9 +26,11 @@ const Main = styled.main`
 
 const MainContainer = styled.div`
   display: flex;
+  position: relative;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  top: 40px;
   max-width: 390px;
-  background-color: yellow;
+  /* background-color: yellow; */
 `;

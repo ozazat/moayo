@@ -24,9 +24,10 @@ export const NavBar = () => {
 
 const NavContainer = styled.div`
   display: flex;
+  position: fixed;
   justify-content: space-between;
   align-items: center;
-  max-width: 390px;
+  top : 770px;
   max-height: 80px;
   padding: 0 20px;
   background-color: #ffffff;

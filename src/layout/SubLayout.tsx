@@ -10,7 +10,7 @@ const SubLayout = () => {
           <Outlet />
         </main>
       </SubContainer>
-      <NavBar />
+        <NavBar />
     </div>
   );
 };
@@ -18,9 +18,12 @@ export default SubLayout;
 
 const SubContainer = styled.div`
   display: flex;
+  position: relative;
+  top: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   max-width: 390px;
   background-color: yellow;
 `;
+
