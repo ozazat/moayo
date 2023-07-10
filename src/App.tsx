@@ -13,7 +13,7 @@ import Add from "@/routes/Add/Add";
 import Edit from "./routes/Edit/Edit";
 import Search from "@/routes/Search/Search";
 import styled from "styled-components";
-import iphone from "/public/iPhone12_Clay_Shadow.png";
+import iphone from "@/assets/iPhone12_Clay_Shadow.png";
 
 const App = () => {
   return (
@@ -50,7 +50,8 @@ const Section = styled.section`
   height: 844px;
   background-color : var(--base-color-lightgrey);
   border: 1.5px solid var(--point-color-green); // 추후 삭제하기!!!!!!
-	border-radius: 50px
+	border-radius: 50px;
+  z-index : -1;
 `
 
 const IPhoneImg = styled.div/*css*/ `
@@ -61,11 +62,11 @@ const IPhoneImg = styled.div/*css*/ `
   right: 0;
   margin: 0 auto;
   display: flex;
-  z-index: -1;
+  z-index: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  opacity: 50%; // 추후 삭제하기!!!!!!!
+  opacity: 80%; // 추후 삭제하기!!!!!!!
   img {
     width: 690px;
     height: auto;

@@ -73,7 +73,7 @@ export const NavBar = () => {
     <>
       <NavContainer>
         <NavLink
-          style={({ isActive }: boolean) => (isActive ? setMainColor("#ff7473") : setMainColor("#333333"))}
+          style={({ isActive }) => (isActive ? setMainColor("#ff7473") : setMainColor("#333333"))}
           to="/main/daily"
         >
           <MainIcon>
@@ -81,7 +81,7 @@ export const NavBar = () => {
           </MainIcon>
         </NavLink>
         <NavLink
-          style={({ isActive }: boolean) => (isActive ? setCalendarColor("#47b8e0") : setCalendarColor("#333333"))}
+          style={({ isActive }) => (isActive ? setCalendarColor("#47b8e0") : setCalendarColor("#333333"))}
           to="/sub/calendar"
         >
           <CalendarIcon>
@@ -89,7 +89,7 @@ export const NavBar = () => {
           </CalendarIcon>
         </NavLink>
         <NavLink
-          style={({ isActive }: boolean) => (isActive ? setChartColor("#ffc952") : setChartColor("#333333"))}
+          style={({ isActive }) => (isActive ? setChartColor("#ffc952") : setChartColor("#333333"))}
           to="/sub/chart"
         >
           <ChartIcon>
@@ -97,7 +97,7 @@ export const NavBar = () => {
           </ChartIcon>
         </NavLink>
         <NavLink
-          style={({ isActive }: boolean) => (isActive ? setAccountColor("#34be3a") : setAccountColor("#333333"))}
+          style={({ isActive }) => (isActive ? setAccountColor("#34be3a") : setAccountColor("#333333"))}
           to="/sub/account"
         >
           <AccountIcon>
