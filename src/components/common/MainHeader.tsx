@@ -1,27 +1,29 @@
-import { NavLink } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import { SearchOutlined } from "@ant-design/icons";
 
 const MainHeader = () => {
+  const location = useLocation();
+
   return (
     <>
       <MainHeaderFirstRow>
         <div>2003년7월</div>
-        <StyledLink to="/search">
+        <StyledLink to="/search" isActive={location.pathname === "/search"}>
           <SearchOutlined />
         </StyledLink>
       </MainHeaderFirstRow>
       <MainHeaderSecondRow>
-        <StyledLink to="/main/daily">
+        <StyledLink to="/main/daily" isActive={location.pathname === "/main/daily"}>
           <div>일일</div>
         </StyledLink>
-        <StyledLink to="/main/weekly">
+        <StyledLink to="/main/weekly" isActive={location.pathname === "/main/weekly"}>
           <div>주간</div>
         </StyledLink>
-        <StyledLink to="/main/monthly">
+        <StyledLink to="/main/monthly" isActive={location.pathname === "/main/monthly"}>
           <div>월간</div>
         </StyledLink>
-        <StyledLink to="/main/all">
+        <StyledLink to="/main/all" isActive={location.pathname === "/main/all"}>
           <div>전체</div>
         </StyledLink>
       </MainHeaderSecondRow>
@@ -30,35 +32,26 @@ const MainHeader = () => {
 };
 
 export default MainHeader;
-const StyledLink = styled(NavLink)`
+
+const StyledLink = styled(Link)`
   text-decoration: none;
   color: var(--base-color-black);
   display: block;
-  align-items: center;
-  
-  & > div {
+  div {
     position: relative;
-    padding-bottom: 0px; 
-  }
-  
-  & > div::after {
-    content: "";
-    position: absolute;
-    left: -15px;  
-    right: -15px; 
-    bottom: -15px;
-    height: 4px; 
-    width: auto;  
-    /* background-color: transparent; */
-    transition: background-color 0.3s ease;
-  }
-
-  &:hover > div {
-    font-weight: 900;
-  }
-
-  &:hover > div::after {
-    background-color: var(--point-color-red);
+    padding-bottom: 0px;
+    font-weight: ${(props) => (props.isActive ? 900 : "normal")};
+    &::after {
+      content: "";
+      position: absolute;
+      left: -15px;
+      right: -15px;
+      bottom: -15px;
+      height: 4px;
+      width: auto;
+      background-color: ${(props) => (props.isActive ? "var(--point-color-red)" : "transparent")};
+      transition: background-color 0.3s ease;
+    }
   }
 `;
 
@@ -71,12 +64,9 @@ const MainHeaderFirstRow = styled.div`
   width: 350px;
   height: 40px;
   padding: 0 10px;
-  & > div {
-    font-weight : 900;
+  div {
+    font-weight: 900;
   }
-  /* background-color: skyblue;
-  border: 1px solid black; */
-
 `;
 
 const MainHeaderSecondRow = styled.div`
@@ -88,8 +78,6 @@ const MainHeaderSecondRow = styled.div`
   height: 50px;
   padding: 0 30px;
   background-color: white;
-  /* background-color: var(--base-color-white); */
-  /* border: 1px solid black; */
   border-radius: 10px;
   margin-top: 10px;
 `;
