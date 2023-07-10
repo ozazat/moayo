@@ -51,9 +51,8 @@ const Section = styled.section`
   background-color : var(--base-color-lightgrey);
   border: 1.5px solid var(--point-color-green); // 추후 삭제하기!!!!!!
 	border-radius: 50px;
-  z-index : -1;
+  z-index : 1;
 `
-
 const IPhoneImg = styled.div/*css*/ `
   position: absolute;
   top: 0px;
@@ -62,7 +61,6 @@ const IPhoneImg = styled.div/*css*/ `
   right: 0;
   margin: 0 auto;
   display: flex;
-  z-index: 0;
   flex-direction: column;
   justify-content: center;
   align-items: center;
