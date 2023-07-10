@@ -23,7 +23,6 @@ const GlobalStyles = createGlobalStyle/* css */ `
 		margin: 0 auto;
 		width: 390px;
 		height: 844px;
-		
 		/* background-color: var(--base-color-black); */
 		/* box-shadow: 0 4px 10px -4px var(--point-color-green); */
 	}
@@ -31,6 +30,10 @@ const GlobalStyles = createGlobalStyle/* css */ `
 	* {
 		font-family: 'SUITE Variable', 'sans-serif';
 		box-sizing: border-box;
+	}
+
+	a {
+		color: var(--base-color-black);
 	}
 	
 	h1 {

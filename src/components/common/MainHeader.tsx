@@ -87,7 +87,8 @@ const MainHeaderSecondRow = styled.div`
   width: 350px;
   height: 50px;
   padding: 0 30px;
-  background-color: var(--base-color-white);
+  background-color: white;
+  /* background-color: var(--base-color-white); */
   /* border: 1px solid black; */
   border-radius: 10px;
   margin-top: 10px;

@@ -20,6 +20,9 @@ const MainLayout = () => {
 export default MainLayout;
 
 const Main = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
   max-width: 390px;
   max-height: 844px;
 `;
