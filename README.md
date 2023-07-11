@@ -79,7 +79,7 @@ interface ExpenseRes {
 ```
 ---
 
-### 2. 소비 품목 목록 API
+### 2. 모든 카테고리 조회 API
 Request:
 
 ```javascript
@@ -280,10 +280,11 @@ Response:
 Status: 200 OK
 ```typescript
 interface calendarRes {
-  [key: number]: ExpenseReq[];
+  [key: number]: calendarItem[];
 }
 // key는 해당 월의 사용한 날(일)
-interface ExpenseReq {
+interface calendarItem {
+  _id: string;
   amount: number;
   userId: string;
   category: string;
@@ -294,20 +295,22 @@ interface ExpenseReq {
 응답 데이터 예시
 ```javascript
 {
-  "1": [
+  1: [
     {
-      amount: 100,
-      userId: "user123",
-      category: "food",
-      date: "2023-07-01T10:30:00.000Z"
+    _id: string;
+    amount: number;
+    userId: string;
+    category: string;
+    date: string;
     }
   ],
-  "4": [
+  4: [
     {
-      amount: 80,
-      userId: "user456",
-      category: "food",
-      date: "2023-07-04T14:20:00.000Z"
+    _id: string;
+    amount: number;
+    userId: string;
+    category: string;
+    date: string;
     }
   ]
 }
