@@ -79,7 +79,7 @@ interface ExpenseRes {
 ```
 ---
 
-### 2. 소비 품목 목록 API
+### 2. 모든 카테고리 조회 API
 Request:
 
 ```javascript
