@@ -1,5 +1,6 @@
 import { useUserStore } from "@/store/useUserStore";
 import { useEffect } from "react";
+import MonthStatistics from "@/components/main/monthstatistics";
 
 const Daily = () => {
   const userId = useUserStore((state) => state.userId);
@@ -13,6 +14,7 @@ const Daily = () => {
   return (
     <>
       <div>
+        <MonthStatistics />
         <p>Daily!!</p>
         <span>환영합니다 </span>
         <span style={{ color: "red" }}>{userNickname}</span>
