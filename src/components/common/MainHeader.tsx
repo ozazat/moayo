@@ -52,6 +52,13 @@ const StyledLink = styled(Link)`
       background-color: ${(props) => (props.isActive ? "var(--point-color-red)" : "transparent")};
       transition: background-color 0.3s ease;
     }
+    &:hover {
+      font-weight: 900;
+
+      &::after {
+        background-color: var(--point-color-red);
+      }
+    }
   }
 `;
 
