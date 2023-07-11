@@ -23,7 +23,7 @@ export type categoryRes = string[];
 // requestBody 없음
 // 응답 데이터
 export type searchRes = search[];
-interface search {
+export interface search {
   _id: string;
   amount: number;
   userId: string;

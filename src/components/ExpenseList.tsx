@@ -1,16 +1,22 @@
 import styled from "styled-components";
 
-export const ExpenseList = () => {
+type Props = {
+  amount: number;
+  category: string;
+  date: string;
+};
+
+export const ExpenseList = ({ amount, category, date }: Props) => {
   return (
     <>
       <ExpenseListContainer>
         <TextInfo>
           <span>🍔 식비</span>
-          <span>12:00</span>
+          <span>{date.slice(5, 10)}</span>
         </TextInfo>
         <ExpenseInfo>
-          <span>지코바 순살 양념</span>
-          <ExpenseAmount>₩9,000</ExpenseAmount>
+          <span>{category}</span>
+          <ExpenseAmount>₩{amount.toLocaleString()}</ExpenseAmount>
         </ExpenseInfo>
       </ExpenseListContainer>
     </>
@@ -27,6 +33,7 @@ const ExpenseListContainer = styled.div`
   max-height: 60px;
   padding: 0 20px 0;
   border-radius: 10px;
+  margin-bottom: 10px;
   background-color: #ffffff;
 `;
 
