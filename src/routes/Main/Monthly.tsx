@@ -1,4 +1,4 @@
-import MonthStatistics from "@/components/main/monthstatistics";
+import MonthStatistics from "@/components/main/MonthStatistics";
 
 const Monthly = () => {
   return (

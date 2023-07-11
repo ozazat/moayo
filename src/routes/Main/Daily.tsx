@@ -1,6 +1,6 @@
 import { useUserStore } from "@/store/useUserStore";
 import { useEffect } from "react";
-import MonthStatistics from "@/components/main/monthstatistics";
+import MonthStatistics from "@/components/main/MonthStatistics";
 
 const Daily = () => {
   const userId = useUserStore((state) => state.userId);
