@@ -1,4 +1,11 @@
+import MonthStatistics from "@/components/main/monthstatistics";
+
 const Monthly = () => {
-  return <div>Monthly!!</div>;
+  return (
+    <>
+      <MonthStatistics />
+      <div>Monthly!!</div>
+    </>
+  );
 };
 export default Monthly;
