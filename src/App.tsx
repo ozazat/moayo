@@ -48,11 +48,11 @@ export default App;
 const Section = styled.section`
   width: 390px;
   height: 844px;
-  background-color : var(--base-color-lightgrey);
+  background-color: var(--base-color-lightgrey);
   border: 1.5px solid var(--point-color-green); // 추후 삭제하기!!!!!!
-	border-radius: 50px;
-  z-index : 1;
-`
+  border-radius: 50px;
+  z-index: 1;
+`;
 const IPhoneImg = styled.div/*css*/ `
   position: absolute;
   top: 0px;
@@ -65,6 +65,7 @@ const IPhoneImg = styled.div/*css*/ `
   justify-content: center;
   align-items: center;
   opacity: 80%; // 추후 삭제하기!!!!!!!
+  z-index: -1;
   img {
     width: 690px;
     height: auto;
