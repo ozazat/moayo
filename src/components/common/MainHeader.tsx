@@ -1,14 +1,33 @@
 import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
-import { SearchOutlined } from "@ant-design/icons";
+import {SearchOutlined } from "@ant-design/icons";
+import { DatePicker } from "antd";
+import dayjs from "dayjs";
+import "dayjs/locale/ko";
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+
+dayjs.extend(customParseFormat);
+dayjs.locale("ko");
 
 const MainHeader = () => {
   const location = useLocation();
 
+  const defaultDate = dayjs().format("YYYY년 M월");
+
+
   return (
     <>
       <MainHeaderFirstRow>
-        <div>2003년7월</div>
+        <div>
+        <StyledDatePicker 
+            picker="month" 
+            bordered={false} 
+            defaultValue={dayjs(defaultDate, "YYYY년M월")} 
+            format="YYYY년 M월" 
+            allowClear={false} 
+            size={"large"} 
+          />
+        </div>
         <StyledLink to="/search" isActive={location.pathname === "/search"}>
           <SearchOutlined />
         </StyledLink>
@@ -33,7 +52,34 @@ const MainHeader = () => {
 
 export default MainHeader;
 
-const StyledLink = styled(Link)`
+const StyledDatePicker = styled(DatePicker)`
+  .ant-picker-input > input {
+    font-size: 1.6rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: #888;
+    }
+  }
+
+  // 아이콘 숨기기
+  .ant-picker-suffix {
+    display: none;
+  }
+
+  // 빈 공백 줄이기
+  .ant-picker-input {
+    padding-right: 0px !important;
+  }
+`;
+
+type StyledLinkProps = {
+  isActive: boolean;
+};
+
+const StyledLink = styled(Link)<StyledLinkProps>`
   text-decoration: none;
   color: var(--base-color-black);
   display: block;
