@@ -69,7 +69,14 @@ export interface deleteExpenseRes {
 // 요청 데이터 없음
 // 응답 데이터
 export interface calendarRes {
-  [key: string]: ExpenseReq[];
+  [key: string]: calendarItem[];
+}
+interface calendarItem {
+  _id: string;
+  amount: number;
+  userId: string;
+  category: string;
+  date: string;
 }
 
 // 카테고리에 해당하는 소비 항목 및 금액 조회
