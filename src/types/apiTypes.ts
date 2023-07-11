@@ -56,7 +56,7 @@ export interface editExpenseReq {
 }
 //응답데이터
 export interface editExpenseRes {
-  message: "Expense updated successfully";
+  message: string;
 }
 
 // 소비기록 삭제
@@ -64,7 +64,7 @@ export interface editExpenseRes {
 // 요청데이터 없음
 // 응답 데이터
 export interface removeExpenseRes {
-  message: "Expense updated successfully";
+  message: string;
 }
 
 // 소비기록 달력 호출
@@ -74,3 +74,9 @@ export interface removeExpenseRes {
 export interface calendarRes {
   [key: string]: ExpenseReq[];
 }
+
+// 카테고리에 해당하는 소비 항목 및 금액 조회
+// GET /expenses/category?q={keyword}&userId={userId}
+// 요청 데이터 없음
+// 응답 데이터
+export type searchCategoryRes = search[];
