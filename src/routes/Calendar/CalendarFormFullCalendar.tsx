@@ -74,13 +74,13 @@ const CalendarFormFullCalendar = () => {
     let [income, expense, total] = eventInfo.event.title.split(",");
     return (
       <div style={{ textAlign: "right" }}>
-        <div style={{ fontSize: "0.8em", color: "green", visibility: income !== "none" ? "visible" : "hidden" }}>
+        <div style={{ fontSize: "0.8em", fontWeight: 900, color: "#34BE3A", visibility: income !== "none" ? "visible" : "hidden" }}>
           {Number(income).toLocaleString()}
         </div>
-        <div style={{ fontSize: "0.8em", color: "red", visibility: expense !== "none" ? "visible" : "hidden" }}>
+        <div style={{ fontSize: "0.8em", fontWeight: 900, color: "#ff7473", visibility: expense !== "none" ? "visible" : "hidden" }}>
           {Number(expense).toLocaleString()}
         </div>
-        <div style={{ fontSize: "0.8em", color: "black", visibility: total !== "none" ? "visible" : "hidden" }}>
+        <div style={{ fontSize: "0.8em", fontWeight: 900, color: "#333333", visibility: total !== "none" ? "visible" : "hidden" }}>
           {Number(total).toLocaleString()}
         </div>
       </div>
@@ -142,12 +142,12 @@ function renderDayCellContent(dayRenderInfo: any) {
 export default CalendarFormFullCalendar;
 
 const CalendarContainer = styled.div`
-  margin-top: 150px;
-  width: 400px;
-  padding: 32px;
+  margin-top: 2px;
+  width: 410px;
+  padding: 2px 32px 0;
 
   .fc .fc-toolbar.fc-header-toolbar {
-    margin-bottom: 0.8em; 
+    margin-bottom: 0.5em; 
   }
   .fc-button {
     padding: 2px 4px;
@@ -157,7 +157,7 @@ const CalendarContainer = styled.div`
     outline: none;
   }
   .fc-button .fc-icon {
-    color: gray;
+    color: #d9d9d9;
   }
   .fc-button:not(:disabled) {
     color: white;
