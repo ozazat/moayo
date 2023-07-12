@@ -1,17 +1,45 @@
+import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { useUserStore } from "@/store/useUserStore";
 import { Icon } from "@iconify/react";
+import axios from "axios";
 
 const Account = () => {
   const userNickname = useUserStore((state) => state.userNickname);
   const userId = useUserStore((state) => state.userId);
+  const [profileImage, setProfileImage] = useState("");
+
+  const fetchImage = async (search) => {
+    try {
+      const res = await axios.get(
+        `https://pixabay.com/api/?key=36260581-10f6d2ea4dd0b2e37dc11a20f&q=${search}&lang=ko`
+      );
+      if (res.status === 200) {
+        const images = res.data.hits;
+        const sortedImages = images.sort((a, b) => b.likes - a.likes || b.downloads - a.downloads);
+        const recommendedImage = sortedImages[0];
+        setProfileImage(recommendedImage.webformatURL);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  useEffect(() => {
+    const animalName = userNickname.split(" ")[1];
+    fetchImage(animalName);
+  }, [userNickname]);
+
+  const handleGithubClick = () => {
+    window.open("https://github.com/ozazat/moayo", "_blank");
+  };
 
   return (
     <>
       <Title>계정</Title>
       <AccountWrap>
         <ProfileWrap>
-          <ProfileImage></ProfileImage>
+          <ProfileImage imageUrl={profileImage}></ProfileImage>
           <Username>{userNickname}</Username>
           <Tag>#{userId?.substring(0, 4)}</Tag>
         </ProfileWrap>
@@ -22,7 +50,7 @@ const Account = () => {
           </InfoLeft>
           <InfoRight>
             <InfoItem>
-              <StyledIcon icon="devicon:github" />
+              <StyledIcon icon="devicon:github" onClick={handleGithubClick} />
             </InfoItem>
           </InfoRight>
         </InfoWrap>
@@ -71,6 +99,9 @@ const ProfileImage = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  background-image: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl})` : "")};
+  background-size: cover;
+  background-position: center;
 `;
 
 const Username = styled.p`
@@ -109,7 +140,15 @@ const InfoItem = styled.p`
   margin: 0;
 `;
 
-const StyledIcon =styled(Icon)`
+const StyledIcon = styled(Icon)`
   width: 38px;
   height: 38px;
-`
+  cursor: pointer;
+  transition: color 0.3s;
+  color: black;
+
+  &:hover {
+    opacity : 0.5;
+    
+  }
+`;
