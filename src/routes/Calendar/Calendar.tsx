@@ -1,6 +1,7 @@
+import CalendarFormFullCalendar from './CalendarFormFullCalendar';
 
 const Calendar = () => {
-  return <div>Calendar</div>;
+    return <CalendarFormFullCalendar />;
 };
 
 export default Calendar;
