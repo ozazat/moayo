@@ -1,5 +1,12 @@
+import MonthStatistics from "@/components/main/MonthStatistics";
+
 const Weekly = () => {
-  return <div>Weekly!!</div>;
+  return (
+    <>
+      <MonthStatistics />
+      <div>Weekly!!</div>
+    </>
+  );
 };
 
 export default Weekly;
