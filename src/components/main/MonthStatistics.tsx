@@ -19,8 +19,8 @@ const MonthStatistics = () => {
     totalLists.length === 0
       ? setTitle("가계부를 작성해주세요~")
       : totalAmount > 0
-      ? setTitle(`${totalAmount} 원 남았어요!`)
-      : setTitle(`${Math.abs(totalAmount)} 원 사용했네요!`);
+      ? setTitle(`💰 ${totalAmount} 원 남았어요!`)
+      : setTitle(`💰 ${Math.abs(totalAmount)} 원 사용했네요!`);
 
     setConsumption(
       totalLists
