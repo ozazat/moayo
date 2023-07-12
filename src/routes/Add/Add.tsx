@@ -4,11 +4,13 @@ import { styled } from "styled-components";
 import { Button } from "antd";
 
 const Add = () => {
-  const [expense, setExpense] = useState("consume");
+  const [expense, setExpense] = useState(true);
   const [amount, setAmount] = useState(0);
-  const [category, setCategory] = useState("");
+  const [tag, setTag] = useState("");
   const [content, setContent] = useState("");
-  const cagtegories = [
+  const [isActive, SetIsActive] = useState(false);
+
+  const ConsumptionTags = [
     "선택해 주세요!",
     "🍔 식비",
     "📱 통신",
@@ -26,33 +28,31 @@ const Add = () => {
     const body = {
       amount: amount,
       userId: "ozazat",
-      category: category,
+      category: tag + content,
       date: new Date().toString()
     };
     postExpense(body).then((res) => console.log(res));
   };
 
-  // 지출/수입 핸들러
+  // 지출/수입 버튼 핸들러
   const expenseConsumeHandler = () => {
-    setExpense("consume");
+    setExpense(true);
     console.log("지출버튼", expense);
   };
 
   const expenseIncomeHandler = () => {
-    setExpense("income");
+    setExpense(false);
     console.log("수입버튼", expense);
   };
 
   // 금액 핸들러
-  const amountInputHandler = () => {
-    expense === "consume" ? (amount += "+") : (amount += "-");
-    setAmount(amount);
-    console.log("금액", amount);
+  const amountInputHandler = (e) => {
+    expense ? setAmount(e.target.value) : setAmount(-e.target.value);
   };
 
-  // 카테고리 핸들러
+  // 태그 핸들러
   const categoryHandler = (e) => {
-    setCategory(e.target.value);
+    setTag(e.target.value);
   };
 
   // 내용 핸들러
@@ -63,12 +63,12 @@ const Add = () => {
   return (
     <AddContainer>
       <ExpenseBtns>
-        <Button className="consume" type="primary" onClick={() => expenseConsumeHandler()}>
+        <ConsumeButton expense={expense} onClick={() => expenseConsumeHandler()}>
           지출
-        </Button>
-        <Button className="income" type="primary" onClick={() => expenseIncomeHandler()}>
+        </ConsumeButton>
+        <IncomeButton expense={expense} onClick={() => expenseIncomeHandler()}>
           수입
-        </Button>
+        </IncomeButton>
       </ExpenseBtns>
 
       <FormContainer action="">
@@ -79,14 +79,14 @@ const Add = () => {
         </div>
         <div>
           <label htmlFor="amount">금액</label>
-          <input type="number" id="amount" pattern="\d*" />
+          <input type="number" id="amount" pattern="\d*" onChange={(e) => amountInputHandler(e)} />
         </div>
         <div>
           <label htmlFor="">태그</label>
-          <select value={category} onChange={(e) => categoryHandler(e)}>
-            {cagtegories.map((category) => (
-              <option key={category} value={category}>
-                {category}
+          <select value={tag} onChange={(e) => categoryHandler(e)}>
+            {ConsumptionTags.map((tag) => (
+              <option key={tag} value={tag}>
+                {tag}
               </option>
             ))}
           </select>
@@ -98,7 +98,7 @@ const Add = () => {
       </FormContainer>
 
       <SubmitBtn>
-        <Button type="primary" onClick={() => postBtnHandler(category)}>
+        <Button type="primary" onClick={() => postBtnHandler(tag)}>
           저장하기
         </Button>
       </SubmitBtn>
@@ -124,15 +124,27 @@ const ExpenseBtns = styled.div`
   justify-content: center;
   align-items: center;
   gap: 10px;
-  Button {
-    width: 100px;
-    height: 30px;
-    border-radius: 10px;
-    background-color: var(--base-color-grey);
-    .consume {
-      background-color: var(--point-color-red);
-    }
-  }
+  color: #ffffff;
+`;
+
+const ConsumeButton = styled.button`
+  width: 100px;
+  height: 30px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: ${(props) => (props.expense ? "var(--point-color-red)" : "var(--base-color-grey)")};
+  color: #ffffff;
+`;
+
+const IncomeButton = styled.button`
+  width: 100px;
+  height: 30px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  background-color: ${(props) => (props.expense ? "var(--base-color-grey)" : "var(--point-color-green)")};
+  color: #ffffff;
 `;
 
 const FormContainer = styled.form`
