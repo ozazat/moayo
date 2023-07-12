@@ -8,6 +8,7 @@ const Add = () => {
   const [amount, setAmount] = useState(0);
   const [tag, setTag] = useState("");
   const [content, setContent] = useState("");
+  const [inputCheck, setInputCheck] = useState([false, false, false, false, false] as boolean[]);
   const [isActive, SetIsActive] = useState(false);
 
   const ConsumptionTags = [
@@ -45,6 +46,10 @@ const Add = () => {
     console.log("수입버튼", expense);
   };
 
+  // 날짜/시간 핸들러
+  const dateInputHandler = () => {};
+  const timeInputHandler = () => {};
+
   // 금액 핸들러
   const amountInputHandler = (e) => {
     expense ? setAmount(e.target.value) : setAmount(-e.target.value);
@@ -74,7 +79,10 @@ const Add = () => {
       <FormContainer action="">
         <div>
           <label htmlFor="date">날짜</label>
-          <input type="date" id="date" />
+          <input type="date" id="date" onChange={dateInputHandler} />
+          <label htmlFor="time" onChange={timeInputHandler}>
+            시간
+          </label>
           <input type="time" id="time" />
         </div>
         <div>
