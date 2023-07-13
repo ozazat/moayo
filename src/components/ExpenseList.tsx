@@ -11,11 +11,11 @@ export const ExpenseList = ({ amount, category, date }: Props) => {
     <>
       <ExpenseListContainer>
         <TextInfo>
-          <span>🍔 식비</span>
+          <span>{category.split("+")[0]}</span>
           <span>{date.slice(5, 10)}</span>
         </TextInfo>
         <ExpenseInfo>
-          <span>{category}</span>
+          <span>{category.split("+")[1]}</span>
           <ExpenseAmount>₩{amount.toLocaleString()}</ExpenseAmount>
         </ExpenseInfo>
       </ExpenseListContainer>
@@ -27,8 +27,8 @@ const ExpenseListContainer = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 330px;
-  height: 60px;
+  min-width: 330px;
+  min-height: 60px;
   max-width: 330px;
   max-height: 60px;
   padding: 0 20px 0;
