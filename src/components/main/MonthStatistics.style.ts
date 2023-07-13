@@ -11,6 +11,8 @@ export const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: absolute;
+  top: 10px;
 `;
 export const Title = styled.div`
   font-weight: 700;

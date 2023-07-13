@@ -1,15 +1,20 @@
 import { Icon } from "@iconify/react";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 export const PostBtn = () => {
   return (
-    <PostBtnContainer>
-      <Icon icon="mdi-light:plus" />
-    </PostBtnContainer>
+    <Link to="/add">
+      <PostBtnContainer>
+        <Icon icon="mdi-light:plus" />
+      </PostBtnContainer>
+    </Link>
   );
 };
 
 const PostBtnContainer = styled.div`
+  position: relative;
+  bottom: -260px;
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,4 +1,5 @@
 import { useLocation, Link } from "react-router-dom";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { SearchOutlined } from "@ant-design/icons";
 import { DatePicker } from "antd";
@@ -6,16 +7,42 @@ import dayjs from "dayjs";
 import "dayjs/locale/ko";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useTimeStore } from "@/store/useTimeStore";
+import { useExpensesStore } from "@/store/useExpensesStore";
+import { searchExpenses } from "@/api/index";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ko");
 
 const MainHeader = () => {
   const location = useLocation();
+  const defaultDate = dayjs().format("YYYY년 M월");
+
+  const totalLists = useExpensesStore((state) => state.totalLists);
+  const setTotalLists = useExpensesStore((state) => state.setTotalLists);
+
+  const currentYear = useTimeStore((state) => state.currentYear);
+  const currentMonth = useTimeStore((state) => state.currentMonth);
   const setCurrentYear = useTimeStore((state) => state.setCurrentYear);
   const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
+  const setMonthList = useExpensesStore((state) => state.setMonthList);
 
-  const defaultDate = dayjs().format("YYYY년 M월");
+  useEffect(() => {
+    searchExpenses("", "ozazat").then((res) => {
+      setTotalLists(res);
+    });
+    // setDayList({});
+    setMonthList([]);
+  }, []);
+
+  useEffect(() => {
+    // setDayList({});
+    setMonthList([]);
+    const currentYearMonth = `${currentYear}-${currentMonth}`;
+    const filteredList = [...totalLists].filter((list) => {
+      return list.date.includes(currentYearMonth);
+    });
+    setMonthList(filteredList);
+  }, [totalLists, currentMonth, currentYear]);
 
   return (
     <>

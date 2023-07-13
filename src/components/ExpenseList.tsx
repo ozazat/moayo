@@ -6,7 +6,7 @@ type Props = {
   date: string;
 };
 
-export const ExpenseList = ({ amount, category, date }: Props) => {
+const ExpenseList = ({ amount, category, date }: Props) => {
   return (
     <>
       <ExpenseListContainer>
@@ -22,6 +22,7 @@ export const ExpenseList = ({ amount, category, date }: Props) => {
     </>
   );
 };
+export default ExpenseList;
 
 const ExpenseListContainer = styled.div`
   display: flex;

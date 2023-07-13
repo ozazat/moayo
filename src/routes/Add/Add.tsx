@@ -2,6 +2,7 @@ import { postExpense } from "@/api";
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Button } from "antd";
+import BackBtn from "@/components/common/BackBtn";
 
 const Add = () => {
   const [expense, setExpense] = useState(true);
@@ -124,6 +125,7 @@ const Add = () => {
 
   return (
     <>
+      <BackBtn />
       <AddContainer>
         <ExpenseBtns>
           <ConsumeButton $expense={expense} onClick={() => expenseConsumeHandler()}>
