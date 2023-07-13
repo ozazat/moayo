@@ -1,31 +1,37 @@
 import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
-import {SearchOutlined } from "@ant-design/icons";
+import { SearchOutlined } from "@ant-design/icons";
 import { DatePicker } from "antd";
 import dayjs from "dayjs";
 import "dayjs/locale/ko";
-import customParseFormat from 'dayjs/plugin/customParseFormat';
+import customParseFormat from "dayjs/plugin/customParseFormat";
+import { useTimeStore } from "@/store/useTimeStore";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ko");
 
 const MainHeader = () => {
   const location = useLocation();
+  const setCurrentYear = useTimeStore((state) => state.setCurrentYear);
+  const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
 
   const defaultDate = dayjs().format("YYYY년 M월");
-
 
   return (
     <>
       <MainHeaderFirstRow>
         <div>
-        <StyledDatePicker 
-            picker="month" 
-            bordered={false} 
-            defaultValue={dayjs(defaultDate, "YYYY년M월")} 
-            format="YYYY년 M월" 
-            allowClear={false} 
-            size={"large"} 
+          <StyledDatePicker
+            picker="month"
+            bordered={false}
+            defaultValue={dayjs(defaultDate, "YYYY년 M월")}
+            format="YYYY년 M월"
+            allowClear={false}
+            size={"large"}
+            onChange={(date: any) => {
+              setCurrentYear(String(date.$y));
+              setCurrentMonth(String(date.$M + 1));
+            }}
           />
         </div>
         <StyledLink to="/search" isActive={location.pathname === "/search"}>
