@@ -27,10 +27,13 @@ const Daily = () => {
     searchExpenses("", "ozazat").then((res) => {
       setTotalLists(res);
     });
+    setDayList({});
+    setMonthList([]);
   }, []);
 
   useEffect(() => {
     setDayList({});
+    setMonthList([]);
     // totalLists에서 2023-07에 해당하는 date만 뽑기 = MonthList라고 하자
     const currentYearMonth = `${currentYear}-${currentMonth}`;
     console.log("여기", currentYear, currentMonth);
@@ -43,8 +46,9 @@ const Daily = () => {
   }, [totalLists, currentMonth, currentYear]);
 
   useEffect(() => {
+    setDayList({});
     createDayList();
-  }, [totalLists, monthList]);
+  }, [monthList]);
 
   const createDayList = () => {
     const newDayList = { ...dayList };
@@ -67,11 +71,17 @@ const Daily = () => {
     <>
       <MainDailyContainer>
         <MonthStatistics />
-        <p>Daily!!</p>
-        <span>환영합니다 </span>
-        <span style={{ color: "red" }}>{userNickname}</span>
-        <span>님!</span>
-        <p>#{userId?.substring(0, 4)}</p>
+        {!totalLists.length ? (
+          <>
+            <p>Daily!!</p>
+            <span>환영합니다 </span>
+            <span style={{ color: "red" }}>{userNickname}</span>
+            <span>님!</span>
+            <p>#{userId?.substring(0, 4)}</p>
+          </>
+        ) : (
+          <></>
+        )}
         <DailyListContainer>
           {Object.entries(dayList).map(([day, expenseList]) => (
             <div key={day}>
@@ -90,22 +100,29 @@ const Daily = () => {
 export default Daily;
 
 const MainDailyContainer = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
   width: 390px;
-  max-height: 844px;
+  height: 680px;
+  max-height: 800px;
 `;
 
 const DailyListContainer = styled.div`
+  position: absolute;
+  top: 180px;
   display: flex;
   flex-direction: column;
-  height: 300px;
+  height: 460px;
   overflow-y: scroll;
   div {
     p {
       font-weight: 600;
     }
+  }
+  &::-webkit-scrollbar {
+    display: none;
   }
 `;
