@@ -1,13 +1,62 @@
 import styled from "styled-components";
+import { search } from "@/types/apiTypes";
+import { useExpensesStore } from "@/store/useExpensesStore";
+import { getWeekNumber, getWeekRange } from "@/utils/date";
+import { useTimeStore } from "@/store/useTimeStore";
+import { useEffect, useState } from "react";
 
 const WeeklyList = () => {
+  const dayList = useExpensesStore((state) => state.dayList);
+  const currentYear = useTimeStore((state) => state.currentYear);
+  const currentMonth = useTimeStore((state) => state.currentMonth);
+  const [weekList, setWeekList] = useState<{ [key: string]: search[] }>();
+
+  useEffect(() => {
+    console.log(dayList);
+    createWeekList();
+  }, [dayList]);
+
+  const createWeekList = () => {
+    const newWeekList: { [key: string]: search[] } = {};
+    Object.entries(dayList).forEach(([day, expenseList]) => {
+      console.log("expenseList", expenseList);
+      const newDay = `${currentYear}.${day}`;
+      const formattedNewDay = new Date(newDay);
+      const newWeekNumber = getWeekNumber(formattedNewDay);
+      const [start, end] = getWeekRange(formattedNewDay, newWeekNumber);
+      // const formatWeekRange =
+      if (start.getDate() <= Number(day.split(".")[1]) && end.getDate() >= Number(day.split(".")[1])) {
+        if (!newWeekList[`${start.toLocaleDateString()} ~ ${end.toLocaleDateString()}`]) {
+          newWeekList[`${start.toLocaleDateString()} ~ ${end.toLocaleDateString()}`] = [];
+        }
+        newWeekList[`${start.toLocaleDateString()} ~ ${end.toLocaleDateString()}`].push(...expenseList);
+        console.log("newWeekList", newWeekList);
+        setWeekList(newWeekList);
+      }
+    });
+  };
+
   return (
     <>
-      <WeeklyListContainer>
-        <WeeklyPeriod>07-24 ~ 07-31</WeeklyPeriod>
-        <WeeklyConsume>-100,000</WeeklyConsume>
-        <WeeklyIncome>+210,000</WeeklyIncome>
-      </WeeklyListContainer>
+      {weekList &&
+        Object.entries(weekList).map(([day, lists]) => (
+          <WeeklyListContainer>
+            <WeeklyTitle key={day}>
+              <WeeklyPeriod>{day}</WeeklyPeriod>
+              <WeeklyConsume>
+                {lists.filter((list) => list.amount < 0).reduce((acc, cur) => acc + cur.amount, 0)}
+              </WeeklyConsume>
+              <WeeklyIncome>
+                {lists.filter((list) => list.amount > 0).reduce((acc, cur) => acc + cur.amount, 0)}
+              </WeeklyIncome>
+            </WeeklyTitle>
+          </WeeklyListContainer>
+        ))}
+      {/* <>
+      {Object.entries(dayList).map(([day, expenseList]) => (
+        <DailyList key={day} day={day} expenseList={expenseList} />
+      ))}
+    </> */}
     </>
   );
 };
@@ -31,7 +80,9 @@ const WeeklyListContainer = styled.div`
     border: 1.8px solid var(--base-color-grey);
   }
 `;
-
+const WeeklyTitle = styled.div`
+  display: flex;
+`;
 const WeeklyPeriod = styled.div`
   font-weight: 600;
 `;
