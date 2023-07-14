@@ -45,7 +45,9 @@ const MonthStatistics = () => {
 
   const getTotalAmount = () => {
     getPeriodSummary("monthly", "ozazat").then((res) => {
+      console.log("totalAmountRes", res);
       const filteredItem = res.filter((item: search) => item._id === `${currentYear}-${currentMonth}`);
+      console.log("filteredItem", filteredItem);
       setTotalAmount(filteredItem[0].totalAmount);
     });
   };
