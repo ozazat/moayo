@@ -7,5 +7,8 @@ export default defineConfig({
   plugins: [react(), tsconfigPaths()],
   server: {
     port: 3000
+  },
+  optimizeDeps: {
+    exclude: ['dayjs/plugin/isBetween']
   }
 });
