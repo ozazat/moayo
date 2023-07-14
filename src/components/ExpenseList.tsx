@@ -1,30 +1,30 @@
+import { Link } from "react-router-dom";
 import styled from "styled-components";
 
 type Props = {
+  _id: string;
   amount: number;
   category: string;
   date: string;
 };
 
-const ExpenseList = ({ amount, category, date }: Props) => {
+const ExpenseList = ({ _id, amount, category, date }: Props) => {
   return (
-    <>
-      <ExpenseListContainer>
-        <TextInfo>
-          <span>{category.split("+")[0]}</span>
-          <span>{date.slice(5, 10)}</span>
-        </TextInfo>
-        <ExpenseInfo>
-          <span>{category.split("+")[1]}</span>
-          <ExpenseAmount>₩{amount.toLocaleString()}</ExpenseAmount>
-        </ExpenseInfo>
-      </ExpenseListContainer>
-    </>
+    <ExpenseListContainer to={`/edit/${_id}`}>
+      <TextInfo>
+        <span>{category.split("+")[0]}</span>
+        <span>{date.slice(5, 10)}</span>
+      </TextInfo>
+      <ExpenseInfo>
+        <span>{category.split("+")[1]}</span>
+        <ExpenseAmount>₩{amount.toLocaleString()}</ExpenseAmount>
+      </ExpenseInfo>
+    </ExpenseListContainer>
   );
 };
 export default ExpenseList;
 
-const ExpenseListContainer = styled.div`
+const ExpenseListContainer = styled(Link)`
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -36,6 +36,7 @@ const ExpenseListContainer = styled.div`
   border-radius: 10px;
   margin-bottom: 10px;
   background-color: #ffffff;
+  cursor: pointer;
 `;
 
 const TextInfo = styled.div`
