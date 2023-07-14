@@ -24,17 +24,19 @@ const Daily = () => {
     initializeUserId();
   }, [initializeUserId]);
 
-  useEffect(() => {
-    setDayList({});
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     setDayList({});
+  //   };
+  // }, []);
 
   useEffect(() => {
-    setDayList({});
+    // setDayList({});
     createDayList();
   }, [monthList, currentYear, currentMonth]);
 
   const createDayList = () => {
-    const newDayList = { ...dayList };
+    const newDayList: { [key: string]: search[] } = {};
     monthList.forEach((list) => {
       const date = list.date;
       const [, month, dayTime] = date.split("-");

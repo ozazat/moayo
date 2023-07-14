@@ -71,7 +71,7 @@ const Add = () => {
   // 저장 버튼 핸들러
   const postBtnHandler = (tag: string) => {
     const body = {
-      amount: amount,
+      amount: expense ? -amount : amount,
       userId: "ozazat",
       category: `${tag}+${content}`,
       date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
@@ -110,7 +110,7 @@ const Add = () => {
 
   // 금액 핸들러
   const amountInputHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-    expense ? setAmount(Number(e.target.value)) : setAmount(Number(-e.target.value));
+    setAmount(Number(e.target.value));
   };
 
   // 태그 핸들러
