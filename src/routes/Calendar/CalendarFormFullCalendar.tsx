@@ -42,7 +42,7 @@ const CalendarFormFullCalendar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getCalendar(year, month, "iskra17");
+        const res = await getCalendar(year, month, "ozazat");
         const eventsData = Object.entries(res).reduce((acc: EventObject[], [day, dayData]: [string, unknown]) => {
           const typedDayData = dayData as Record<string, unknown>[]; 
           const totalIncome = typedDayData.reduce((total: number, curr: any) => (curr.amount > 0 ? total + curr.amount : total), 0);
@@ -145,6 +145,8 @@ const CalendarContainer = styled.div`
   margin-top: 2px;
   width: 440px;
   padding: 2px 32px 0;
+  position: absolute; // relative 로 지정해야되는데 억지로 맞춰놨다.
+  top : 170px;
 
   .fc .fc-toolbar.fc-header-toolbar {
     margin-bottom: 0.5em; 
