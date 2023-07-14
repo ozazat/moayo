@@ -42,7 +42,7 @@ const CalendarFormFullCalendar = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const res = await getCalendar(year, month, "user17");
+        const res = await getCalendar(year, month, "iskra17");
         const eventsData = Object.entries(res).reduce((acc: EventObject[], [day, dayData]: [string, unknown]) => {
           const typedDayData = dayData as Record<string, unknown>[]; 
           const totalIncome = typedDayData.reduce((total: number, curr: any) => (curr.amount > 0 ? total + curr.amount : total), 0);
@@ -74,13 +74,13 @@ const CalendarFormFullCalendar = () => {
     let [income, expense, total] = eventInfo.event.title.split(",");
     return (
       <div style={{ textAlign: "right" }}>
-        <div style={{ fontSize: "0.8em", fontWeight: 900, color: "#34BE3A", visibility: income !== "none" ? "visible" : "hidden" }}>
+        <div style={{ fontSize: "0.4em", fontWeight: 900, color: "#34BE3A", visibility: income !== "none" ? "visible" : "hidden" }}>
           {Number(income).toLocaleString()}
         </div>
-        <div style={{ fontSize: "0.8em", fontWeight: 900, color: "#ff7473", visibility: expense !== "none" ? "visible" : "hidden" }}>
+        <div style={{ fontSize: "0.4em", fontWeight: 900, color: "#ff7473", visibility: expense !== "none" ? "visible" : "hidden" }}>
           {Number(expense).toLocaleString()}
         </div>
-        <div style={{ fontSize: "0.8em", fontWeight: 900, color: "#333333", visibility: total !== "none" ? "visible" : "hidden" }}>
+        <div style={{ fontSize: "0.4em", fontWeight: 900, color: "#333333", visibility: total !== "none" ? "visible" : "hidden" }}>
           {Number(total).toLocaleString()}
         </div>
       </div>
@@ -143,7 +143,7 @@ export default CalendarFormFullCalendar;
 
 const CalendarContainer = styled.div`
   margin-top: 2px;
-  width: 410px;
+  width: 440px;
   padding: 2px 32px 0;
 
   .fc .fc-toolbar.fc-header-toolbar {
