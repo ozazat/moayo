@@ -1,5 +1,5 @@
 import GlobalStyles from "@/styles/GlobalStyles.styles";
-import { Route, Routes, BrowserRouter } from "react-router-dom";
+import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
 import MainLayout from "@/layout/MainLayout";
 import Daily from "@/routes/Main/Daily";
 import Weekly from "./routes/Main/Weekly";
@@ -38,6 +38,9 @@ const App = () => {
           <Route path="/add" element={<Add />} />
           <Route path="/edit" element={<Edit />} />
           <Route path="/search" element={<Search />} />
+
+          <Route path="/" element={<Navigate to="/main" replace />} />
+          <Route path="*" element={<Navigate to="/main" replace />} />
         </Routes>
       </BrowserRouter>
     </Section>
