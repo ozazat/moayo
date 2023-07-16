@@ -4,17 +4,20 @@ import { Link } from "react-router-dom";
 
 export const PostBtn = () => {
   return (
-    <Link to="/add">
+    <StyledLink to="/add">
       <PostBtnContainer>
         <Icon icon="mdi-light:plus" />
       </PostBtnContainer>
-    </Link>
+    </StyledLink>
   );
 };
 
+const StyledLink = styled(Link)`
+  position: absolute;
+  bottom: 50px;
+`;
+
 const PostBtnContainer = styled.div`
-  position: relative;
-  bottom: -260px;
   display: flex;
   justify-content: center;
   align-items: center;
