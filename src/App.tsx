@@ -39,8 +39,8 @@ const App = () => {
           <Route path="/edit/:_id" element={<Edit />} />
           <Route path="/search" element={<Search />} />
 
-          <Route path="/" element={<Navigate to="/main" replace />} />
-          <Route path="*" element={<Navigate to="/main" replace />} />
+          <Route path="/" element={<Navigate to="/main/daily" replace />} />
+          <Route path="*" element={<Navigate to="/main/daily" replace />} />
         </Routes>
       </BrowserRouter>
     </Section>
