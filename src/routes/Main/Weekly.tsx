@@ -56,11 +56,13 @@ const Weekly = () => {
     });
   };
 
-  console.log("dayList", Object.entries(dayList));
+  // console.log("dayList", Object.entries(dayList));
   return (
     <WeeklyContainer>
       <MonthStatistics />
+      {/* <WeeklyListContainer /> */}
       <WeeklyList />
+      {/* <WeeklyListContainer /> */}
       <PostBtn />
     </WeeklyContainer>
   );
@@ -77,5 +79,3 @@ const WeeklyContainer = styled.div`
   height: 680px;
   max-height: 800px;
 `;
-
-// const CollapseContainer = styled(Collapse)``;
