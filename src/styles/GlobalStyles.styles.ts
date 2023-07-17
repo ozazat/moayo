@@ -33,6 +33,7 @@ const GlobalStyles = createGlobalStyle/* css */ `
 	}
 
 	a {
+		text-decoration: none;
 		color: var(--base-color-black);
 	}
 	

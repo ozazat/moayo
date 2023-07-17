@@ -15,35 +15,41 @@ const Calendar = () => {
           <StyledSearchOutlined />
         </Link>
       </FirstRow>
-      <MonthStatistics />
-      <CalendarFormFullCalendar />
+      <ContentWrapper>
+        <MonthStatistics />
+        <CalendarFormFullCalendar />
+      </ContentWrapper>
     </CalendarWrapper>
   );
 };
-
-export default Calendar;
 
 const CalendarWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 `;
 
 const FirstRow = styled.div`
   display: flex;
-  position: relative;
   justify-content: space-between;
   align-items: center;
   font-size: 1.1rem;
   width: 350px;
   height: 40px;
   padding: 0 10px;
-  
 `;
 
 const StyledSearchOutlined = styled(SearchOutlined)`
   font-size : 1.8rem;
 `
 
+const ContentWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  flex: 1;
+`;
 
+export default Calendar
