@@ -37,31 +37,8 @@ const Weekly = () => {
   //   }
   // ];
   useEffect(() => {
-    // setDayList({});
     createDayList();
   }, [monthList, currentYear, currentMonth]);
-
-  // useEffect(() => {
-  //   //hi === 주간 별로 map 돌리기 전, 배열 만들기. 해당 주차에
-  //   console.log(dayList);
-  //   const hi = Object.entries(dayList)
-  //     .filter(([day]) => {
-  //       // 0724~0731
-  //       console.log("---------------------------");
-  //       const newDay = `${currentYear}.${day}`;
-  //       const formattedNewDay = new Date(newDay);
-  //       // console.log("formattedNewDay", formattedNewDay);
-  //       const newWeekNumber = getWeekNumber(formattedNewDay);
-  //       // console.log("newWeekNumber", newWeekNumber);
-  //       const [start, end] = getWeekRange(formattedNewDay, newWeekNumber);
-  //       // console.log("start", start.getDate());
-  //       // console.log("end", end.getDate());
-  //       // console.log("day", Number(day.split(".")[1]));
-  //       return start.getDate() <= Number(day.split(".")[1]) && end.getDate() >= Number(day.split(".")[1]);
-  //     })
-  //     .map(([day, expenseList]) => <DailyList key={day} day={day} expenseList={expenseList} />);
-  //   console.log("Hi!", hi);
-  // }, [dayList]);
 
   const createDayList = () => {
     const newDayList: { [key: string]: search[] } = {};
