@@ -4,12 +4,13 @@ import { useExpensesStore } from "@/store/useExpensesStore";
 import { getWeekNumber, getWeekRange } from "@/utils/date";
 import { useTimeStore } from "@/store/useTimeStore";
 import { useEffect, useState } from "react";
+import DailyList from "@/components/main/DailyList";
 
 const WeeklyList = () => {
   const dayList = useExpensesStore((state) => state.dayList);
   const currentYear = useTimeStore((state) => state.currentYear);
-  const currentMonth = useTimeStore((state) => state.currentMonth);
   const [weekList, setWeekList] = useState<{ [key: string]: search[] }>();
+  const [isClicked, setIsClicked] = useState(false);
 
   useEffect(() => {
     console.log(dayList);
@@ -36,27 +37,38 @@ const WeeklyList = () => {
     });
   };
 
+  const ContainerClickHandler = (day: string) => {
+    console.log(day);
+    setIsClicked(!isClicked);
+
+    const dates: number[] = day.match(/\d+/g)?.map(Number) || [];
+    const start = dates[1];
+    const end = dates[5];
+  };
   return (
     <>
       {weekList &&
         Object.entries(weekList).map(([day, lists]) => (
-          <WeeklyListContainer>
-            <WeeklyTitle key={day}>
-              <WeeklyPeriod>{day}</WeeklyPeriod>
-              <WeeklyConsume>
-                {lists.filter((list) => list.amount < 0).reduce((acc, cur) => acc + cur.amount, 0)}
-              </WeeklyConsume>
-              <WeeklyIncome>
-                {lists.filter((list) => list.amount > 0).reduce((acc, cur) => acc + cur.amount, 0)}
-              </WeeklyIncome>
-            </WeeklyTitle>
-          </WeeklyListContainer>
+          <>
+            <WeeklyListContainer onClick={() => ContainerClickHandler(day)} key={day}>
+              <WeeklyTitle>
+                <WeeklyPeriod>{day}</WeeklyPeriod>
+                <WeeklyConsume>
+                  {lists.filter((list) => list.amount < 0).reduce((acc, cur) => acc + cur.amount, 0)}
+                </WeeklyConsume>
+                <WeeklyIncome>
+                  {lists.filter((list) => list.amount > 0).reduce((acc, cur) => acc + cur.amount, 0)}
+                </WeeklyIncome>
+              </WeeklyTitle>
+            </WeeklyListContainer>
+            {/* {isClicked &&
+              Object.entries(dayList)
+                .filter(([day]) => {
+                  Number(day.split(".")[1]) >= weekStart && Number(day.split(".")[1]) <= weekEnd;
+                })
+                .map(([day, lists]) => <DailyList key={day} day={day} expenseList={lists} />)} */}
+          </>
         ))}
-      {/* <>
-      {Object.entries(dayList).map(([day, expenseList]) => (
-        <DailyList key={day} day={day} expenseList={expenseList} />
-      ))}
-    </> */}
     </>
   );
 };
