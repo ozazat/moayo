@@ -36,7 +36,7 @@ const App = () => {
             <Route path="/sub/account" element={<Account />} />
           </Route>
           <Route path="/add" element={<Add />} />
-          <Route path="/edit" element={<Edit />} />
+          <Route path="/edit/:_id" element={<Edit />} />
           <Route path="/search" element={<Search />} />
 
           <Route path="/" element={<Navigate to="/main" replace />} />
