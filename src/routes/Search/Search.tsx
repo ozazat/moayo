@@ -13,21 +13,30 @@ const Search = () => {
   const [searchData, setSearchData] = useState<search[]>([]);
   const [isSearching, setIsSearching] = useState(true);
   const [searchResult, setSearchResult] = useState<{ [key: string]: search[] }>({});
+  const [resultExist, setResultExist] = useState(false);
+  const [isStartSearch, setIsStartSearch] = useState(false);
 
   useEffect(() => {
     onSearch();
     setIsSearching(true);
   }, [realSearchText]);
 
+  useEffect(() => {
+    if (Object.keys(searchResult).length > 0) {
+      setResultExist(true);
+    } else {
+      setResultExist(false);
+    }
+  }, [searchResult]);
+
   const onSearch = async () => {
     // searchExpenses(realSearchText, "ozazat").then((res) => {
     //   setSearchData(res.data);
-    //   console.log(res.data); /// 요기 찍히게
+    //   console.log(res.data); ///
     // });
 
     if (realSearchText) {
       const url = "http://52.78.195.183:3003/api/expenses/search?q=" + realSearchText + "&userId=ozazat";
-
       const res = await axios.get(url);
       console.log("response", res);
       const data = res.data;
@@ -42,10 +51,13 @@ const Search = () => {
     setIsSearching(false);
   };
 
-  const startSearch = () => {
+  const startSearch = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const result = createResultList();
     setSearchResult(result);
+    console.log("SearchResult", result);
     setIsSearching(false);
+    setIsStartSearch(true);
   };
 
   const createResultList = () => {
@@ -71,14 +83,16 @@ const Search = () => {
       <SearchContainer>
         <SearchTitle>검색</SearchTitle>
         <SearchInputContainer>
-          <SearchInput
-            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-              setRealSearchText(e.target.value);
-            }}
-            value={realSearchText}
-            placeholder="가계부 내역을 검색해보세요 ~"
-          />
-          <SearchOutlined onClick={startSearch} />
+          <form onSubmit={(e) => startSearch(e)}>
+            <SearchInput
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                setRealSearchText(e.target.value);
+              }}
+              value={realSearchText}
+              placeholder="가계부 내역을 검색해보세요 ~"
+            />
+          </form>
+          <SearchOutlined onClick={(e) => startSearch(e)} />
         </SearchInputContainer>
         <SearchResultContainer>
           {realSearchText ? (
@@ -86,13 +100,12 @@ const Search = () => {
               <AutoSearchWrap>
                 {searchData.map((item: search, index) => (
                   <AutoSearchData key={index} onClick={() => autoSearchClickHandler(index)}>
-                    {/* <div>{item.category.split("+")[1]}</div> */}
                     <div
                       dangerouslySetInnerHTML={{
                         __html: item.category
                           .split("+")[1]
-                          .replace(
-                            new RegExp(realSearchText, "g"),
+                          ?.replace(
+                            new RegExp(realSearchText, "gu"),
                             `<span style="color:var(--point-color-red)">${realSearchText}</span>`
                           )
                       }}
@@ -103,12 +116,17 @@ const Search = () => {
             </AutoSearchContainer>
           ) : null}
         </SearchResultContainer>
-        <ResultContainer>
-          {searchResult &&
-            Object.entries(searchResult).map(([day, expenseList]) => (
-              <DailyList key={day} day={day} expenseList={expenseList} />
+        {!resultExist && isStartSearch ? (
+          <ResultContainer>
+            <div>검색 결과가 존재하지 않아요! ㅠㅠ</div>
+          </ResultContainer>
+        ) : (
+          <ResultContainer>
+            {Object.entries(searchResult).map(([day, expenseList]) => (
+              <DailyList key={day} day={day} expenseList={expenseList} searchText={realSearchText} />
             ))}
-        </ResultContainer>
+          </ResultContainer>
+        )}
       </SearchContainer>
     </>
   );
@@ -168,7 +186,7 @@ const SearchResultContainer = styled.div``;
 const AutoSearchContainer = styled.div`
   position: relative;
   display: block;
-  width: 290px;
+  width: 300px;
   min-height: 100px;
   border: 2px solid var(--base-color-grey);
   border-radius: 10px;
