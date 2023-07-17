@@ -71,18 +71,19 @@ const Search = () => {
     const url =
       "http://52.78.195.183:3003/api/expenses/search?q=" +
       realSearchText +
-      "&userId=649d58b69865d316a53374c6";
+      "&userId=ozazat";
 
     const response = await axios.get(url);
     console.log("response1", response);
     const data1 = response.data;
-    console.log(data1);
+    ////split 이용해서 새로운 배열 
+    console.log(data1); /// 요기 찍히게
     setSearchData(data1);
   };
 
   return (
     <div style={{ padding: 20 }}>
-      실시간 검색어 입력 화면
+      검색
       <br />
       <SearchContainer>
         <SearchInput
@@ -97,7 +98,7 @@ const Search = () => {
               {searchData.map((item, index) => (
                 <AutoSearchData key={index}>
                   <div style={{ marginLeft: 10 }}>{item.category}</div>
-                  <img src="search.svg" alt="searchIcon" />
+                  
                 </AutoSearchData>
               ))}
             </AutoSearchWrap>
