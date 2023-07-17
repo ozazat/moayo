@@ -1,12 +1,14 @@
-import { NavLink } from "react-router-dom";
+import { NavLink, useMatch } from "react-router-dom";
 import { Icon } from "@iconify/react";
 import styled from "styled-components";
 
 export const NavBar = () => {
+  const isMainActive = Boolean(useMatch("/main/*"));
+
   return (
     <>
       <NavContainer>
-        <MainNav className={({ isActive }: ClassNameProps) => (isActive ? "active" : "")} to="/main/daily">
+        <MainNav className={isMainActive ? "active" : ""} to="/main/daily">
           <MainIcon>
             <Icon icon="iconoir:piggy-bank" />
           </MainIcon>
