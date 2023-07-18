@@ -11,7 +11,7 @@ const BackBtn = () => {
 
   return (
     <BackBtnContainer onClick={goBack}>
-      <Icon icon="ic:sharp-arrow-back-ios" color="#34be3a" />
+      <Icon icon="ic:sharp-arrow-back-ios" />
     </BackBtnContainer>
   );
 };
@@ -26,6 +26,9 @@ const BackBtnContainer = styled.div`
   svg {
     width: 40px;
     height: 40px;
+    path {
+      color: var(--point-color-green);
+    }
   }
 `;
 export default BackBtn;
