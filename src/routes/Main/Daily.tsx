@@ -1,5 +1,5 @@
 import { useUserStore } from "@/store/useUserStore";
-import { useEffect, useRef } from "react";
+import { useEffect } from "react";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import MonthStatistics from "@/components/main/MonthStatistics";
 import { useTimeStore } from "@/store/useTimeStore";
