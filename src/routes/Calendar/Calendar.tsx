@@ -50,6 +50,7 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex: 1;
+  margin-top : -18px;
 `;
 
 export default Calendar

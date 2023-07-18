@@ -16,6 +16,7 @@ const AllDailyList = () => {
   };
 
   useEffect(() => {
+    setTimeout(() => {
     console.log("-------------");
     console.log("currentDay", currentDay);
     if (refs.current[currentDay] === undefined) {
@@ -26,6 +27,7 @@ const AllDailyList = () => {
     }
     console.log("refs.current[currentDay]", refs.current[currentDay]);
     console.log("refs", refs);
+  }, 200);  // 지연 시간은 필요에 따라 조절 가능
   }, [currentDay, currentMonth, currentYear]);
 
   return (
