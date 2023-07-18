@@ -10,7 +10,7 @@ import Calendar from "./routes/Calendar/Calendar";
 import Chart from "./routes/Chart/Chart";
 import Account from "@/routes/Account/Account";
 import Add from "@/routes/Add/Add";
-import Edit from "./routes/Edit/Edit";
+import Edit from "@/routes/Edit/Edit";
 import Search from "@/routes/Search/Search";
 import styled from "styled-components";
 import iphone from "@/assets/iPhone12_Clay_Shadow.png";

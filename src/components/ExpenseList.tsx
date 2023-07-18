@@ -11,7 +11,7 @@ type Props = {
 
 const ExpenseList = ({ _id, amount, category, date, searchText }: Props) => {
   return (
-    <ExpenseListContainer to={`/edit/${_id}`}>
+    <ExpenseListContainer to={`/edit/${_id}`} state={{ amount, category, date }}>
       <TextInfo>
         <span>{category.split("+")[0]}</span>
         <span>{date.slice(5, 10)}</span>
