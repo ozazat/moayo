@@ -15,27 +15,27 @@ dayjs.locale("ko");
 
 const MainHeader = () => {
   const location = useLocation();
-  const defaultDate = dayjs().format("YYYY년 M월");
 
   const totalLists = useExpensesStore((state) => state.totalLists);
   const setTotalLists = useExpensesStore((state) => state.setTotalLists);
-
   const currentYear = useTimeStore((state) => state.currentYear);
   const currentMonth = useTimeStore((state) => state.currentMonth);
   const setCurrentYear = useTimeStore((state) => state.setCurrentYear);
   const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
   const setMonthList = useExpensesStore((state) => state.setMonthList);
 
+  // const defaultDate = dayjs().format("YYYY년 M월");
+
+  const defaultDate = `${currentYear}년 ${currentMonth}월`;
+
   useEffect(() => {
     searchExpenses("", "ozazat").then((res) => {
       setTotalLists(res);
     });
-    // setDayList({});
     setMonthList([]);
   }, []);
 
   useEffect(() => {
-    // setDayList({});
     setMonthList([]);
     const currentYearMonth = `${currentYear}-${currentMonth}`;
     const filteredList = [...totalLists].filter((list) => {

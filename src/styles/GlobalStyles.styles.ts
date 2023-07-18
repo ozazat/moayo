@@ -48,6 +48,9 @@ const GlobalStyles = createGlobalStyle/* css */ `
 	div {
 		font-weight: 400;
 	}
+	ul {
+		padding: 0;
+	}
 `;
 
 export default GlobalStyles;

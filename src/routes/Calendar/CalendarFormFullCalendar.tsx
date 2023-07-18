@@ -6,6 +6,9 @@ import { DateClickArg, EventRenderedArgs } from "@fullcalendar/common";
 import styled from "styled-components";
 import { getCalendar } from "@/api";
 import { useTimeStore } from "@/store/useTimeStore";
+import { searchExpenses } from "@/api/index";
+import { useExpensesStore } from "@/store/useExpensesStore";
+import { useNavigate } from "react-router-dom";
 
 interface EventObject {
   title: string;
@@ -16,27 +19,29 @@ const CalendarFormFullCalendar = () => {
   const [events, setEvents] = useState<EventObject[]>([]);
   const [year, setYear] = useState<number>(new Date().getFullYear());
   const [month, setMonth] = useState<number>(new Date().getMonth() + 1);
-  const calendarRef = useRef<FullCalendar>(null);
 
+  const calendarRef = useRef<FullCalendar>(null);
   const initialRender = useRef<boolean>(true);
 
   const setCurrentYear = useTimeStore((state) => state.setCurrentYear);
   const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
+  const setTotalLists = useExpensesStore((state) => state.setTotalLists);
   const setCurrentDay = useTimeStore((state) => state.setCurrentDay);
-  const setFullDate = useTimeStore((state) => state.setFullDate);
+  const navigate = useNavigate();
 
+  useEffect(() => {
+    searchExpenses("", "ozazat").then((res) => {
+      setTotalLists(res);
+    });
+    setCurrentYear(String(new Date().getFullYear()));
+    setCurrentMonth(String(new Date().getMonth() + 1));
+  }, []);
 
   const handleDateClick = (arg: DateClickArg) => {
-    alert(arg.dateStr);
-    const clickedDate = new Date(arg.dateStr);
-    setCurrentYear(String(clickedDate.getFullYear()));
-    setCurrentMonth(String(clickedDate.getMonth() + 1));
-    setCurrentDay(String(clickedDate.getDate()));
-    setFullDate(arg.dateStr);
-
-
-
-
+    setCurrentYear(arg.dateStr.split("-")[0]);
+    setCurrentMonth(arg.dateStr.split("-")[1]);
+    setCurrentDay(arg.dateStr.split("-")[2]);
+    navigate("/main/daily");
   };
 
   const handleDatesSet = (arg: any) => {
@@ -62,9 +67,15 @@ const CalendarFormFullCalendar = () => {
       try {
         const res = await getCalendar(year, month, "ozazat");
         const eventsData = Object.entries(res).reduce((acc: EventObject[], [day, dayData]: [string, unknown]) => {
-          const typedDayData = dayData as Record<string, unknown>[]; 
-          const totalIncome = typedDayData.reduce((total: number, curr: any) => (curr.amount > 0 ? total + curr.amount : total), 0);
-          const totalExpense = typedDayData.reduce((total: number, curr: any) => (curr.amount < 0 ? total - curr.amount : total), 0);
+          const typedDayData = dayData as Record<string, unknown>[];
+          const totalIncome = typedDayData.reduce(
+            (total: number, curr: any) => (curr.amount > 0 ? total + curr.amount : total),
+            0
+          );
+          const totalExpense = typedDayData.reduce(
+            (total: number, curr: any) => (curr.amount < 0 ? total - curr.amount : total),
+            0
+          );
           const total: number = totalIncome - totalExpense;
 
           return [
@@ -92,13 +103,34 @@ const CalendarFormFullCalendar = () => {
     let [income, expense, total] = eventInfo.event.title.split(",");
     return (
       <div style={{ textAlign: "right" }}>
-        <div style={{ fontSize: "0.4em", fontWeight: 900, color: "#34BE3A", visibility: income !== "none" ? "visible" : "hidden" }}>
+        <div
+          style={{
+            fontSize: "0.4em",
+            fontWeight: 900,
+            color: "#34BE3A",
+            visibility: income !== "none" ? "visible" : "hidden"
+          }}
+        >
           {Number(income).toLocaleString()}
         </div>
-        <div style={{ fontSize: "0.4em", fontWeight: 900, color: "#ff7473", visibility: expense !== "none" ? "visible" : "hidden" }}>
+        <div
+          style={{
+            fontSize: "0.4em",
+            fontWeight: 900,
+            color: "#ff7473",
+            visibility: expense !== "none" ? "visible" : "hidden"
+          }}
+        >
           {Number(expense).toLocaleString()}
         </div>
-        <div style={{ fontSize: "0.4em", fontWeight: 900, color: "#333333", visibility: total !== "none" ? "visible" : "hidden" }}>
+        <div
+          style={{
+            fontSize: "0.4em",
+            fontWeight: 900,
+            color: "#333333",
+            visibility: total !== "none" ? "visible" : "hidden"
+          }}
+        >
           {Number(total).toLocaleString()}
         </div>
       </div>
@@ -164,10 +196,10 @@ const CalendarContainer = styled.div`
   width: 440px;
   padding: 2px 32px 0;
   position: absolute; // relative 로 지정해야되는데 억지로 맞춰놨다.
-  top : 170px;
+  top: 170px;
 
   .fc .fc-toolbar.fc-header-toolbar {
-    margin-bottom: 0.5em; 
+    margin-bottom: 0.5em;
   }
   .fc-button {
     padding: 2px 4px;
