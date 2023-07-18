@@ -17,6 +17,7 @@ const Daily = () => {
   const monthList = useExpensesStore((state) => state.monthList);
   const currentYear = useTimeStore((state) => state.currentYear);
   const currentMonth = useTimeStore((state) => state.currentMonth);
+  const currentDay = useTimeStore((state) => state.currentDay);
 
   useEffect(() => {
     initializeUserId();

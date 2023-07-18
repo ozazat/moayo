@@ -16,11 +16,11 @@ const MonthStatistics = () => {
 
   useEffect(() => {
     getTotalAmount();
-    totalLists.length === 0
-      ? setTitle("가계부를 작성해주세요~")
+    consumption === 0 && income === 0
+      ? setTitle("📌 가계부를 작성해주세요~")
       : totalAmount > 0
       ? setTitle(`💰 ${totalAmount.toLocaleString()}원 남았어요!`)
-      : setTitle(`💰 ${Math.abs(totalAmount)}원 사용했네요!`);
+      : setTitle(`💰 ${Math.abs(totalAmount).toLocaleString()}원 사용했네요!`);
 
     const currentYearMonth = `${currentYear}-${currentMonth}`;
 
@@ -41,14 +41,18 @@ const MonthStatistics = () => {
           return sum + item.amount;
         }, 0)
     );
-  }, [currentYear, currentMonth, totalAmount, totalLists]);
+    console.log("currentYearMonth", currentYearMonth);
+    // console.log("currentMonth", currentMonth);
+  }, [currentYear, currentMonth, totalAmount, totalLists, consumption, income]);
 
   const getTotalAmount = () => {
     getPeriodSummary("monthly", "ozazat").then((res) => {
       console.log("totalAmountRes", res);
       const filteredItem = res.filter((item: search) => item._id === `${currentYear}-${currentMonth}`);
       console.log("filteredItem", filteredItem);
-      setTotalAmount(filteredItem[0].totalAmount);
+      if (filteredItem.length !== 0) {
+        setTotalAmount(filteredItem[0].totalAmount);
+      }
     });
   };
 
