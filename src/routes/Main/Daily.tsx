@@ -40,6 +40,7 @@ const Daily = () => {
       }
     });
     setDayList(newDayList);
+    console.log("newDayList: ", newDayList);
   };
 
   return (

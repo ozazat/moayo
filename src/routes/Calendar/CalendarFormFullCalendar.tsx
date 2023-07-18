@@ -5,6 +5,7 @@ import interactionPlugin from "@fullcalendar/interaction";
 import { DateClickArg, EventRenderedArgs } from "@fullcalendar/common";
 import styled from "styled-components";
 import { getCalendar } from "@/api";
+import { useTimeStore } from "@/store/useTimeStore";
 
 interface EventObject {
   title: string;
@@ -19,8 +20,23 @@ const CalendarFormFullCalendar = () => {
 
   const initialRender = useRef<boolean>(true);
 
+  const setCurrentYear = useTimeStore((state) => state.setCurrentYear);
+  const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
+  const setCurrentDay = useTimeStore((state) => state.setCurrentDay);
+  const setFullDate = useTimeStore((state) => state.setFullDate);
+
+
   const handleDateClick = (arg: DateClickArg) => {
     alert(arg.dateStr);
+    const clickedDate = new Date(arg.dateStr);
+    setCurrentYear(String(clickedDate.getFullYear()));
+    setCurrentMonth(String(clickedDate.getMonth() + 1));
+    setCurrentDay(String(clickedDate.getDate()));
+    setFullDate(arg.dateStr);
+
+
+
+
   };
 
   const handleDatesSet = (arg: any) => {
@@ -34,6 +50,8 @@ const CalendarFormFullCalendar = () => {
       if (newYear !== year || newMonth !== month) {
         setYear(newYear);
         setMonth(newMonth);
+        setCurrentYear(String(newYear));
+        setCurrentMonth(String(newMonth));
         console.log("handleDatesSet-setYear, setMonth : ", newYear, newMonth);
       }
     }
