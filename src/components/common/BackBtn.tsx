@@ -23,6 +23,8 @@ const BackBtnContainer = styled.div`
   display: flex;
   width: 50px;
   justify-content: center;
+  cursor: pointer;
+  z-index: 9;
   svg {
     width: 40px;
     height: 40px;
