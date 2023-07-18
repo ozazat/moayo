@@ -1,5 +1,6 @@
 import ExpenseList from "@/components/ExpenseList";
 import { search } from "@/types/apiTypes";
+import { forwardRef } from "react";
 
 interface Props {
   day: string;
@@ -7,9 +8,10 @@ interface Props {
   searchText?: string;
 }
 
-const DailyList = ({ day, expenseList, searchText }: Props) => {
+const DailyList = forwardRef(({ day, expenseList, searchText }: Props, ref) => {
+  // console.log("day", day.split(".")[1]);
   return (
-    <div key={day}>
+    <div ref={ref} key={day}>
       <p>{day.slice(0, 5)}</p>
       {expenseList.map((list: search, i: number) => (
         <ExpenseList
@@ -23,6 +25,6 @@ const DailyList = ({ day, expenseList, searchText }: Props) => {
       ))}
     </div>
   );
-};
+});
 
 export default DailyList;

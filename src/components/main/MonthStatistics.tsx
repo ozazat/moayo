@@ -41,15 +41,15 @@ const MonthStatistics = () => {
           return sum + item.amount;
         }, 0)
     );
-    console.log("currentYearMonth", currentYearMonth);
+    // console.log("currentYearMonth", currentYearMonth);
     // console.log("currentMonth", currentMonth);
   }, [currentYear, currentMonth, totalAmount, totalLists, consumption, income]);
 
   const getTotalAmount = () => {
     getPeriodSummary("monthly", "ozazat").then((res) => {
-      console.log("totalAmountRes", res);
+      // console.log("totalAmountRes", res);
       const filteredItem = res.filter((item: search) => item._id === `${currentYear}-${currentMonth}`);
-      console.log("filteredItem", filteredItem);
+      // console.log("filteredItem", filteredItem);
       if (filteredItem.length !== 0) {
         setTotalAmount(filteredItem[0].totalAmount);
       }

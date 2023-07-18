@@ -33,11 +33,15 @@ const CalendarFormFullCalendar = () => {
     searchExpenses("", "ozazat").then((res) => {
       setTotalLists(res);
     });
+    setCurrentYear(String(new Date().getFullYear()));
+    setCurrentMonth(String(new Date().getMonth() + 1));
   }, []);
 
   const handleDateClick = (arg: DateClickArg) => {
-    alert(arg.dateStr);
-    navigate("/main/daily/arg.dateStr");
+    setCurrentYear(arg.dateStr.split("-")[0]);
+    setCurrentMonth(arg.dateStr.split("-")[1]);
+    setCurrentDay(arg.dateStr.split("-")[2]);
+    navigate("/main/daily");
   };
 
   const handleDatesSet = (arg: any) => {
