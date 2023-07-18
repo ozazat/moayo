@@ -24,7 +24,7 @@ const App = () => {
       <BrowserRouter>
         <GlobalStyles />
         <Routes>
-          <Route path="/main" element={<MainLayout />}>
+          <Route path="/main/" element={<MainLayout />}>
             <Route path="/main/daily" element={<Daily />} />
             <Route path="/main/weekly" element={<Weekly />} />
             <Route path="/main/monthly" element={<Monthly />} />

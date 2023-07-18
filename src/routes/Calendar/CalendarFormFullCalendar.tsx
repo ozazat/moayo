@@ -44,6 +44,12 @@ const CalendarFormFullCalendar = () => {
     navigate("/main/daily");
   };
 
+  const handleDayCellDidMount = (arg: any) => {
+    arg.el.addEventListener("click", () => {
+      const dateString = `${arg.date.getFullYear()}-${arg.date.getMonth() + 1}-${arg.date.getDate()}`;
+      handleDateClick({ dateStr: dateString });
+    });
+  };
   const handleDatesSet = (arg: any) => {
     if (initialRender.current) {
       initialRender.current = false;
@@ -108,7 +114,11 @@ const CalendarFormFullCalendar = () => {
             fontSize: "0.4em",
             fontWeight: 900,
             color: "#34BE3A",
-            visibility: income !== "none" ? "visible" : "hidden"
+            visibility: income !== "none" ? "visible" : "hidden",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            maxWidth: "100px" // Change the value as per the desired width
           }}
         >
           {Number(income).toLocaleString()}
@@ -118,7 +128,11 @@ const CalendarFormFullCalendar = () => {
             fontSize: "0.4em",
             fontWeight: 900,
             color: "#ff7473",
-            visibility: expense !== "none" ? "visible" : "hidden"
+            visibility: expense !== "none" ? "visible" : "hidden",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            maxWidth: "100px" // Change the value as per the desired width
           }}
         >
           {Number(expense).toLocaleString()}
@@ -128,7 +142,11 @@ const CalendarFormFullCalendar = () => {
             fontSize: "0.4em",
             fontWeight: 900,
             color: "#333333",
-            visibility: total !== "none" ? "visible" : "hidden"
+            visibility: total !== "none" ? "visible" : "hidden",
+            textOverflow: "ellipsis",
+            overflow: "hidden",
+            whiteSpace: "nowrap",
+            maxWidth: "100px" // Change the value as per the desired width
           }}
         >
           {Number(total).toLocaleString()}
@@ -145,6 +163,7 @@ const CalendarFormFullCalendar = () => {
         initialView="dayGridMonth"
         events={events}
         dateClick={handleDateClick}
+        dayCellDidMount={handleDayCellDidMount}
         datesSet={handleDatesSet}
         eventContent={renderEventContent}
         locale="ko"
@@ -224,6 +243,7 @@ const CalendarContainer = styled.div`
   }
   .fc-daygrid-day {
     height: 80px;
+    background-color: white;
   }
   .fc-daygrid-day.fc-event {
     background: none;
