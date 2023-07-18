@@ -7,7 +7,7 @@ import "chart.js/auto";
 import "chartjs-plugin-datalabels";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween.js";
-import styled from "styled-components";
+import styled, { createGlobalStyle } from "styled-components";
 
 dayjs.extend(isBetween);
 
@@ -54,6 +54,15 @@ const colors = [
   "#660066",
   "#336600"
 ];
+
+const GlobalStyle = createGlobalStyle`
+  .chartjs-legend li span {
+    max-width: 100px; /* 원하는 최대 너비 설정 */
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+`;
 
 const ChartContainer = styled.div`
   width: 340px;
@@ -135,27 +144,60 @@ const Button = styled.button`
   }
 `;
 
+const TableContainer = styled.div`
+  width: 100%;
+  max-height: 380px;
+  overflow-y: auto;
+  margin-top: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
 const StyledTable = styled.table`
+  table-layout: fixed; // 추가: 각 셀의 너비를 고정
   width: 100%;
   text-align: left;
   border-collapse: collapse;
-  margin-top: 20px;
+  font-family: "IBM Plex Mono", monospace;
+
+  tbody {
+    display: block;
+  }
+
+  tr {
+    display: block;
+    border-bottom: 1px solid #ddd;
+  }
+
+  td {
+    padding: 8px;
+  }
 `;
 
 const Row = styled.tr`
+  display: block;
   border-bottom: 1px solid #ddd;
 `;
 
 const Cell = styled.td`
-  padding: 8px;
-  text-align: right;
-
   &:first-child {
-    text-align: right; // 비율을 오른쪽 정렬
+    text-align: right;
+    width: 50px;
   }
 
   &:nth-child(2) {
-    text-align: left; // 태그 이름을 왼쪽 정렬
+    text-align: left;
+    padding-left: 15px;
+    width: 100px;
+  }
+
+  &:last-child {
+    text-align: right;
+    width: 220px;
   }
 `;
 
@@ -201,20 +243,20 @@ const Chart: React.FC = () => {
 
     let dataObjects = Object.entries(tags).map(([label, data]) => ({
       label,
-      data : data as number, 
-      backgroundColor: colors[Object.keys(tags).indexOf(label) % colors.length],
+      data: data as number,
+      backgroundColor: colors[Object.keys(tags).indexOf(label) % colors.length]
     }));
-  
-    dataObjects.sort((a, b) => b.data - a.data);  // 내림차순으로 정렬합니다.
-  
+
+    dataObjects.sort((a, b) => b.data - a.data); // 내림차순으로 정렬합니다.
+
     setChartData({
-      labels: dataObjects.map(obj => obj.label),
+      labels: dataObjects.map((obj) => obj.label),
       datasets: [
         {
-          data: dataObjects.map(obj => obj.data),
-          backgroundColor: dataObjects.map(obj => obj.backgroundColor),
-        },
-      ],
+          data: dataObjects.map((obj) => obj.data),
+          backgroundColor: dataObjects.map((obj) => obj.backgroundColor)
+        }
+      ]
     });
   }, [filteredListByType]);
 
@@ -235,118 +277,132 @@ const Chart: React.FC = () => {
     `${dayjs(value).startOf("week").format(weekFormat)} ~ ${dayjs(value).endOf("week").format(weekFormat)}`;
 
   return (
-    <ChartContainer>
-      <PickerContainer>
-        {timePeriod === TimePeriod.ALL ? (
-          <StyledDateText>전체</StyledDateText>
-        ) : (
-          <StyledDatePicker
-            open={showDatePicker}
-            onClick={handleDatePickerClick}
-            onBlur={() => setShowDatePicker(false)}
-            bordered={false}
-            allowClear={false}
-            picker={
-              timePeriod === TimePeriod.MONTH
-                ? "month"
-                : timePeriod === TimePeriod.YEAR
-                ? "year"
-                : timePeriod === TimePeriod.WEEK
-                ? "week"
-                : undefined
-            }
-            value={selectedDate}
-            onChange={(value: dayjs.Dayjs | null) => {
-              setSelectedDate(value ? value : dayjs());
-              setShowDatePicker(false);
-            }}
-            format={
-              timePeriod === TimePeriod.MONTH
-                ? "YYYY년 MM월"
-                : timePeriod === TimePeriod.YEAR
-                ? "YYYY년"
-                : timePeriod === TimePeriod.WEEK
-                ? customWeekStartEndFormat
-                : undefined
-            }
-          />
-        )}
-        <SelectBox
-          value={timePeriod}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTimePeriod(e.target.value as TimePeriod)}
-        >
-          {Object.values(TimePeriod).map((period) => (
-            <option key={period} value={period}>
-              {period}
-            </option>
-          ))}
-        </SelectBox>
-      </PickerContainer>
-
-      <ExpenseTypeButtons>
-        <Button
-          className={expenseType === ExpenseType.INCOME ? "active" : ""}
-          onClick={() => setExpenseType(ExpenseType.INCOME)}
-        >
-          {ExpenseType.INCOME} : ₩ {totalIncome.toLocaleString()}
-        </Button>
-        <Button
-          className={expenseType === ExpenseType.EXPENSE ? "active" : ""}
-          onClick={() => setExpenseType(ExpenseType.EXPENSE)}
-        >
-          {ExpenseType.EXPENSE} : ₩ {totalExpense.toLocaleString()}
-        </Button>
-      </ExpenseTypeButtons>
-
-      {chartData.labels.length > 0 ? (
-        <>
-          <div
-            style={{
-              marginTop: "40px",
-              marginBottom: "40px",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center"
-            }}
-          >
-            <Pie
-              data={chartData}
-              options={{
-                responsive: true,
-                maintainAspectRatio: true,
-                aspectRatio: 2,
-                plugins: { legend: { position: "right" } }
+    <>
+      <GlobalStyle />
+      <ChartContainer>
+        <PickerContainer>
+          {timePeriod === TimePeriod.ALL ? (
+            <StyledDateText>전체</StyledDateText>
+          ) : (
+            <StyledDatePicker
+              open={showDatePicker}
+              onClick={handleDatePickerClick}
+              onBlur={() => setShowDatePicker(false)}
+              bordered={false}
+              allowClear={false}
+              picker={
+                timePeriod === TimePeriod.MONTH
+                  ? "month"
+                  : timePeriod === TimePeriod.YEAR
+                  ? "year"
+                  : timePeriod === TimePeriod.WEEK
+                  ? "week"
+                  : undefined
+              }
+              value={selectedDate}
+              onChange={(value: dayjs.Dayjs | null) => {
+                setSelectedDate(value ? value : dayjs());
+                setShowDatePicker(false);
               }}
+              format={
+                timePeriod === TimePeriod.MONTH
+                  ? "YYYY년 MM월"
+                  : timePeriod === TimePeriod.YEAR
+                  ? "YYYY년"
+                  : timePeriod === TimePeriod.WEEK
+                  ? customWeekStartEndFormat
+                  : undefined
+              }
             />
-          </div>
-        </>
-      ) : (
-        <div style={{ textAlign: "center", marginTop: "50px" }}>데이터가 존재하지 않습니다.</div>
-      )}
-      <StyledTable>
-        <tbody>
-          {chartData.labels.map((label, index) => {
-            const total = expenseType === ExpenseType.INCOME ? totalIncome : totalExpense;
-            const percentage = Math.round((chartData.datasets[0].data[index] / total) * 100);
-            const formattedAmount = chartData.datasets[0].data[index].toLocaleString();
+          )}
+          <SelectBox
+            value={timePeriod}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => setTimePeriod(e.target.value as TimePeriod)}
+          >
+            {Object.values(TimePeriod).map((period) => (
+              <option key={period} value={period}>
+                {period}
+              </option>
+            ))}
+          </SelectBox>
+        </PickerContainer>
 
-            return (
-              <Row key={label}>
-                <Cell
-                  style={{
-                    width: "50px",
-                    color: "white",
-                    backgroundColor: chartData.datasets[0].backgroundColor[index]
-                  }}
-                >{`${percentage}%`}</Cell>
-                <Cell style={{ paddingLeft: "15px" }}>{label}</Cell>
-                <Cell>{`${formattedAmount}원`}</Cell>
-              </Row>
-            );
-          })}
-        </tbody>
-      </StyledTable>
-    </ChartContainer>
+        <ExpenseTypeButtons>
+          <Button
+            className={expenseType === ExpenseType.INCOME ? "active" : ""}
+            onClick={() => setExpenseType(ExpenseType.INCOME)}
+          >
+            {ExpenseType.INCOME} : ₩ {totalIncome.toLocaleString()}
+          </Button>
+          <Button
+            className={expenseType === ExpenseType.EXPENSE ? "active" : ""}
+            onClick={() => setExpenseType(ExpenseType.EXPENSE)}
+          >
+            {ExpenseType.EXPENSE} : ₩ {totalExpense.toLocaleString()}
+          </Button>
+        </ExpenseTypeButtons>
+
+        {chartData.labels.length > 0 ? (
+          <>
+            <div
+              style={{
+                marginTop: "40px",
+                marginBottom: "40px",
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center"
+              }}
+            >
+              <Pie
+                data={chartData}
+                options={{
+                  responsive: true,
+                  maintainAspectRatio: true,
+                  aspectRatio: 2,
+                  plugins: {
+                    legend: {
+                      position: "right",
+                      labels: {
+                        boxWidth: 20,
+                        usePointStyle: false
+                      }
+                    }
+                  }
+                }}
+              />
+            </div>
+          </>
+        ) : (
+          <div style={{ textAlign: "center", marginTop: "50px" }}>데이터가 존재하지 않습니다.</div>
+        )}
+        <TableContainer>
+          <StyledTable>
+            <tbody>
+              {chartData.labels.map((label, index) => {
+                const total = expenseType === ExpenseType.INCOME ? totalIncome : totalExpense;
+                const percentage = Math.round((chartData.datasets[0].data[index] / total) * 100);
+                const formattedAmount = chartData.datasets[0].data[index].toLocaleString();
+
+                return (
+                  <Row key={label}>
+                    <Cell
+                      style={{
+                        width: "50px",
+                        color: "white",
+                        backgroundColor: chartData.datasets[0].backgroundColor[index],
+                        fontFamily: "IBM Plex Mono, monospace"
+                      }}
+                    >{`${percentage}%`}</Cell>
+                    <Cell style={{ paddingLeft: "15px" }}>{label}</Cell>
+                    <Cell style={{ fontFamily: "IBM Plex Mono, monospace" }}>{`${formattedAmount}원`}</Cell>
+                  </Row>
+                );
+              })}
+            </tbody>
+          </StyledTable>
+        </TableContainer>
+      </ChartContainer>
+    </>
   );
 };
 
