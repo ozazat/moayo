@@ -1,46 +1,26 @@
-import { postExpense } from "@/api";
+import { editExpense, deleteExpense } from "@/api";
 import { useState, useEffect } from "react";
 import { styled } from "styled-components";
 import { Button } from "antd";
 import BackBtn from "@/components/common/BackBtn";
+import { useParams, useLocation, useNavigate } from "react-router-dom";
+import { ConsumptionTags, IncomeTags } from "@/constants/tags";
+import { Icon } from "@iconify/react";
 
 const Edit = () => {
-  const [expense, setExpense] = useState(true);
-  const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
-  const [time, setTime] = useState(new Date().toTimeString().slice(0, 5));
-  const [amount, setAmount] = useState(0);
-  const [tag, setTag] = useState("");
-  const [content, setContent] = useState("");
-  const [inputCheck, setInputCheck] = useState([true, true, false, false, false] as boolean[]);
-  const [isActive, SetIsActive] = useState(false);
+  const { _id } = useParams<string>();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const data = location.state;
 
-  const ConsumptionTags = [
-    "선택해 주세요!",
-    "🍔 식비",
-    "📱 통신비",
-    "🚍 교통비",
-    "🏠 관리비",
-    "🏥 병원",
-    "🚀 여행",
-    "💖 취미",
-    "📚 학업",
-    "⚙️ 기타"
-  ];
-
-  const IncomeTags = ["선택해 주세요!", "💰 월급", "🎉 상여금", "💵 부수입", "🤑 용돈", "🪙 금융/투자", "⚙️ 기타"];
-  // useEffect(() => {
-  //   console.log("지출/수입", expense);
-  //   console.log("날짜", date);
-  //   console.log("시간", time);
-  //   console.log("금액", amount);
-  //   console.log("태그", tag);
-  //   console.log("내용", content);
-  // }, [expense, date, time, amount, tag, content]);
-
-  useEffect(() => {
-    console.log("날짜", new Date().toLocaleDateString());
-    console.log("시간", new Date().toLocaleTimeString());
-  }, []);
+  const [expense, setExpense] = useState<boolean>(true);
+  const [inputCheck, setInputCheck] = useState([true, true, true, true, true] as boolean[]);
+  const [isActive, SetIsActive] = useState<boolean>(false);
+  const [date, setDate] = useState<string>(data.date.split("T")[0]);
+  const [time, setTime] = useState<string>(data.date.split("T")[1].slice(0, 5));
+  const [amount, setAmount] = useState<number>(Math.abs(data.amount));
+  const [tag, setTag] = useState<string>(data.category.split("+")[0]);
+  const [content, setContent] = useState<string>(data.category.split("+")[1]);
 
   useEffect(() => {
     if (inputCheck.every((input) => input === true)) {
@@ -68,15 +48,16 @@ const Edit = () => {
     }
   };
 
-  // 저장 버튼 핸들러
-  const postBtnHandler = (tag: string) => {
+  // 수정 버튼 핸들러
+  const editBtnHandler = (tag: string) => {
     const body = {
       amount: expense ? -amount : amount,
       userId: "ozazat",
       category: `${tag}+${content}`,
       date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
     };
-    postExpense(body).then((res) => {
+
+    editExpense(body, _id as string).then((res) => {
       console.log(res);
       setInputCheck([true, true, false, false, false] as boolean[]);
       SetIsActive(false);
@@ -85,6 +66,17 @@ const Edit = () => {
       setAmount(0);
       setTag("");
       setContent("");
+      alert("수정 완료!");
+      navigate(-1);
+    });
+  };
+
+  // 삭제 버튼 핸들러
+  const deleteBtnHandler = () => {
+    deleteExpense(_id as string).then((res) => {
+      console.log(res);
+      alert("삭제 성공!");
+      navigate(-1);
     });
   };
 
@@ -212,10 +204,14 @@ const Edit = () => {
           </FormElement>
         </FormContainer>
         <SubmitBtn $isActive={isActive}>
-          <Button type="primary" disabled={!isActive} onClick={() => postBtnHandler(tag)}>
-            저장하기
+          <Button type="primary" disabled={!isActive} onClick={() => editBtnHandler(tag)}>
+            수정하기
           </Button>
         </SubmitBtn>
+        <DeleteBtn onClick={deleteBtnHandler}>
+          <Icon icon="maki:waste-basket" />
+          <div>삭제하기</div>
+        </DeleteBtn>
       </AddContainer>
     </>
   );
@@ -300,5 +296,18 @@ const SubmitBtn = styled.div<SubmitBtnProps>`
     height: 50px;
     border-radius: 10px;
     background-color: ${(props) => (props.$isActive ? "var(--point-color-yellow)" : "var(--base-color-grey)")};
+  }
+`;
+
+const DeleteBtn = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  color: #505050;
+  width: 300px;
+  height: 30px;
+  svg {
+    width: 20px;
+    height: 20px;
   }
 `;

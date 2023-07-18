@@ -1,5 +1,6 @@
 import { postExpense } from "@/api";
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { Button } from "antd";
 import BackBtn from "@/components/common/BackBtn";
@@ -13,6 +14,8 @@ const Add = () => {
   const [content, setContent] = useState("");
   const [inputCheck, setInputCheck] = useState([true, true, false, false, false] as boolean[]);
   const [isActive, SetIsActive] = useState(false);
+
+  const navigate = useNavigate();
 
   const ConsumptionTags = [
     "선택해 주세요!",
@@ -85,6 +88,7 @@ const Add = () => {
       setAmount(0);
       setTag("");
       setContent("");
+      navigate(-1);
     });
   };
 

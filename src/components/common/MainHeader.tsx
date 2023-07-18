@@ -23,6 +23,7 @@ const MainHeader = () => {
   const setCurrentYear = useTimeStore((state) => state.setCurrentYear);
   const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
   const setMonthList = useExpensesStore((state) => state.setMonthList);
+  const setYearList = useExpensesStore((state) => state.setYearList);
 
   // const defaultDate = dayjs().format("YYYY년 M월");
 
@@ -36,12 +37,22 @@ const MainHeader = () => {
   }, []);
 
   useEffect(() => {
-    setMonthList([]);
-    const currentYearMonth = `${currentYear}-${currentMonth}`;
-    const filteredList = [...totalLists].filter((list) => {
-      return list.date.includes(currentYearMonth);
-    });
-    setMonthList(filteredList);
+    if (location.pathname === "/main/daily" || location.pathname === "/main/weekly") {
+      setMonthList([]);
+      const currentYearMonth = `${currentYear}-${currentMonth}`;
+      const filteredList = [...totalLists].filter((list) => {
+        return list.date.includes(currentYearMonth);
+      });
+      setMonthList(filteredList);
+    }
+    if (location.pathname === "/main/monthly") {
+      setYearList([]);
+      const StrcurrentYear = `${currentYear}`;
+      const filteredList = [...totalLists].filter((list) => {
+        return list.date.includes(StrcurrentYear);
+      });
+      setYearList(filteredList);
+    }
   }, [totalLists, currentMonth, currentYear]);
 
   return (
@@ -49,15 +60,20 @@ const MainHeader = () => {
       <MainHeaderFirstRow>
         <div>
           <StyledDatePicker
-            picker="month"
+            picker={location.pathname === "/main/monthly" ? "year" : "month"}
             bordered={false}
             defaultValue={dayjs(defaultDate, "YYYY년 M월")}
-            format="YYYY년 M월"
+            format={location.pathname === "/main/monthly" ? "YYYY년" : "YYYY년 M월"}
             allowClear={false}
             size={"large"}
             onChange={(date: any) => {
-              setCurrentYear(String(date.$y));
-              setCurrentMonth(String(date.$M + 1));
+              if (location.pathname === "/main/daily" || location.pathname === "/main/weekly") {
+                setCurrentYear(String(date.$y));
+                setCurrentMonth(String(date.$M + 1));
+              }
+              if (location.pathname === "/main/monthly") {
+                setCurrentYear(String(date.$y));
+              }
             }}
           />
         </div>

@@ -11,7 +11,7 @@ type Props = {
 
 const ExpenseList = ({ _id, amount, category, date, searchText }: Props) => {
   return (
-    <ExpenseListContainer to={`/edit/${_id}`}>
+    <ExpenseListContainer to={`/edit/${_id}`} state={{ amount, category, date }}>
       <TextInfo>
         <span>{category.split("+")[0]}</span>
         <span>{date.slice(5, 10)}</span>
@@ -31,7 +31,9 @@ const ExpenseList = ({ _id, amount, category, date, searchText }: Props) => {
         ) : (
           <div>{category.split("+")[1]}</div>
         )}
-        <ExpenseAmount>₩{amount.toLocaleString()}</ExpenseAmount>
+        <ExpenseAmount className={amount > 0 ? "income" : ""}>
+          ₩{amount > 0 ? amount.toLocaleString() : amount.toLocaleString().slice(1)}
+        </ExpenseAmount>
       </ExpenseInfo>
     </ExpenseListContainer>
   );
@@ -71,4 +73,7 @@ const ExpenseInfo = styled.div`
 
 const ExpenseAmount = styled.span`
   color: var(--point-color-red);
+  &.income {
+    color: var(--point-color-green);
+  }
 `;
