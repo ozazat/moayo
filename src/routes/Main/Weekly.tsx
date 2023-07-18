@@ -9,7 +9,6 @@ import { search } from "@/types/apiTypes";
 
 const Weekly = () => {
   const monthList = useExpensesStore((state) => state.monthList);
-
   const setDayList = useExpensesStore((state) => state.setDayList);
   const currentYear = useTimeStore((state) => state.currentYear);
   const currentMonth = useTimeStore((state) => state.currentMonth);
@@ -30,7 +29,22 @@ const Weekly = () => {
       } else {
         newDayList[formattedDay] = [list];
       }
-      setDayList(newDayList);
+      const keysArray: string[] = Object.keys(newDayList);
+
+      // 키 값을 내림차순으로 정렬합니다.
+      keysArray.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+
+      // 정렬된 키를 기반으로 새로운 객체를 생성합니다.
+      interface SortedData {
+        [date: string]: search[];
+      }
+      const sortedData: SortedData = {};
+      keysArray.forEach((key) => {
+        sortedData[key] = newDayList[key];
+      });
+
+      // console.log(Object.entries(sortedData));
+      setDayList(sortedData);
     });
   };
 

@@ -1,5 +1,5 @@
 import { useUserStore } from "@/store/useUserStore";
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import MonthStatistics from "@/components/main/MonthStatistics";
 import { useTimeStore } from "@/store/useTimeStore";
@@ -17,7 +17,11 @@ const Daily = () => {
   const monthList = useExpensesStore((state) => state.monthList);
   const currentYear = useTimeStore((state) => state.currentYear);
   const currentMonth = useTimeStore((state) => state.currentMonth);
+  const currentDay = useTimeStore((state) => state.currentDay);
 
+  // currentDay와 dayList의 day가 일치하는 것 찾기.
+  // useRef로 해당 dayList 요소로 스크롤이동.
+  useEffect(() => {}, [currentDay]);
   useEffect(() => {
     initializeUserId();
   }, [initializeUserId]);
@@ -39,7 +43,23 @@ const Daily = () => {
         newDayList[formattedDay] = [list];
       }
     });
-    setDayList(newDayList);
+    // console.log("newDayList", newDayList);
+    const keysArray: string[] = Object.keys(newDayList);
+
+    // 키 값을 내림차순으로 정렬합니다.
+    keysArray.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+
+    // 정렬된 키를 기반으로 새로운 객체를 생성합니다.
+    interface SortedData {
+      [date: string]: search[];
+    }
+    const sortedData: SortedData = {};
+    keysArray.forEach((key) => {
+      sortedData[key] = newDayList[key];
+    });
+
+    // console.log(Object.entries(sortedData));
+    setDayList(sortedData);
   };
 
   return (

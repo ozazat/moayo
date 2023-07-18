@@ -6,9 +6,10 @@ type Props = {
   amount: number;
   category: string;
   date: string;
+  searchText?: string;
 };
 
-const ExpenseList = ({ _id, amount, category, date }: Props) => {
+const ExpenseList = ({ _id, amount, category, date, searchText }: Props) => {
   return (
     <ExpenseListContainer to={`/edit/${_id}`}>
       <TextInfo>
@@ -16,7 +17,20 @@ const ExpenseList = ({ _id, amount, category, date }: Props) => {
         <span>{date.slice(5, 10)}</span>
       </TextInfo>
       <ExpenseInfo>
-        <span>{category.split("+")[1]}</span>
+        {searchText ? (
+          <div
+            dangerouslySetInnerHTML={{
+              __html: category
+                .split("+")[1]
+                ?.replace(
+                  new RegExp(searchText, "gu"),
+                  `<span style="color:var(--point-color-red)">${searchText}</span>`
+                )
+            }}
+          />
+        ) : (
+          <div>{category.split("+")[1]}</div>
+        )}
         <ExpenseAmount>₩{amount.toLocaleString()}</ExpenseAmount>
       </ExpenseInfo>
     </ExpenseListContainer>
