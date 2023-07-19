@@ -1,11 +1,13 @@
 import { useState, useEffect } from "react";
 import { Container, Title, DivideContainer, Consumption, Income } from "./MonthStatistics.style";
 import { getPeriodSummary } from "@/api";
-import { search } from "@/types/apiTypes";
+import { search, period, periodRes } from "@/types/apiTypes";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import { useTimeStore } from "@/store/useTimeStore";
+import { useLocation } from "react-router-dom";
 
 const MonthStatistics = () => {
+  const location = useLocation();
   const [title, setTitle] = useState("가계부를 작성해 주세요~");
   const [totalAmount, setTotalAmount] = useState(0);
   const totalLists = useExpensesStore((state) => state.totalLists);
@@ -24,34 +26,88 @@ const MonthStatistics = () => {
 
     const currentYearMonth = `${currentYear}-${currentMonth}`;
 
-    setConsumption(
-      totalLists
-        .filter((item) => item.date.includes(currentYearMonth))
-        .filter((item) => item.amount < 0)
-        .reduce((sum: number, item: search) => {
-          return sum + item.amount;
-        }, 0)
-    );
+    if (location.pathname === "/main/weekly" || location.pathname === "/main/daily") {
+      setConsumption(
+        totalLists
+          .filter((item) => item.date.includes(currentYearMonth))
+          .filter((item) => item.amount < 0)
+          .reduce((sum: number, item: search) => {
+            return sum + item.amount;
+          }, 0)
+      );
 
-    setIncome(
-      totalLists
-        .filter((item) => item.date.includes(currentYearMonth))
-        .filter((item) => item.amount > 0)
-        .reduce((sum: number, item: search) => {
-          return sum + item.amount;
-        }, 0)
-    );
-    // console.log("currentYearMonth", currentYearMonth);
-    // console.log("currentMonth", currentMonth);
+      setIncome(
+        totalLists
+          .filter((item) => item.date.includes(currentYearMonth))
+          .filter((item) => item.amount > 0)
+          .reduce((sum: number, item: search) => {
+            return sum + item.amount;
+          }, 0)
+      );
+    }
+    if (location.pathname === "/main/monthly") {
+      setConsumption(
+        totalLists
+          .filter((item) => item.date.includes(currentYear))
+          .filter((item) => item.amount < 0)
+          .reduce((sum: number, item: search) => {
+            return sum + item.amount;
+          }, 0)
+      );
+
+      setIncome(
+        totalLists
+          .filter((item) => item.date.includes(currentYear))
+          .filter((item) => item.amount > 0)
+          .reduce((sum: number, item: search) => {
+            return sum + item.amount;
+          }, 0)
+      );
+    }
+    if (location.pathname === "/main/all") {
+      setConsumption(
+        totalLists
+          .filter((item) => item.amount < 0)
+          .reduce((sum: number, item: search) => {
+            return sum + item.amount;
+          }, 0)
+      );
+
+      setIncome(
+        totalLists
+          .filter((item) => item.amount > 0)
+          .reduce((sum: number, item: search) => {
+            return sum + item.amount;
+          }, 0)
+      );
+    }
   }, [currentYear, currentMonth, totalAmount, totalLists, consumption, income]);
 
   const getTotalAmount = () => {
     getPeriodSummary("monthly", "ozazat").then((res) => {
-      // console.log("totalAmountRes", res);
-      const filteredItem = res.filter((item: search) => item._id === `${currentYear}-${currentMonth}`);
-      // console.log("filteredItem", filteredItem);
-      if (filteredItem.length !== 0) {
-        setTotalAmount(filteredItem[0].totalAmount);
+      if (location.pathname === "/main/weekly" || location.pathname === "/main/daily") {
+        const filteredItem: periodRes = res.filter((item: period) => item._id === `${currentYear}-${currentMonth}`);
+        if (filteredItem.length !== 0) {
+          setTotalAmount(filteredItem[0].totalAmount);
+        }
+      }
+      if (location.pathname === "/main/monthly") {
+        const filteredItem: periodRes = res.filter((item: period) => item._id.includes(`${currentYear}`));
+        if (filteredItem.length !== 0) {
+          setTotalAmount(
+            filteredItem.reduce((sum: number, item: period) => {
+              return sum + item.totalAmount;
+            }, 0)
+          );
+        }
+      }
+      if (location.pathname === "/main/all") {
+        console.log(res);
+        setTotalAmount(
+          res.reduce((sum: number, item: period) => {
+            return sum + item.totalAmount;
+          }, 0)
+        );
       }
     });
   };

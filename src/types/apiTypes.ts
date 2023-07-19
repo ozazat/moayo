@@ -37,7 +37,7 @@ export interface search {
 // 요청 데이터 없음
 // 응답 데이터
 export type periodRes = period[];
-interface period {
+export interface period {
   _id: string;
   totalAmount: number;
 }
@@ -84,3 +84,7 @@ interface calendarItem {
 // 요청 데이터 없음
 // 응답 데이터
 export type searchCategoryRes = search[];
+
+export interface ObjectData {
+  [key: string]: search[];
+}
