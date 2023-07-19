@@ -30,11 +30,6 @@ const Search = () => {
   }, [searchResult]);
 
   const onSearch = async () => {
-    // searchExpenses(realSearchText, "ozazat").then((res) => {
-    //   setSearchData(res.data);
-    //   console.log(res.data); ///
-    // });
-
     if (realSearchText) {
       const url = "http://52.78.195.183:3003/api/expenses/search?q=" + realSearchText + "&userId=ozazat";
       const res = await axios.get(url);
@@ -51,7 +46,7 @@ const Search = () => {
     setIsSearching(false);
   };
 
-  const startSearch = (e: React.FormEvent<HTMLFormElement>) => {
+  const startSearch = (e: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLSpanElement | MouseEvent>) => {
     e.preventDefault();
     const result = createResultList();
     setSearchResult(result);
@@ -103,7 +98,7 @@ const Search = () => {
                     <div
                       dangerouslySetInnerHTML={{
                         __html: item.category
-                          .split("+")[1]
+                          .replace("+", ":")
                           ?.replace(
                             new RegExp(realSearchText, "gu"),
                             `<span style="color:var(--point-color-red)">${realSearchText}</span>`

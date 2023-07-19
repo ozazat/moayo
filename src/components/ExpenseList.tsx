@@ -14,7 +14,7 @@ const ExpenseList = ({ _id, amount, category, date, searchText }: Props) => {
     <ExpenseListContainer to={`/edit/${_id}`} state={{ amount, category, date }}>
       <TextInfo>
         <span>{category.split("+")[0]}</span>
-        <span>{date.slice(5, 10)}</span>
+        <span>{date.slice(11, 16)}</span>
       </TextInfo>
       <ExpenseInfo>
         {searchText ? (
@@ -59,7 +59,7 @@ const TextInfo = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 0.8em;
-  text-align: center;
+  text-align: left;
   color: #9b9b9b;
 `;
 

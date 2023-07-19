@@ -2,17 +2,24 @@ import { useTimeStore } from "@/store/useTimeStore";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import styled from "styled-components";
 import { useEffect, useState } from "react";
-import { search } from "@/types/apiTypes";
+import { search, ObjectData } from "@/types/apiTypes";
 import { getWeeksOfMonth, getMonthRange } from "@/utils/date";
 
 const MonthlyList = () => {
   const yearList = useExpensesStore((state) => state.yearList);
   const currentYear = useTimeStore((state) => state.currentYear);
-  const [monthList, setMonthList] = useState({});
+  const [monthList, setMonthList] = useState<ObjectData>({});
+  const [weekRange, setWeekRange] = useState<{ [key: number]: string[] }>({});
+  const [isClicked, setIsClicked] = useState<boolean[]>([]);
 
   useEffect(() => {
     createMonthList();
   }, [yearList]);
+
+  useEffect(() => {
+    const isClickedArray = monthList ? Object.keys(monthList) : [];
+    setIsClicked(new Array(isClickedArray.length).fill(false));
+  }, [monthList]);
 
   console.log(getWeeksOfMonth(Number(currentYear), 8));
 
@@ -28,7 +35,6 @@ const MonthlyList = () => {
         newMonthList[formattedDay] = [list];
       }
     });
-    // console.log("newDayList", newDayList);
     const keysArray: string[] = Object.keys(newMonthList);
     // 키 값을 내림차순으로 정렬합니다.
     keysArray.sort((a, b) => Number(b.replace("월", "")) - Number(a.replace("월", "")));
@@ -47,19 +53,46 @@ const MonthlyList = () => {
     console.log(monthList);
   };
 
+  // 클릭 이벤트에, getWeeksofMonth를 생성. useState로 set해주기 : Weeks, setWeeks ✅
+  const monthListClickHandler = (month: string, index: number) => {
+    setIsClicked(isClicked.map((clicked, clickedIndex) => (clickedIndex === index ? !clicked : clicked)));
+    const weekRanges = getWeeksOfMonth(Number(currentYear), Number(month.replace("월", "")));
+    setWeekRange((prevWeekRange) => ({ ...prevWeekRange, [index]: [...weekRanges] }));
+  };
+
+  useEffect(() => {
+    console.log("weekRange", weekRange);
+  }, [weekRange]);
+  // monthList 에서 map 돌려서, month = "5월", lists = search[] 배열
+  // 주간 데이터를 얻으려면, 5월을 getWeeksofMonth에 넣어 [11~11, 11~11, 11~11]이런 형태의 배열 데이터를 받아와야함.
+  // MonthlyListContainer를 클릭했을 때, 펼쳐지면서 나오자.✅
+
+  // lists에서 weeks를 돌면서, 해당 기간 안에 있는 list들의 amount 합 구하기.
+  const filterListsByRange = (lists: search[], range: string) => {
+    const [start, end] = range.split(" ~ ");
+    const startDate = new Date(`${currentYear}-${start}`);
+    const endDate = new Date(`${currentYear}-${end}`);
+    return lists.filter((list) => {
+      const listDate = new Date(list.date);
+      return listDate >= startDate && listDate <= endDate;
+    });
+  };
   return (
     <Container>
-      {Object.entries(monthList).map(([month, lists]) => (
-        <MonthlyListContainer>
-          <>
+      {Object.entries(monthList).map(([month, lists], index) => (
+        <div key={month}>
+          <MonthlyListContainer
+            className={isClicked[index] ? "active" : ""}
+            onClick={() => monthListClickHandler(month, index)}
+          >
             <MonthlyPeriod>
               <div>{month}</div>
               <span>{getMonthRange(Number(currentYear), Number(month.replace("월", "")))}</span>
             </MonthlyPeriod>
             <MonthlyConsume>
               {lists
-                .filter((list) => list.amount < 0)
-                .reduce((acc, cur) => acc + cur.amount, 0)
+                .filter((list: search) => list.amount < 0)
+                .reduce((acc: number, cur: search) => acc + cur.amount, 0)
                 .toLocaleString()}
             </MonthlyConsume>
             <MonthlyIncome>
@@ -68,8 +101,34 @@ const MonthlyList = () => {
                 .reduce((acc, cur) => acc + cur.amount, 0)
                 .toLocaleString()}
             </MonthlyIncome>
-          </>
-        </MonthlyListContainer>
+          </MonthlyListContainer>
+          <WeeklyListContainer className={isClicked[index] ? "active" : ""}>
+            {isClicked[index] &&
+              weekRange[index] &&
+              weekRange[index].map((range) => {
+                const filteredLists = filterListsByRange(lists, range);
+                return (
+                  <WeeklyLists key={range}>
+                    <span>{range.replaceAll("-", ".")}</span>
+                    <WeeklyAmounts>
+                      <Consume>
+                        {filteredLists
+                          .filter((list) => list.amount < 0)
+                          .reduce((acc, cur) => acc + cur.amount, 0)
+                          .toLocaleString()}
+                      </Consume>
+                      <Income>
+                        {filteredLists
+                          .filter((list) => list.amount > 0)
+                          .reduce((acc, cur) => acc + cur.amount, 0)
+                          .toLocaleString()}
+                      </Income>
+                    </WeeklyAmounts>
+                  </WeeklyLists>
+                );
+              })}
+          </WeeklyListContainer>
+        </div>
       ))}
     </Container>
   );
@@ -113,6 +172,11 @@ const MonthlyListContainer = styled.div`
   &:hover {
     border: 1px solid var(--point-color-yellow);
   }
+  &.active {
+    box-shadow: 1px 2px 1px var(--point-color-yellow);
+    position: relative;
+    top: 4px;
+  }
 `;
 
 const MonthlyPeriod = styled.div`
@@ -134,5 +198,51 @@ const MonthlyConsume = styled.div`
 
 const MonthlyIncome = styled.div`
   font-size: 0.9em;
+  color: var(--point-color-green);
+`;
+
+const WeeklyListContainer = styled.div`
+  display: none;
+  &.active {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-start;
+    position: relative;
+    top: 10px;
+    min-width: 330px;
+    max-width: 330px;
+    max-height: 260px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    background-color: #eaeaea;
+    overflow: scroll;
+    &::-webkit-scrollbar {
+      display: none;
+    }
+  }
+`;
+
+const WeeklyLists = styled.div`
+  display: flex;
+  width: 300px;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin: 5px 10px;
+  span {
+    font-size: 16px;
+  }
+`;
+const WeeklyAmounts = styled.div`
+  display: flex;
+`;
+
+const Consume = styled.div`
+  color: var(--point-color-red);
+  margin-right: 10px;
+`;
+
+const Income = styled.div`
   color: var(--point-color-green);
 `;

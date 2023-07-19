@@ -9,6 +9,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useTimeStore } from "@/store/useTimeStore";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import { searchExpenses } from "@/api/index";
+import All from "@/routes/Main/All";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ko");
@@ -53,30 +54,34 @@ const MainHeader = () => {
       });
       setYearList(filteredList);
     }
-  }, [totalLists, currentMonth, currentYear]);
+  }, [totalLists, currentMonth, currentYear, location.pathname]);
 
   return (
     <>
       <MainHeaderFirstRow>
-        <div>
-          <StyledDatePicker
-            picker={location.pathname === "/main/monthly" ? "year" : "month"}
-            bordered={false}
-            defaultValue={dayjs(defaultDate, "YYYY년 M월")}
-            format={location.pathname === "/main/monthly" ? "YYYY년" : "YYYY년 M월"}
-            allowClear={false}
-            size={"large"}
-            onChange={(date: any) => {
-              if (location.pathname === "/main/daily" || location.pathname === "/main/weekly") {
-                setCurrentYear(String(date.$y));
-                setCurrentMonth(String(date.$M + 1));
-              }
-              if (location.pathname === "/main/monthly") {
-                setCurrentYear(String(date.$y));
-              }
-            }}
-          />
-        </div>
+        {location.pathname === "/main/all" ? (
+          <AllPicker>전체보기</AllPicker>
+        ) : (
+          <div>
+            <StyledDatePicker
+              picker={location.pathname === "/main/monthly" ? "year" : "month"}
+              bordered={false}
+              defaultValue={dayjs(defaultDate, "YYYY년 M월")}
+              format={location.pathname === "/main/monthly" ? "YYYY년" : "YYYY년 M월"}
+              allowClear={false}
+              size={"large"}
+              onChange={(date: any) => {
+                if (location.pathname === "/main/daily" || location.pathname === "/main/weekly") {
+                  setCurrentYear(String(date.$y));
+                  setCurrentMonth(String(date.$M + 1));
+                }
+                if (location.pathname === "/main/monthly") {
+                  setCurrentYear(String(date.$y));
+                }
+              }}
+            />
+          </div>
+        )}
         <StyledLink to="/search" isActive={location.pathname === "/search"}>
           <SearchOutlined />
         </StyledLink>
@@ -182,4 +187,11 @@ const MainHeaderSecondRow = styled.div`
   background-color: white;
   border-radius: 10px;
   margin-top: 10px;
+`;
+
+const AllPicker = styled.div`
+  margin-left: 10px;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: rgba(0, 0, 0, 0.88);
 `;
