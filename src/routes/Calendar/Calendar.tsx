@@ -3,6 +3,7 @@ import CalendarFormFullCalendar from "./CalendarFormFullCalendar";
 import { useLocation, Link } from "react-router-dom";
 import styled from "styled-components";
 import { SearchOutlined } from "@ant-design/icons";
+import { PostBtn } from "@/components/PostBtn";
 
 const Calendar = () => {
   const location = useLocation();
@@ -19,6 +20,9 @@ const Calendar = () => {
         <MonthStatistics />
         <CalendarFormFullCalendar />
       </ContentWrapper>
+      <PostBtnWrapper>
+        <PostBtn />
+      </PostBtnWrapper>
     </CalendarWrapper>
   );
 };
@@ -40,8 +44,8 @@ const FirstRow = styled.div`
 `;
 
 const StyledSearchOutlined = styled(SearchOutlined)`
-  font-size : 1.8rem;
-`
+  font-size: 1.8rem;
+`;
 
 const ContentWrapper = styled.div`
   display: flex;
@@ -50,7 +54,14 @@ const ContentWrapper = styled.div`
   align-items: center;
   justify-content: center;
   flex: 1;
-  margin-top : -18px;
+  margin-top: -18px;
 `;
 
-export default Calendar
+const PostBtnWrapper = styled.div`
+  position: absolute;
+  bottom: -768px;  // 화면에서 수동으로 때려 박음.
+  left: 171px;  // 화면에서 수동으로 때려 박음.
+  z-index: 2;
+`;
+
+export default Calendar;
