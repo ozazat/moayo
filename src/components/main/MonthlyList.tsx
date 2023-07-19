@@ -48,7 +48,7 @@ const MonthlyList = () => {
   };
 
   return (
-    <>
+    <Container>
       {Object.entries(monthList).map(([month, lists]) => (
         <MonthlyListContainer>
           <>
@@ -71,14 +71,32 @@ const MonthlyList = () => {
           </>
         </MonthlyListContainer>
       ))}
-    </>
+    </Container>
   );
 };
 
 export default MonthlyList;
 
-const MonthlyListContainer = styled.div`
+const Container = styled.div`
+  position: relative;
+  top: 70px;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 350px;
+  height: 440px;
+  max-width: 350px;
+  max-height: 700px;
+  overflow: scroll;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+`;
+
+const MonthlyListContainer = styled.div`
+  display: grid;
+  grid-template-columns: 1.5fr repeat(2, 1fr);
   justify-content: center;
   align-items: center;
   gap: 28px;
@@ -87,18 +105,20 @@ const MonthlyListContainer = styled.div`
   max-width: 330px;
   max-height: 60px;
   border-radius: 10px;
+  padding: 0 18px 0;
   margin-bottom: 10px;
   background-color: #ffffff;
+  text-align: center;
   cursor: pointer;
   &:hover {
-    border: 1.8px solid var(--base-color-grey);
+    border: 1px solid var(--point-color-yellow);
   }
 `;
 
 const MonthlyPeriod = styled.div`
   display: flex;
   flex-direction: column;
-
+  text-align: left;
   div {
     font-weight: 600;
   }
