@@ -18,7 +18,7 @@ const ExpenseList = ({ _id, amount, category, date, searchText }: Props) => {
       </TextInfo>
       <ExpenseInfo>
         {searchText ? (
-          <div
+          <ExpenseName
             dangerouslySetInnerHTML={{
               __html: category
                 .split("+")[1]
@@ -29,7 +29,7 @@ const ExpenseList = ({ _id, amount, category, date, searchText }: Props) => {
             }}
           />
         ) : (
-          <div>{category.split("+")[1]}</div>
+          <ExpenseName>{category.split("+")[1]}</ExpenseName>
         )}
         <ExpenseAmount className={amount > 0 ? "income" : ""}>
           ₩{amount > 0 ? amount.toLocaleString() : amount.toLocaleString().slice(1)}
@@ -50,7 +50,7 @@ const ExpenseListContainer = styled(Link)`
   max-height: 60px;
   padding: 0 20px 0;
   border-radius: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 12px;
   background-color: #ffffff;
   cursor: pointer;
 `;
@@ -69,6 +69,10 @@ const ExpenseInfo = styled.div`
   font-weight: 600;
   text-align: right;
   color: var(--base-color-black);
+`;
+
+const ExpenseName = styled.div`
+  font-weight: 600;
 `;
 
 const ExpenseAmount = styled.span`

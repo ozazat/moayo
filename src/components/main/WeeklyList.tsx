@@ -111,9 +111,9 @@ const WeeklyListContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 18px;
-  min-width: 330px;
+  min-width: 340px;
   min-height: 60px;
-  max-width: 330px;
+  max-width: 340px;
   max-height: 60px;
   border-radius: 10px;
   margin-bottom: 10px;
@@ -140,14 +140,17 @@ const WeeklyTitle = styled.div`
 `;
 
 const WeeklyPeriod = styled.div`
+  font-size: 14px;
   font-weight: 600;
 `;
 
 const WeeklyConsume = styled.div`
+  font-size: 14px;
   color: var(--point-color-red);
 `;
 
 const WeeklyIncome = styled.div`
+  font-size: 14px;
   color: var(--point-color-green);
 `;
 
@@ -159,11 +162,12 @@ const WeeklyDailyListContainer = styled.div`
     align-items: center;
     position: relative;
     top: 10px;
-    min-width: 330px;
-    max-width: 330px;
+    min-width: 340px;
+    max-width: 340px;
     max-height: 260px;
     border-radius: 10px;
     margin-bottom: 30px;
+    padding-top: 10px;
     background-color: #eaeaea;
     overflow: scroll;
     &::-webkit-scrollbar {
