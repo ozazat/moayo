@@ -26,7 +26,11 @@ const MonthStatistics = () => {
 
     const currentYearMonth = `${currentYear}-${currentMonth}`;
 
-    if (location.pathname === "/main/weekly" || location.pathname === "/main/daily") {
+    if (
+      location.pathname === "/main/weekly" ||
+      location.pathname === "/main/daily" ||
+      location.pathname === "/sub/calendar"
+    ) {
       setConsumption(
         totalLists
           .filter((item) => item.date.includes(currentYearMonth))
@@ -85,7 +89,11 @@ const MonthStatistics = () => {
 
   const getTotalAmount = () => {
     getPeriodSummary("monthly", "ozazat").then((res) => {
-      if (location.pathname === "/main/weekly" || location.pathname === "/main/daily") {
+      if (
+        location.pathname === "/main/weekly" ||
+        location.pathname === "/main/daily" ||
+        location.pathname === "/sub/calendar"
+      ) {
         const filteredItem: periodRes = res.filter((item: period) => item._id === `${currentYear}-${currentMonth}`);
         if (filteredItem.length !== 0) {
           setTotalAmount(filteredItem[0].totalAmount);

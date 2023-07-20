@@ -46,7 +46,6 @@ const All = () => {
   return (
     <MainContainer>
       <MonthStatistics />
-      <div>All!!!</div>
       <AllListContainer>
         {Object.entries(allLists).map(([day, list]) => (
           <DailyList key={day} day={day} expenseList={list} />
