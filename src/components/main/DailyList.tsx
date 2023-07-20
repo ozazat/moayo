@@ -16,9 +16,7 @@ interface DayOfWeekProps {
   dayOfWeek: string;
 }
 
-const DailyList = forwardRef(({ day, expenseList, searchText }: Props, ref) => {
-  // console.log("day", day.split(".")[1]);
-
+const DailyList = forwardRef<HTMLDivElement, Props>(({ day, expenseList, searchText }: Props, ref) => {
   let expenseTotal = 0;
   let incomeTotal = 0;
 
