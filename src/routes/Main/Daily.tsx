@@ -1,9 +1,8 @@
-import { useUserStore } from "@/store/useUserStore";
 import { useEffect } from "react";
+import { useUserStore } from "@/store/useUserStore";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import MonthStatistics from "@/components/main/MonthStatistics";
 import { useTimeStore } from "@/store/useTimeStore";
-import { search } from "@/types/apiTypes";
 import { PostBtn } from "@/components/PostBtn";
 import AllDailyList from "@/components/main/AllDailyList";
 import styled from "styled-components";
@@ -20,8 +19,8 @@ const Daily = () => {
   const currentMonth = useTimeStore((state) => state.currentMonth);
   const currentDay = useTimeStore((state) => state.currentDay);
 
-  // currentDay와 dayList의 day가 일치하는 것 찾기.
-  // useRef로 해당 dayList 요소로 스크롤이동.
+  // currentDay와 dayList의 day가 일치하는 것 찾기
+  // useRef로 해당 dayList 요소로 스크롤 이동
   useEffect(() => {}, [currentDay]);
   useEffect(() => {
     initializeUserId();

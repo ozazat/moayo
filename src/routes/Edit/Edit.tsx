@@ -41,12 +41,10 @@ const Edit = () => {
       const updatedInputs = [...inputCheck];
       updatedInputs[index] = true;
       setInputCheck(updatedInputs);
-      console.log("내용이 있을때", updatedInputs);
     } else {
       const updatedInputs = [...inputCheck];
       updatedInputs[index] = false;
       setInputCheck(updatedInputs);
-      console.log("내용이 없을때", updatedInputs);
     }
   };
 
@@ -61,7 +59,6 @@ const Edit = () => {
       };
 
       editExpense(body, _id as string).then((res) => {
-        console.log(res);
         setInputCheck([true, true, false, false, false] as boolean[]);
         SetIsActive(false);
         setDate(new Date().toISOString().substring(0, 10));
@@ -78,7 +75,6 @@ const Edit = () => {
   // 삭제 버튼 핸들러
   const deleteBtnHandler = () => {
     deleteExpense(_id as string).then((res) => {
-      console.log(res);
       alert("삭제 성공!");
       navigate(-1);
     });
@@ -87,12 +83,10 @@ const Edit = () => {
   // 지출/수입 버튼 핸들러
   const expenseConsumeHandler = () => {
     setExpense(true);
-    console.log("지출버튼", expense);
   };
 
   const expenseIncomeHandler = () => {
     setExpense(false);
-    console.log("수입버튼", expense);
   };
 
   // 날짜/시간 핸들러

@@ -31,10 +31,10 @@ const Weekly = () => {
       }
       const keysArray: string[] = Object.keys(newDayList);
 
-      // 키 값을 내림차순으로 정렬합니다.
+      // 키 값을 내림차순으로 정렬
       keysArray.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
 
-      // 정렬된 키를 기반으로 새로운 객체를 생성합니다.
+      // 정렬된 키를 기반으로 새로운 객체 생성
       interface SortedData {
         [date: string]: search[];
       }
@@ -43,7 +43,6 @@ const Weekly = () => {
         sortedData[key] = newDayList[key];
       });
 
-      // console.log(Object.entries(sortedData));
       setDayList(sortedData);
     });
   };

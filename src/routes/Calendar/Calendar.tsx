@@ -1,18 +1,16 @@
 import MonthStatistics from "@/components/main/MonthStatistics";
 import CalendarFormFullCalendar from "./CalendarFormFullCalendar";
-import { useLocation, Link } from "react-router-dom";
-import styled from "styled-components";
+import { Link } from "react-router-dom";
 import { SearchOutlined } from "@ant-design/icons";
 import { PostBtn } from "@/components/PostBtn";
+import styled from "styled-components";
 
 const Calendar = () => {
-  const location = useLocation();
-
   return (
     <CalendarWrapper>
       <FirstRow>
         <h1>달력</h1>
-        <Link to="/search" isActive={location.pathname === "/search"}>
+        <Link to="/search">
           <StyledSearchOutlined />
         </Link>
       </FirstRow>
@@ -59,8 +57,8 @@ const ContentWrapper = styled.div`
 
 const PostBtnWrapper = styled.div`
   position: absolute;
-  bottom: -768px;  // 화면에서 수동으로 때려 박음.
-  left: 171px;  // 화면에서 수동으로 때려 박음.
+  bottom: -768px; // 화면에서 수동으로 때려 박음.
+  left: 171px; // 화면에서 수동으로 때려 박음.
   z-index: 2;
 `;
 

@@ -17,7 +17,6 @@ const Account = () => {
       );
       if (res.status === 200) {
         const images: pixabayRes = res.data.hits;
-        console.log(images);
         const sortedImages = images.sort(
           (a: pixabayHit, b: pixabayHit) => b.likes - a.likes || b.downloads - a.downloads
         );
@@ -25,7 +24,7 @@ const Account = () => {
         setProfileImage(recommendedImage.webformatURL);
       }
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 
@@ -43,7 +42,7 @@ const Account = () => {
       <Title>계정</Title>
       <AccountWrap>
         <ProfileWrap>
-          <ProfileImage imageUrl={profileImage}></ProfileImage>
+          <ProfileImage $imageUrl={profileImage}></ProfileImage>
           <Username>{userNickname}</Username>
           <Tag>#{userId?.substring(0, 4)}</Tag>
         </ProfileWrap>
@@ -94,7 +93,7 @@ const ProfileWrap = styled.div`
 `;
 
 interface ProfileImageProps {
-  imageUrl: string;
+  $imageUrl: string;
 }
 
 const ProfileImage = styled.div<ProfileImageProps>`
@@ -107,7 +106,7 @@ const ProfileImage = styled.div<ProfileImageProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: ${({ imageUrl }) => (imageUrl ? `url(${imageUrl})` : "")};
+  background-image: ${({ $imageUrl }) => ($imageUrl ? `url(${$imageUrl})` : "")};
   background-size: cover;
   background-position: center;
 `;
