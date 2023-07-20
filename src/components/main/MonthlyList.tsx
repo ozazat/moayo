@@ -159,9 +159,9 @@ const MonthlyListContainer = styled.div`
   justify-content: center;
   align-items: center;
   gap: 28px;
-  min-width: 330px;
+  min-width: 340px;
   min-height: 60px;
-  max-width: 330px;
+  max-width: 340px;
   max-height: 60px;
   border-radius: 10px;
   padding: 0 18px 0;
@@ -207,13 +207,15 @@ const WeeklyListContainer = styled.div`
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    align-items: flex-start;
+    align-items: center;
+    gap: 4px;
     position: relative;
     top: 10px;
-    min-width: 330px;
-    max-width: 330px;
+    min-width: 340px;
+    max-width: 340px;
     max-height: 260px;
     border-radius: 10px;
+    padding: 10px 0 10px;
     margin-bottom: 30px;
     background-color: #eaeaea;
     overflow: scroll;
@@ -224,18 +226,22 @@ const WeeklyListContainer = styled.div`
 `;
 
 const WeeklyLists = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  align-items: center;
   width: 300px;
-  flex-direction: row;
-  justify-content: space-between;
-  align-items: flex-start;
-  margin: 5px 10px;
   span {
-    font-size: 16px;
+    font-size: 14px;
+    padding-left: 8px;
   }
 `;
 const WeeklyAmounts = styled.div`
-  display: flex;
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  justify-content: center;
+  text-align: center;
+  font-size: 12px;
 `;
 
 const Consume = styled.div`

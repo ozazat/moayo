@@ -33,7 +33,7 @@ const DailyList = forwardRef(({ day, expenseList, searchText }: Props, ref) => {
   const dayOfWeek = dayjs(day, "MM.DD").format("ddd");
 
   return (
-    <div ref={ref} key={day}>
+    <Container ref={ref} key={day}>
       <DaySummary>
         <Day>
           {day}(<DayOfWeek dayOfWeek={dayOfWeek}>{dayOfWeek}</DayOfWeek>)
@@ -54,20 +54,28 @@ const DailyList = forwardRef(({ day, expenseList, searchText }: Props, ref) => {
           searchText={searchText}
         />
       ))}
-    </div>
+    </Container>
   );
 });
 
 export default DailyList;
 
+const Container = styled.div`
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 8px;
+`;
+
 const DaySummary = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 6px;
 `;
 
 const Day = styled.span`
-  /* 필요한 스타일 추가 */
+  font-size: 0.9em;
+  padding-left: 4px;
 `;
 
 const DayOfWeek = styled.span<DayOfWeekProps>`
@@ -75,20 +83,22 @@ const DayOfWeek = styled.span<DayOfWeekProps>`
 `;
 
 const AmountsSummary = styled.div`
-  display: flex;
-  justify-content: space-between;
-  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  justify-content: center;
+  width: 45%;
   gap: 8px;
   padding-right: 0px;
-  background-color: var(--base-color-grey);
+  /* background-color: var(--base-color-grey); */
   opacity: 0.8;
-  border-radius: 10px;
+  border-radius: 6px;
 `;
 
 const Amount = styled.span`
   flex: 1;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  padding-right: 8px;
   font-size: 0.8rem;
-  font-weight: 800;
+  font-weight: 600;
 `;
