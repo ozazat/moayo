@@ -1,19 +1,48 @@
 import { useEffect, useState } from "react";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import { ObjectData } from "@/types/apiTypes";
-import { createList } from "@/scripts/createList";
 import { PostBtn } from "@/components/PostBtn";
 import DailyList from "@/components/main/DailyList";
 import MonthStatistics from "@/components/main/MonthStatistics";
 import styled from "styled-components";
+import { search } from "@/types/apiTypes";
 
 const All = () => {
   const totalLists = useExpensesStore((state) => state.totalLists);
   const [allLists, setAllLists] = useState<ObjectData>({});
 
   useEffect(() => {
-    createList(totalLists, setAllLists);
+    createAllList();
   }, [totalLists]);
+
+  const createAllList = () => {
+    const newDayList: { [key: string]: search[] } = {};
+    totalLists.forEach((list) => {
+      const date = list.date;
+      const [year, month, dayTime] = date.split("-");
+      const day = dayTime.split("T")[0];
+      const formattedDay = `${year}.${month}.${day}`;
+      if (newDayList[formattedDay]) {
+        newDayList[formattedDay].push(list);
+      } else {
+        newDayList[formattedDay] = [list];
+      }
+    });
+    // console.log("newDayList", newDayList);
+    const keysArray: string[] = Object.keys(newDayList);
+
+    // 키 값을 내림차순으로 정렬합니다.
+    keysArray.sort((a, b) => new Date(b).getTime() - new Date(a).getTime());
+
+    // 정렬된 키를 기반으로 새로운 객체를 생성합니다.
+    const sortedData: ObjectData = {};
+    keysArray.forEach((key) => {
+      sortedData[key] = newDayList[key];
+    });
+
+    console.log("sortedData", sortedData);
+    setAllLists(sortedData);
+  };
 
   return (
     <MainContainer>
