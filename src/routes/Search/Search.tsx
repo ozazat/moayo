@@ -7,8 +7,10 @@ import axios from "axios";
 import { search } from "@/types/apiTypes";
 import BackBtn from "@/components/common/BackBtn";
 import DailyList from "@/components/main/DailyList";
+import { useUserStore } from '@/store/useUserStore';
 
 const Search = () => {
+  const userId = useUserStore((state) => state.userId);
   const [realSearchText, setRealSearchText] = useState("");
   const [searchData, setSearchData] = useState<search[]>([]);
   const [isSearching, setIsSearching] = useState(true);
@@ -31,7 +33,7 @@ const Search = () => {
 
   const onSearch = async () => {
     if (realSearchText) {
-      const url = "http://52.78.195.183:3003/api/expenses/search?q=" + realSearchText + "&userId=ozazat";
+      const url = "http://52.78.195.183:3003/api/expenses/search?q=" + realSearchText + "&userId="+ userId;
       const res = await axios.get(url);
       console.log("response", res);
       const data = res.data;

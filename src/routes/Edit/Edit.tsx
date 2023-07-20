@@ -6,6 +6,7 @@ import BackBtn from "@/components/common/BackBtn";
 import { useParams, useLocation, useNavigate } from "react-router-dom";
 import { ConsumptionTags, IncomeTags } from "@/constants/tags";
 import { Icon } from "@iconify/react";
+import { useUserStore } from "@/store/useUserStore";
 
 const Edit = () => {
   const { _id } = useParams<string>();
@@ -13,6 +14,7 @@ const Edit = () => {
   const location = useLocation();
   const data = location.state;
 
+  const userId = useUserStore((state) => state.userId);
   const [expense, setExpense] = useState<boolean>(true);
   const [inputCheck, setInputCheck] = useState([true, true, true, true, true] as boolean[]);
   const [isActive, SetIsActive] = useState<boolean>(false);
@@ -50,25 +52,27 @@ const Edit = () => {
 
   // 수정 버튼 핸들러
   const editBtnHandler = (tag: string) => {
-    const body = {
-      amount: expense ? -amount : amount,
-      userId: "ozazat",
-      category: `${tag}+${content}`,
-      date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
-    };
+    if (userId) {
+      const body = {
+        amount: expense ? -amount : amount,
+        userId: userId,
+        category: `${tag}+${content}`,
+        date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
+      };
 
-    editExpense(body, _id as string).then((res) => {
-      console.log(res);
-      setInputCheck([true, true, false, false, false] as boolean[]);
-      SetIsActive(false);
-      setDate(new Date().toISOString().substring(0, 10));
-      setTime(new Date().toTimeString().slice(0, 5));
-      setAmount(0);
-      setTag("");
-      setContent("");
-      alert("수정 완료!");
-      navigate(-1);
-    });
+      editExpense(body, _id as string).then((res) => {
+        console.log(res);
+        setInputCheck([true, true, false, false, false] as boolean[]);
+        SetIsActive(false);
+        setDate(new Date().toISOString().substring(0, 10));
+        setTime(new Date().toTimeString().slice(0, 5));
+        setAmount(0);
+        setTag("");
+        setContent("");
+        alert("수정 완료!");
+        navigate(-1);
+      });
+    }
   };
 
   // 삭제 버튼 핸들러

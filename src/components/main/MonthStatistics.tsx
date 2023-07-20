@@ -5,9 +5,11 @@ import { search, period, periodRes } from "@/types/apiTypes";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import { useTimeStore } from "@/store/useTimeStore";
 import { useLocation } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore";
 
 const MonthStatistics = () => {
   const location = useLocation();
+  const userId = useUserStore((state) => state.userId);
   const [title, setTitle] = useState("가계부를 작성해 주세요~");
   const [totalAmount, setTotalAmount] = useState(0);
   const totalLists = useExpensesStore((state) => state.totalLists);
@@ -88,36 +90,38 @@ const MonthStatistics = () => {
   }, [currentYear, currentMonth, totalAmount, totalLists, consumption, income]);
 
   const getTotalAmount = () => {
-    getPeriodSummary("monthly", "ozazat").then((res) => {
-      if (
-        location.pathname === "/main/weekly" ||
-        location.pathname === "/main/daily" ||
-        location.pathname === "/sub/calendar"
-      ) {
-        const filteredItem: periodRes = res.filter((item: period) => item._id === `${currentYear}-${currentMonth}`);
-        if (filteredItem.length !== 0) {
-          setTotalAmount(filteredItem[0].totalAmount);
+    if (userId) {
+      getPeriodSummary("monthly", userId).then((res) => {
+        if (
+          location.pathname === "/main/weekly" ||
+          location.pathname === "/main/daily" ||
+          location.pathname === "/sub/calendar"
+        ) {
+          const filteredItem: periodRes = res.filter((item: period) => item._id === `${currentYear}-${currentMonth}`);
+          if (filteredItem.length !== 0) {
+            setTotalAmount(filteredItem[0].totalAmount);
+          }
         }
-      }
-      if (location.pathname === "/main/monthly") {
-        const filteredItem: periodRes = res.filter((item: period) => item._id.includes(`${currentYear}`));
-        if (filteredItem.length !== 0) {
+        if (location.pathname === "/main/monthly") {
+          const filteredItem: periodRes = res.filter((item: period) => item._id.includes(`${currentYear}`));
+          if (filteredItem.length !== 0) {
+            setTotalAmount(
+              filteredItem.reduce((sum: number, item: period) => {
+                return sum + item.totalAmount;
+              }, 0)
+            );
+          }
+        }
+        if (location.pathname === "/main/all") {
+          console.log(res);
           setTotalAmount(
-            filteredItem.reduce((sum: number, item: period) => {
+            res.reduce((sum: number, item: period) => {
               return sum + item.totalAmount;
             }, 0)
           );
         }
-      }
-      if (location.pathname === "/main/all") {
-        console.log(res);
-        setTotalAmount(
-          res.reduce((sum: number, item: period) => {
-            return sum + item.totalAmount;
-          }, 0)
-        );
-      }
-    });
+      });
+    }
   };
 
   return (

@@ -10,6 +10,7 @@ import { useTimeStore } from "@/store/useTimeStore";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import { searchExpenses } from "@/api/index";
 import All from "@/routes/Main/All";
+import { useUserStore } from "@/store/useUserStore";
 
 dayjs.extend(customParseFormat);
 dayjs.locale("ko");
@@ -17,6 +18,7 @@ dayjs.locale("ko");
 const MainHeader = () => {
   const location = useLocation();
 
+  const userId = useUserStore((state) => state.userId);
   const totalLists = useExpensesStore((state) => state.totalLists);
   const setTotalLists = useExpensesStore((state) => state.setTotalLists);
   const currentYear = useTimeStore((state) => state.currentYear);
@@ -31,10 +33,12 @@ const MainHeader = () => {
   const defaultDate = `${currentYear}년 ${currentMonth}월`;
 
   useEffect(() => {
-    searchExpenses("", "ozazat").then((res) => {
-      setTotalLists(res);
-    });
-    setMonthList([]);
+    if (userId) {
+      searchExpenses("", userId).then((res) => {
+        setTotalLists(res);
+      });
+      setMonthList([]);
+    }
   }, []);
 
   useEffect(() => {
