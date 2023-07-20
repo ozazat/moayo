@@ -7,7 +7,6 @@ export const getWeekNumber = (dateFrom = new Date()) => {
 
   // 이번 달 1일로 지정
   const startOfMonth = new Date(dateFrom.setDate(1));
-  // const startOfMonth = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), 1);
 
   // 이번 달 1일이 무슨 요일인지 확인
   const weekDay = startOfMonth.getDay(); // 0: Sun ~ 6: Sat
@@ -20,12 +19,9 @@ export const getWeekNumber = (dateFrom = new Date()) => {
 export const getWeekRange = (dateFrom = new Date(), weekNumber: number) => {
   // 이번 달 1일로 지정
   const startOfMonth = new Date(dateFrom.setDate(1));
-  // const startOfMonth = new Date(dateFrom.getFullYear(), dateFrom.getMonth(), 1);
-  console.log("이번달 1일", startOfMonth);
 
   // 이번 달 1일이 무슨 요일인지 확인
   const weekDay = startOfMonth.getDay(); // 0: Sun ~ 6: Sat
-  console.log("이번달 1일 요일", weekDay);
 
   // 주차의 시작 날짜 계산
   const startDate = new Date(startOfMonth.setDate(1 + (weekNumber - 1) * 7 - weekDay));

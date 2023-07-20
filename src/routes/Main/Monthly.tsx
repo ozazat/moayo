@@ -1,5 +1,5 @@
-import MonthStatistics from "@/components/main/MonthStatistics";
 import { PostBtn } from "@/components/PostBtn";
+import MonthStatistics from "@/components/main/MonthStatistics";
 import MonthlyList from "@/components/main/MonthlyList";
 import styled from "styled-components";
 

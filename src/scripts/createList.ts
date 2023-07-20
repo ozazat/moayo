@@ -23,7 +23,5 @@ export const createList = (lists: search[], setnewLists: (lists: ObjectData) => 
   keysArray.forEach((key) => {
     sortedData[key] = newDayList[key];
   });
-
-  console.log("sortedData", sortedData);
   setnewLists(sortedData);
 };

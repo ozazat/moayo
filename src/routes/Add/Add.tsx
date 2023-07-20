@@ -4,7 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { Button } from "antd";
 import BackBtn from "@/components/common/BackBtn";
-import { useUserStore } from '@/store/useUserStore';
+import { useUserStore } from "@/store/useUserStore";
+import { ConsumptionTags, IncomeTags } from "@/constants/tags";
 
 const Add = () => {
   const userId = useUserStore((state) => state.userId);
@@ -18,34 +19,6 @@ const Add = () => {
   const [isActive, SetIsActive] = useState(false);
 
   const navigate = useNavigate();
-
-  const ConsumptionTags = [
-    "선택해 주세요!",
-    "🍔 식비",
-    "📱 통신비",
-    "🚍 교통비",
-    "🏠 관리비",
-    "🏥 병원",
-    "🚀 여행",
-    "💖 취미",
-    "📚 학업",
-    "⚙️ 기타"
-  ];
-
-  const IncomeTags = ["선택해 주세요!", "💰 월급", "🎉 상여금", "💵 부수입", "🤑 용돈", "🪙 금융/투자", "⚙️ 기타"];
-  // useEffect(() => {
-  //   console.log("지출/수입", expense);
-  //   console.log("날짜", date);
-  //   console.log("시간", time);
-  //   console.log("금액", amount);
-  //   console.log("태그", tag);
-  //   console.log("내용", content);
-  // }, [expense, date, time, amount, tag, content]);
-
-  useEffect(() => {
-    console.log("날짜", new Date().toLocaleDateString());
-    console.log("시간", new Date().toLocaleTimeString());
-  }, []);
 
   useEffect(() => {
     if (inputCheck.every((input) => input === true)) {
@@ -64,12 +37,10 @@ const Add = () => {
       const updatedInputs = [...inputCheck];
       updatedInputs[index] = true;
       setInputCheck(updatedInputs);
-      console.log("내용이 있을때", updatedInputs);
     } else {
       const updatedInputs = [...inputCheck];
       updatedInputs[index] = false;
       setInputCheck(updatedInputs);
-      console.log("내용이 없을때", updatedInputs);
     }
   };
 
@@ -79,7 +50,7 @@ const Add = () => {
       console.error("userId 가 존재하지 않습니다.");
       return;
     }
-  
+
     const body = {
       amount: expense ? -amount : amount,
       userId: userId,
@@ -87,7 +58,6 @@ const Add = () => {
       date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
     };
     postExpense(body).then((res) => {
-      console.log(res);
       setInputCheck([true, true, false, false, false] as boolean[]);
       SetIsActive(false);
       setDate(new Date().toISOString().substring(0, 10));
@@ -102,12 +72,10 @@ const Add = () => {
   // 지출/수입 버튼 핸들러
   const expenseConsumeHandler = () => {
     setExpense(true);
-    console.log("지출버튼", expense);
   };
 
   const expenseIncomeHandler = () => {
     setExpense(false);
-    console.log("수입버튼", expense);
   };
 
   // 날짜/시간 핸들러

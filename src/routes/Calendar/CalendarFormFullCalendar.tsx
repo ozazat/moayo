@@ -66,7 +66,6 @@ const CalendarFormFullCalendar = () => {
         setMonth(newMonth);
         setCurrentYear(String(newYear));
         setCurrentMonth(String(newMonth));
-        console.log("handleDatesSet-setYear, setMonth : ", newYear, newMonth);
       }
     }
   };
@@ -99,8 +98,6 @@ const CalendarFormFullCalendar = () => {
             ];
           }, []);
           setEvents(eventsData);
-          console.log("useEffect-fetchData-월일 : ", year, month);
-          console.log("useEffect-fetchData-events : ", eventsData);
         } catch (error) {
           console.error(error);
         }

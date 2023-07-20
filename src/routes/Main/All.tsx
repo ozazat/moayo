@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import styled from "styled-components";
 import { useExpensesStore } from "@/store/useExpensesStore";
-import { search, ObjectData } from "@/types/apiTypes";
-import DailyList from "@/components/main/DailyList";
-import { PostBtn } from "@/components/PostBtn";
-import MonthStatistics from "@/components/main/MonthStatistics";
+import { ObjectData } from "@/types/apiTypes";
 import { createList } from "@/scripts/createList";
+import { PostBtn } from "@/components/PostBtn";
+import DailyList from "@/components/main/DailyList";
+import MonthStatistics from "@/components/main/MonthStatistics";
+import styled from "styled-components";
 
 const All = () => {
   const totalLists = useExpensesStore((state) => state.totalLists);
@@ -40,6 +40,7 @@ const MainContainer = styled.div`
   height: 680px;
   max-height: 800px;
 `;
+
 const AllListContainer = styled.div`
   position: absolute;
   top: 190px;

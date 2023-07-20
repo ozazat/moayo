@@ -29,7 +29,7 @@ export const getCategories = async (userId: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log("모든 카테고리 조회 실패", e);
+    console.error("모든 카테고리 조회 실패", e);
     throw new Error("모든 카테고리 조회에 실패했습니다.");
   }
 };
@@ -42,7 +42,7 @@ export const searchExpenses = async (keyword: string, userId: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log("특정 카테고리 소비 항목 조회 실패", e);
+    console.error("특정 카테고리 소비 항목 조회 실패", e);
     throw new Error("특정 카테고리 소비 항목 조회에 실패했습니다.");
   }
 };
@@ -55,7 +55,7 @@ export const getPeriodSummary = async (period: string, userId: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log("기간별 소비 조회 실패", e);
+    console.error("기간별 소비 조회 실패", e);
     throw new Error("기간별 소비 조회에 실패했습니다.");
   }
 };
@@ -68,7 +68,7 @@ export const editExpense = async (requestBody: editExpenseReq, _id: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log("소비 기록 수정 실패", e);
+    console.error("소비 기록 수정 실패", e);
     throw new Error("소비기록 수정에 실패했습니다.");
   }
 };
@@ -81,7 +81,7 @@ export const deleteExpense = async (_id: string) => {
       return res.data;
     }
   } catch (e) {
-    console.log("소비 기록 삭제 실패", e);
+    console.error("소비 기록 삭제 실패", e);
     throw new Error("소비기록 삭제에 실패했습니다.");
   }
 };
@@ -94,7 +94,7 @@ export const getCalendar = async (year: number, month: number, userId: string) =
       return res.data;
     }
   } catch (e) {
-    console.log("소비 기록 달력 호출 실패", e);
+    console.error("소비 기록 달력 호출 실패", e);
     throw new Error("소비 기록 달력 호출에 실패했습니다.");
   }
 };

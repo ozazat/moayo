@@ -1,22 +1,21 @@
+import axios from "axios";
 import { useState, useEffect } from "react";
-// import { searchExpenses } from "@/api";
+import { search } from "@/types/apiTypes";
+import { useUserStore } from "@/store/useUserStore";
 import { Input } from "antd";
 import { SearchOutlined } from "@ant-design/icons";
-import styled from "styled-components";
-import axios from "axios";
-import { search } from "@/types/apiTypes";
 import BackBtn from "@/components/common/BackBtn";
 import DailyList from "@/components/main/DailyList";
-import { useUserStore } from '@/store/useUserStore';
+import styled from "styled-components";
 
 const Search = () => {
   const userId = useUserStore((state) => state.userId);
   const [realSearchText, setRealSearchText] = useState("");
   const [searchData, setSearchData] = useState<search[]>([]);
-  const [isSearching, setIsSearching] = useState(true);
+  const [isSearching, setIsSearching] = useState<boolean>(true);
   const [searchResult, setSearchResult] = useState<{ [key: string]: search[] }>({});
-  const [resultExist, setResultExist] = useState(false);
-  const [isStartSearch, setIsStartSearch] = useState(false);
+  const [resultExist, setResultExist] = useState<boolean>(false);
+  const [isStartSearch, setIsStartSearch] = useState<boolean>(false);
 
   useEffect(() => {
     onSearch();
@@ -33,11 +32,9 @@ const Search = () => {
 
   const onSearch = async () => {
     if (realSearchText) {
-      const url = "http://52.78.195.183:3003/api/expenses/search?q=" + realSearchText + "&userId="+ userId;
+      const url = "http://52.78.195.183:3003/api/expenses/search?q=" + realSearchText + "&userId=" + userId;
       const res = await axios.get(url);
-      console.log("response", res);
       const data = res.data;
-      console.log(data);
       setSearchData(data);
     }
   };
@@ -52,7 +49,6 @@ const Search = () => {
     e.preventDefault();
     const result = createResultList();
     setSearchResult(result);
-    console.log("SearchResult", result);
     setIsSearching(false);
     setIsStartSearch(true);
   };
@@ -70,7 +66,6 @@ const Search = () => {
         newDayList[formattedDay] = [list];
       }
     });
-    console.log(newDayList);
     return newDayList;
   };
 
@@ -136,7 +131,6 @@ const SearchContainer = styled.div`
   top: 20px;
   display: flex;
   flex-direction: column;
-  // justify-content: center;
   align-items: center;
   min-width: 100%;
   min-height: 800px;

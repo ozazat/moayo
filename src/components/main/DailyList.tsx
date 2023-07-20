@@ -13,7 +13,7 @@ interface Props {
 }
 
 interface DayOfWeekProps {
-  dayOfWeek: string;
+  $dayOfWeek: string;
 }
 
 const DailyList = forwardRef<HTMLDivElement, Props>(({ day, expenseList, searchText }: Props, ref) => {
@@ -34,7 +34,7 @@ const DailyList = forwardRef<HTMLDivElement, Props>(({ day, expenseList, searchT
     <Container ref={ref} key={day}>
       <DaySummary>
         <Day>
-          {day}(<DayOfWeek dayOfWeek={dayOfWeek}>{dayOfWeek}</DayOfWeek>)
+          {day}(<DayOfWeek $dayOfWeek={dayOfWeek}>{dayOfWeek}</DayOfWeek>)
         </Day>
         <AmountsSummary>
           <Amount style={{ color: "var(--point-color-red)" }}>₩{expenseTotal.toLocaleString()}</Amount>
@@ -77,7 +77,7 @@ const Day = styled.span`
 `;
 
 const DayOfWeek = styled.span<DayOfWeekProps>`
-  color: ${(props) => (props.dayOfWeek === "일" ? "red" : props.dayOfWeek === "토" ? "blue" : "inherit")};
+  color: ${(props) => (props.$dayOfWeek === "일" ? "red" : props.$dayOfWeek === "토" ? "blue" : "inherit")};
 `;
 
 const AmountsSummary = styled.div`

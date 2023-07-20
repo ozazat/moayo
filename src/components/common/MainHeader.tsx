@@ -9,7 +9,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import { useTimeStore } from "@/store/useTimeStore";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import { searchExpenses } from "@/api/index";
-import All from "@/routes/Main/All";
 import { useUserStore } from "@/store/useUserStore";
 
 dayjs.extend(customParseFormat);
@@ -27,8 +26,6 @@ const MainHeader = () => {
   const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
   const setMonthList = useExpensesStore((state) => state.setMonthList);
   const setYearList = useExpensesStore((state) => state.setYearList);
-
-  // const defaultDate = dayjs().format("YYYY년 M월");
 
   const defaultDate = `${currentYear}년 ${currentMonth}월`;
 
@@ -86,21 +83,21 @@ const MainHeader = () => {
             />
           </div>
         )}
-        <StyledLink to="/search" isActive={location.pathname === "/search"}>
+        <StyledLink to="/search">
           <SearchOutlined />
         </StyledLink>
       </MainHeaderFirstRow>
       <MainHeaderSecondRow>
-        <StyledLink to="/main/daily" isActive={location.pathname === "/main/daily"}>
+        <StyledLink to="/main/daily" $isActive={location.pathname === "/main/daily"}>
           <div>일일</div>
         </StyledLink>
-        <StyledLink to="/main/weekly" isActive={location.pathname === "/main/weekly"}>
+        <StyledLink to="/main/weekly" $isActive={location.pathname === "/main/weekly"}>
           <div>주간</div>
         </StyledLink>
-        <StyledLink to="/main/monthly" isActive={location.pathname === "/main/monthly"}>
+        <StyledLink to="/main/monthly" $isActive={location.pathname === "/main/monthly"}>
           <div>월간</div>
         </StyledLink>
-        <StyledLink to="/main/all" isActive={location.pathname === "/main/all"}>
+        <StyledLink to="/main/all" $isActive={location.pathname === "/main/all"}>
           <div>전체</div>
         </StyledLink>
       </MainHeaderSecondRow>
@@ -134,7 +131,7 @@ const StyledDatePicker = styled(DatePicker)`
 `;
 
 type StyledLinkProps = {
-  isActive: boolean;
+  $isActive?: boolean;
 };
 
 const StyledLink = styled(Link)<StyledLinkProps>`
@@ -144,7 +141,7 @@ const StyledLink = styled(Link)<StyledLinkProps>`
   div {
     position: relative;
     padding-bottom: 0px;
-    font-weight: ${(props) => (props.isActive ? 900 : "normal")};
+    font-weight: ${(props) => (props.$isActive ? 900 : "normal")};
     &::after {
       content: "";
       position: absolute;
@@ -153,7 +150,7 @@ const StyledLink = styled(Link)<StyledLinkProps>`
       bottom: -15px;
       height: 4px;
       width: auto;
-      background-color: ${(props) => (props.isActive ? "var(--point-color-red)" : "transparent")};
+      background-color: ${(props) => (props.$isActive ? "var(--point-color-red)" : "transparent")};
       transition: background-color 0.3s ease;
     }
     &:hover {
