@@ -32,7 +32,7 @@ const Search = () => {
 
   const onSearch = async () => {
     if (realSearchText) {
-      const url = "http://52.78.195.183:3003/api/expenses/search?q=" + realSearchText + "&userId=" + userId;
+      const url = "https://chickenlecture.xyz/api/expenses/search?q=" + realSearchText + "&userId=" + userId;
       const res = await axios.get(url);
       const data = res.data;
       setSearchData(data);

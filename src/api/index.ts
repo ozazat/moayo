@@ -2,7 +2,7 @@ import axios from "axios";
 import { ExpenseReq, editExpenseReq } from "@/types/apiTypes";
 
 const baseApi = axios.create({
-  baseURL: "http://52.78.195.183:3003/api",
+  baseURL: "https://chickenlecture.xyz/api",
   headers: {
     "Content-Type": "application/json"
   }
