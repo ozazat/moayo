@@ -2,7 +2,6 @@ import { useState, useEffect, useRef } from "react";
 import FullCalendar from "@fullcalendar/react";
 import dayGridPlugin from "@fullcalendar/daygrid";
 import interactionPlugin from "@fullcalendar/interaction";
-import { DateClickArg, EventRenderedArgs } from "@fullcalendar/common";
 import styled from "styled-components";
 import { getCalendar } from "@/api";
 import { useTimeStore } from "@/store/useTimeStore";
@@ -37,7 +36,7 @@ const CalendarFormFullCalendar = () => {
     setCurrentMonth(String(new Date().getMonth() + 1));
   }, []);
 
-  const handleDateClick = (arg: DateClickArg) => {
+  const handleDateClick = (arg: any) => {
     setCurrentYear(arg.dateStr.split("-")[0]);
     setCurrentMonth(arg.dateStr.split("-")[1]);
     setCurrentDay(arg.dateStr.split("-")[2]);
@@ -50,7 +49,7 @@ const CalendarFormFullCalendar = () => {
       handleDateClick({ dateStr: dateString });
     });
   };
-  const handleDatesSet = (arg: any) => {
+  const handleDatesSet = () => {
     if (initialRender.current) {
       initialRender.current = false;
     } else {
@@ -105,7 +104,7 @@ const CalendarFormFullCalendar = () => {
     fetchData();
   }, [year, month]);
 
-  const renderEventContent = (eventInfo: EventRenderedArgs) => {
+  const renderEventContent = (eventInfo: any) => {
     let [income, expense, total] = eventInfo.event.title.split(",");
     return (
       <div style={{ textAlign: "right" }}>
