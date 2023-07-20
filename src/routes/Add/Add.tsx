@@ -4,8 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { styled } from "styled-components";
 import { Button } from "antd";
 import BackBtn from "@/components/common/BackBtn";
+import { useUserStore } from '@/store/useUserStore';
 
 const Add = () => {
+  const userId = useUserStore((state) => state.userId);
   const [expense, setExpense] = useState(true);
   const [date, setDate] = useState(new Date().toISOString().substring(0, 10));
   const [time, setTime] = useState(new Date().toTimeString().slice(0, 5));
@@ -73,9 +75,14 @@ const Add = () => {
 
   // 저장 버튼 핸들러
   const postBtnHandler = (tag: string) => {
+    if (!userId) {
+      console.error("userId 가 존재하지 않습니다.");
+      return;
+    }
+  
     const body = {
       amount: expense ? -amount : amount,
-      userId: "ozazat",
+      userId: userId,
       category: `${tag}+${content}`,
       date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
     };

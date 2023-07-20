@@ -8,6 +8,7 @@ import { useTimeStore } from "@/store/useTimeStore";
 import { searchExpenses } from "@/api/index";
 import { useExpensesStore } from "@/store/useExpensesStore";
 import { useNavigate } from "react-router-dom";
+import { useUserStore } from "@/store/useUserStore";
 
 interface EventObject {
   title: string;
@@ -22,6 +23,7 @@ const CalendarFormFullCalendar = () => {
   const calendarRef = useRef<FullCalendar>(null);
   const initialRender = useRef<boolean>(true);
 
+  const userId = useUserStore((state) => state.userId);
   const setCurrentYear = useTimeStore((state) => state.setCurrentYear);
   const setCurrentMonth = useTimeStore((state) => state.setCurrentMonth);
   const setTotalLists = useExpensesStore((state) => state.setTotalLists);
@@ -29,11 +31,13 @@ const CalendarFormFullCalendar = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    searchExpenses("", "ozazat").then((res) => {
-      setTotalLists(res);
-    });
-    setCurrentYear(String(new Date().getFullYear()));
-    setCurrentMonth(String(new Date().getMonth() + 1));
+    if (userId) {
+      searchExpenses("", userId).then((res) => {
+        setTotalLists(res);
+      });
+      setCurrentYear(String(new Date().getFullYear()));
+      setCurrentMonth(String(new Date().getMonth() + 1));
+    }
   }, []);
 
   const handleDateClick = (arg: any) => {
@@ -68,40 +72,42 @@ const CalendarFormFullCalendar = () => {
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await getCalendar(year, month, "ozazat");
-        const eventsData = Object.entries(res).reduce((acc: EventObject[], [day, dayData]: [string, unknown]) => {
-          const typedDayData = dayData as Record<string, unknown>[];
-          const totalIncome = typedDayData.reduce(
-            (total: number, curr: any) => (curr.amount > 0 ? total + curr.amount : total),
-            0
-          );
-          const totalExpense = typedDayData.reduce(
-            (total: number, curr: any) => (curr.amount < 0 ? total - curr.amount : total),
-            0
-          );
-          const total: number = totalIncome - totalExpense;
+    if (userId) {
+      const fetchData = async () => {
+        try {
+          const res = await getCalendar(year, month, userId);
+          const eventsData = Object.entries(res).reduce((acc: EventObject[], [day, dayData]: [string, unknown]) => {
+            const typedDayData = dayData as Record<string, unknown>[];
+            const totalIncome = typedDayData.reduce(
+              (total: number, curr: any) => (curr.amount > 0 ? total + curr.amount : total),
+              0
+            );
+            const totalExpense = typedDayData.reduce(
+              (total: number, curr: any) => (curr.amount < 0 ? total - curr.amount : total),
+              0
+            );
+            const total: number = totalIncome - totalExpense;
 
-          return [
-            ...acc,
-            {
-              title: `${totalIncome ? totalIncome : "none"},${totalExpense ? totalExpense : "none"},${
-                totalIncome && totalExpense ? total : "none"
-              }`,
-              date: `${year}-${month.toString().padStart(2, "0")}-${day.padStart(2, "0")}`
-            }
-          ];
-        }, []);
-        setEvents(eventsData);
-        console.log("useEffect-fetchData-월일 : ", year, month);
-        console.log("useEffect-fetchData-events : ", eventsData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+            return [
+              ...acc,
+              {
+                title: `${totalIncome ? totalIncome : "none"},${totalExpense ? totalExpense : "none"},${
+                  totalIncome && totalExpense ? total : "none"
+                }`,
+                date: `${year}-${month.toString().padStart(2, "0")}-${day.padStart(2, "0")}`
+              }
+            ];
+          }, []);
+          setEvents(eventsData);
+          console.log("useEffect-fetchData-월일 : ", year, month);
+          console.log("useEffect-fetchData-events : ", eventsData);
+        } catch (error) {
+          console.error(error);
+        }
+      };
 
-    fetchData();
+      fetchData();
+    }
   }, [year, month]);
 
   const renderEventContent = (eventInfo: any) => {
