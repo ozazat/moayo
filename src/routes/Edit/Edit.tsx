@@ -58,7 +58,7 @@ const Edit = () => {
         date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
       };
 
-      editExpense(body, _id as string).then((res) => {
+      editExpense(body, _id as string).then(() => {
         setInputCheck([true, true, false, false, false] as boolean[]);
         SetIsActive(false);
         setDate(new Date().toISOString().substring(0, 10));
@@ -74,7 +74,7 @@ const Edit = () => {
 
   // 삭제 버튼 핸들러
   const deleteBtnHandler = () => {
-    deleteExpense(_id as string).then((res) => {
+    deleteExpense(_id as string).then(() => {
       alert("삭제 성공!");
       navigate(-1);
     });

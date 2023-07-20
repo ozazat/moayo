@@ -57,7 +57,7 @@ const Add = () => {
       category: `${tag}+${content}`,
       date: `${date}T${time}:00.000Z` //"2023-07-04T10:30:00.000Z"
     };
-    postExpense(body).then((res) => {
+    postExpense(body).then(() => {
       setInputCheck([true, true, false, false, false] as boolean[]);
       SetIsActive(false);
       setDate(new Date().toISOString().substring(0, 10));

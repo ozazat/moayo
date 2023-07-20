@@ -9,6 +9,7 @@ export default defineConfig({
     port: 3000
   },
   optimizeDeps: {
-    exclude: ['dayjs/plugin/isBetween']
-  }
+    exclude: ["dayjs/plugin/isBetween"]
+  },
+  base: "/moayo"
 });
