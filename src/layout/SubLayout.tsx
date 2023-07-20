@@ -4,17 +4,25 @@ import styled from "styled-components";
 
 const SubLayout = () => {
   return (
-    <div>
+    <Sub>
       <SubContainer>
         <main>
           <Outlet />
         </main>
       </SubContainer>
       <NavBar />
-    </div>
+    </Sub>
   );
 };
 export default SubLayout;
+
+const Sub = styled.main`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 390px;
+  max-height: 844px;
+`;
 
 const SubContainer = styled.div`
   display: flex;
