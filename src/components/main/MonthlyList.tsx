@@ -21,8 +21,6 @@ const MonthlyList = () => {
     setIsClicked(new Array(isClickedArray.length).fill(false));
   }, [monthList]);
 
-  console.log(getWeeksOfMonth(Number(currentYear), 8));
-
   const createMonthList = () => {
     const newMonthList: { [key: string]: search[] } = {};
     yearList.forEach((list) => {
@@ -47,10 +45,8 @@ const MonthlyList = () => {
     keysArray.forEach((key) => {
       sortedData[key] = newMonthList[key];
     });
-    console.log("sortedData", sortedData);
-    console.log("ArraySorted", Object.entries(sortedData));
+
     setMonthList(sortedData);
-    console.log(monthList);
   };
 
   // 클릭 이벤트에, getWeeksofMonth를 생성. useState로 set해주기 : Weeks, setWeeks ✅
@@ -60,14 +56,6 @@ const MonthlyList = () => {
     setWeekRange((prevWeekRange) => ({ ...prevWeekRange, [index]: [...weekRanges] }));
   };
 
-  useEffect(() => {
-    console.log("weekRange", weekRange);
-  }, [weekRange]);
-  // monthList 에서 map 돌려서, month = "5월", lists = search[] 배열
-  // 주간 데이터를 얻으려면, 5월을 getWeeksofMonth에 넣어 [11~11, 11~11, 11~11]이런 형태의 배열 데이터를 받아와야함.
-  // MonthlyListContainer를 클릭했을 때, 펼쳐지면서 나오자.✅
-
-  // lists에서 weeks를 돌면서, 해당 기간 안에 있는 list들의 amount 합 구하기.
   const filterListsByRange = (lists: search[], range: string) => {
     const [start, end] = range.split(" ~ ");
     const startDate = new Date(`${currentYear}-${start}`);

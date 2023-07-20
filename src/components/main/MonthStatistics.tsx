@@ -113,7 +113,6 @@ const MonthStatistics = () => {
           }
         }
         if (location.pathname === "/main/all") {
-          console.log(res);
           setTotalAmount(
             res.reduce((sum: number, item: period) => {
               return sum + item.totalAmount;

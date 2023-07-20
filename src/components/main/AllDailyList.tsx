@@ -17,17 +17,12 @@ const AllDailyList = () => {
 
   useEffect(() => {
     setTimeout(() => {
-    console.log("-------------");
-    console.log("currentDay", currentDay);
-    if (refs.current[currentDay] === undefined) {
-      console.log("undefined일 때 :", refs);
-    } else {
-      refs.current[currentDay].scrollIntoView({ behavior: "smooth" });
-      console.log("undefined가 아닐 때 :", refs);
-    }
-    console.log("refs.current[currentDay]", refs.current[currentDay]);
-    console.log("refs", refs);
-  }, 200);  // 지연 시간은 필요에 따라 조절 가능
+      if (refs.current[currentDay] === undefined) {
+        return;
+      } else {
+        refs.current[currentDay].scrollIntoView({ behavior: "smooth" });
+      }
+    }, 200); // 지연 시간은 필요에 따라 조절 가능
   }, [currentDay, currentMonth, currentYear]);
 
   return (

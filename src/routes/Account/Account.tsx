@@ -3,20 +3,24 @@ import styled from "styled-components";
 import { useUserStore } from "@/store/useUserStore";
 import { Icon } from "@iconify/react";
 import axios from "axios";
+import { pixabayRes, pixabayHit } from "@/types/common";
 
 const Account = () => {
   const userNickname = useUserStore((state) => state.userNickname);
   const userId = useUserStore((state) => state.userId);
   const [profileImage, setProfileImage] = useState("");
 
-  const fetchImage = async (search) => {
+  const fetchImage = async (search: string) => {
     try {
       const res = await axios.get(
         `https://pixabay.com/api/?key=36260581-10f6d2ea4dd0b2e37dc11a20f&q=${search}&lang=ko`
       );
       if (res.status === 200) {
-        const images = res.data.hits;
-        const sortedImages = images.sort((a, b) => b.likes - a.likes || b.downloads - a.downloads);
+        const images: pixabayRes = res.data.hits;
+        console.log(images);
+        const sortedImages = images.sort(
+          (a: pixabayHit, b: pixabayHit) => b.likes - a.likes || b.downloads - a.downloads
+        );
         const recommendedImage = sortedImages[0];
         setProfileImage(recommendedImage.webformatURL);
       }
@@ -26,7 +30,7 @@ const Account = () => {
   };
 
   useEffect(() => {
-    const animalName = userNickname.split(" ")[1];
+    const animalName = userNickname ? userNickname.split(" ")[1] : "";
     fetchImage(animalName);
   }, [userNickname]);
 
@@ -89,7 +93,11 @@ const ProfileWrap = styled.div`
   width: 100%;
 `;
 
-const ProfileImage = styled.div`
+interface ProfileImageProps {
+  imageUrl: string;
+}
+
+const ProfileImage = styled.div<ProfileImageProps>`
   width: 85%;
   height: 0;
   padding-bottom: 85%;
@@ -148,7 +156,6 @@ const StyledIcon = styled(Icon)`
   color: black;
 
   &:hover {
-    opacity : 0.5;
-    
+    opacity: 0.5;
   }
 `;
