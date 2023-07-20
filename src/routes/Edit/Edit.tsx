@@ -32,6 +32,14 @@ const Edit = () => {
     }
   }, [inputCheck]);
 
+  useEffect(() => {
+    if (data.amount > 0) {
+      setExpense(false);
+    } else {
+      setExpense(true);
+    }
+  }, [data]);
+
   // input 내용 입력 시 버튼 active 핸들러
   const inputCheckHandler = (
     e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLSelectElement>,
