@@ -1467,4 +1467,4 @@ oe.version="2.29.4";Xq(Ot);oe.fn=X;oe.min=FK;oe.max=jK;oe.now=HK;oe.utc=ho;oe.un
   background-color: var(--base-color-lightgrey);
   border: 1.5px solid var(--base-color-grey);
   z-index: 1;
-`;rb.createRoot(document.getElementById("root")).render(T.jsx(ee.StrictMode,{children:T.jsx(_3,{children:T.jsx(ffe,{})})}))});export default pfe();
+`;rb.createRoot(document.getElementById("root")).render(T.jsx(ee.StrictMode,{children:T.jsx(_3,{basename:"/moayo",children:T.jsx(ffe,{})})}))});export default pfe();
