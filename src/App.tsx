@@ -1,18 +1,51 @@
 import GlobalStyles from "@/styles/GlobalStyles.styles";
 import { Route, Routes, Navigate } from "react-router-dom";
-import MainLayout from "@/layout/MainLayout";
-import Daily from "@/routes/Main/Daily";
-import Weekly from "./routes/Main/Weekly";
-import Monthly from "./routes/Main/Monthly";
-import All from "./routes/Main/All";
-import SubLayout from "@/layout/SubLayout";
-import Calendar from "./routes/Calendar/Calendar";
-import Chart from "./routes/Chart/Chart";
-import Account from "@/routes/Account/Account";
-import Add from "@/routes/Add/Add";
-import Edit from "@/routes/Edit/Edit";
-import Search from "@/routes/Search/Search";
 import styled from "styled-components";
+import loadable from "@loadable/component";
+
+const MainLayout = loadable(() => import("@/layout/MainLayout"), {
+  fallback: <div>Loading...</div>
+});
+const SubLayout = loadable(() => import("@/layout/SubLayout"), {
+  fallback: <div>Loading...</div>
+});
+
+const Add = loadable(() => import("@/routes/Add/Add"), {
+  fallback: <div>Loading...</div>
+});
+
+const Edit = loadable(() => import("@/routes/Edit/Edit"), {
+  fallback: <div>Loading...</div>
+});
+
+const Search = loadable(() => import("@/routes/Search/Search"), {
+  fallback: <div>Loading...</div>
+});
+
+//Main Route
+const Daily = loadable(() => import("@/routes/Main/Daily"), {
+  fallback: <div>Loading...</div>
+});
+const Weekly = loadable(() => import("@/routes/Main/Weekly"), {
+  fallback: <div>Loading...</div>
+});
+const Monthly = loadable(() => import("@/routes/Main/Monthly"), {
+  fallback: <div>Loading...</div>
+});
+const All = loadable(() => import("@/routes/Main/All"), {
+  fallback: <div>Loading...</div>
+});
+
+// Sub Layout
+const Calendar = loadable(() => import("@/routes/Calendar/Calendar"), {
+  fallback: <div>Loading...</div>
+});
+const Chart = loadable(() => import("@/routes/Chart/Chart"), {
+  fallback: <div>Loading...</div>
+});
+const Account = loadable(() => import("@/routes/Account/Account"), {
+  fallback: <div>Loading...</div>
+});
 
 const App = () => {
   return (
