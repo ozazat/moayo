@@ -1,5 +1,5 @@
 import GlobalStyles from "@/styles/GlobalStyles.styles";
-import { Route, Routes, BrowserRouter, Navigate } from "react-router-dom";
+import { Route, Routes, Navigate } from "react-router-dom";
 import MainLayout from "@/layout/MainLayout";
 import Daily from "@/routes/Main/Daily";
 import Weekly from "./routes/Main/Weekly";
@@ -17,28 +17,26 @@ import styled from "styled-components";
 const App = () => {
   return (
     <Section>
-      <BrowserRouter>
-        <GlobalStyles />
-        <Routes>
-          <Route path="/main/" element={<MainLayout />}>
-            <Route path="/main/daily" element={<Daily />} />
-            <Route path="/main/weekly" element={<Weekly />} />
-            <Route path="/main/monthly" element={<Monthly />} />
-            <Route path="/main/all" element={<All />} />
-          </Route>
-          <Route path="/sub" element={<SubLayout />}>
-            <Route path="/sub/calendar" element={<Calendar />} />
-            <Route path="/sub/chart" element={<Chart />} />
-            <Route path="/sub/account" element={<Account />} />
-          </Route>
-          <Route path="/add" element={<Add />} />
-          <Route path="/edit/:_id" element={<Edit />} />
-          <Route path="/search" element={<Search />} />
+      <GlobalStyles />
+      <Routes>
+        <Route path="/main/" element={<MainLayout />}>
+          <Route path="/main/daily" element={<Daily />} />
+          <Route path="/main/weekly" element={<Weekly />} />
+          <Route path="/main/monthly" element={<Monthly />} />
+          <Route path="/main/all" element={<All />} />
+        </Route>
+        <Route path="/sub" element={<SubLayout />}>
+          <Route path="/sub/calendar" element={<Calendar />} />
+          <Route path="/sub/chart" element={<Chart />} />
+          <Route path="/sub/account" element={<Account />} />
+        </Route>
+        <Route path="/add" element={<Add />} />
+        <Route path="/edit/:_id" element={<Edit />} />
+        <Route path="/search" element={<Search />} />
 
-          <Route path="/" element={<Navigate to="/main/daily" replace />} />
-          <Route path="*" element={<Navigate to="/main/daily" replace />} />
-        </Routes>
-      </BrowserRouter>
+        <Route path="/" element={<Navigate to="/main/daily" replace />} />
+        <Route path="*" element={<Navigate to="/main/daily" replace />} />
+      </Routes>
     </Section>
   );
 };
