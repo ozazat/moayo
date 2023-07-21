@@ -87,6 +87,7 @@ const NavContainer = styled.div`
   height: 60px;
   max-width: 390px;
   max-height: 80px;
+  border: 1.5px solid var(--base-color-grey);
   background-color: #ffffff;
 `;
 
