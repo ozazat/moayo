@@ -92,4 +92,3 @@ export const useUserStore = create<Store>((set) => ({
     set({ userId: id, userNickname: nickname });
   }
 }));
-
