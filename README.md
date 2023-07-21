@@ -29,7 +29,10 @@
 <img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" />
 <img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white" />
 <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=flat&logo=styledcomponents&logoColor=white" />
-<img src="https://img.shields.io/badge/zustand-000000?style=flat&logo=zustand&logoColor=white" />
+<br />
+<img src="https://img.shields.io/badge/Chart.js-FF6384?style=flat&logo=chartdotjs&logoColor=white" />
+<img src="https://img.shields.io/badge/Ant Design-0170FE?style=flat&logo=antdesign&logoColor=white" />
+<img src="https://img.shields.io/badge/Zustand-000000?style=flat&logo=Zustand&logoColor=white" />
 </p>
 
 ### Config
@@ -95,28 +98,28 @@ $ npm run dev
 
 ### Main
 + DatePicker 이용하여 날짜별 데이터 출력
-+ 일간, 월간, 연간, 전체 통계(지출, 수입, 총합) 출력
++ 일일, 월간, 연간, 전체 통계(지출, 수입, 총합) 출력
 + 일일, 주간, 월간, 전체 리스트 출력
 + 가계추가(/add) 페이지 이동 버튼 구현
 #### 일일 (/main/daily)
-+ 선택한 달을 기준으로, 각 일별 데이터 출력
++ 선택한 달을 기준으로, 각 일별 데이터 출력 (기본값 : 현재 연도, 월, 일)
 + 일별 지출, 수입 통계 표시
 + 컴포넌트로 태그, 내용, 금액, 시간 표시
 + 컴포넌트 클릭 시 수정(/edit) 페이지로 이동
 #### 주간 (/main/weekly)
-+ 선택한 달을 기준으로, 각 주간별 데이터 출력(기본값 : 현재 년도, 현재 월)
++ 선택한 달을 기준으로, 각 주간별 데이터 출력 (기본값 : 현재 연도, 월)
 + 주간별 지출, 수입 통계 표시
 + 주간 데이터 클릭 시 해당 주간의 일일 데이터 출력 (태그, 내용, 금액, 시간 등)
 #### 월간 (/main/monthly)
 + 월별 기간, 지출, 수입 통계 표시
-+ 선택한 연도를 기준으로, 각 월별 데이터 출력(기본값 : 현재 년도)
++ 선택한 연도를 기준으로, 각 월별 데이터 출력 (기본값 : 현재 연도)
 + 월간별 지출, 수입 통계 표시
 + 각 월 컴포넌트 클릭 시 해당 월의 모든 주간별 통계 표시 (지출, 수입)
 ### Add
-+ ➕버튼 클릭 시 가계 추가 페이지로 이동
++ ➕ 버튼 클릭 시 가계 추가 페이지로 이동
 + 날짜, 시간, 금액, 태그, 내용 입력 가능
 + 지출, 수입 버튼으로 구분하여 사용
-+ 날짜, 시간: 각각 HTML Input 태그의 date, time 타입 이용(기본값 현재 날짜, 시간)
++ 날짜, 시간: 각각 HTML Input 태그의 date, time 타입 이용 (기본값 : 현재 날짜, 시간)
 + 태그: HTML select 태그 이용, 지출, 수입 활성화 여부에 따라 변경됨
 
 ### Edit
@@ -146,7 +149,7 @@ $ npm run dev
 ### 기타 기능
 + uuid 사용하여 중복 없는 사용자 id 및 무작위 닉네임 자동생성, localStorage로 관리
 + loadable 사용하여 코드 스플릿 및 로딩 컴포넌트 추가
-+ dayjs 및 moment 사용하여 날짜 포멧팅
++ day.js 및 moment 사용하여 날짜 포멧팅
 
 
 <br />
