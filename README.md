@@ -1,362 +1,99 @@
-# moayo
+# 💰 모아요 (MOAYO)
 
-[필수 구현] 
-- [ ] 지출 내역 입력 폼 (지출 금액, 지출항목, 지출 날짜)
-- [ ] 지출 내역 목록(일반 리스트형, 칼렌더 형 표기 가능) 
-- [ ] 지출 내역 수정 및 삭제 
+<p>React, TypeScript, Rest API를 활용한 간편 가계부 프로젝트입니다.</p>
 
-[선택 구현]
-- [ ] 지출 내역 칼렌더로 표기
-- [ ] 지출 내역 월별 내역, 주별 내역, 일별 내역 표기 
-- [ ] 차트를 이용해서 소비 내역 표기 하기
-- [ ] 모바일 형태로 구현할지, 웹 형태로 구현할지는 자유
+<br />
 
-### 프로젝트 설치 방법
-Local에서 사용할 폴더 위치로 이동 (cd '폴더위치')
+## 프로젝트 소개
 
-```cmd
-git init
-git remote add origin https://github.com/ozazat/moayo.git
-git fetch --all
-git pull origin main
-npm i
-npm run dev
+> **패스트캠퍼스 프론트엔드 개발 부트캠프 5기**<br />
+> **개발 기간** : 2023. 07. 05 ~ 2023. 07. 21<br />
+> **배포 주소** : [가계부 체험하기!📱](https://ozazat.github.io/moayo/)
+
+<br />
+
+## 개발자 소개
+
+| **[김가은](https://github.com/KIMKAEUN)** | **[김경원](https://github.com/ruddnjs3769)** | **[김준희](https://github.com/dev-junehee)** | **[정재현](https://github.com/debeck6)** |
+| :--------------------------------------------------------------------------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------------------------------------------------------: | :--------------------------------------------------------------------------------------------------------------------------------------: | :----------------------------------------------------------------------------------------------------------------------------------------: |
+|<a href="https://github.com/KIMKAEUN"><img src="https://avatars.githubusercontent.com/u/129493066?v=4" width=150px alt="김가은" /> | <a href="https://github.com/ruddnjs3769"><img src="https://avatars.githubusercontent.com/u/84277185?v=4" width=150px alt="김경원" /> | <a href="https://github.com/dev-junehee"><img src="https://avatars.githubusercontent.com/u/116873887?v=4" width=150px alt="김준희" /> | <a href="https://github.com/iskra17"><img src="https://avatars.githubusercontent.com/u/128365197?v=4" width=150px alt="정재현" /> 
+|Search 페이지|Main 페이지<br/>(일일, 주간, 월간, 전체)|Main 페이지<br/>(일일, 주간, 월간, 전체)|Calendar 페이지<br/>Chart 페이지|
+
+<br />
+
+## 사용기술 및 개발환경
+
+### Development
+
+<p>
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat&logo=React&logoColor=white" />
+<img src="https://img.shields.io/badge/TypeScript-3178C6?style=flat&logo=TypeScript&logoColor=white" />
+<img src="https://img.shields.io/badge/styledcomponents-DB7093?style=flat&logo=styledcomponents&logoColor=white" />
+<img src="https://img.shields.io/badge/zustand-000000?style=flat&logo=zustand&logoColor=white" />
+</p>
+
+### Config
+
+<p>
+<img src="https://img.shields.io/badge/Vite-646CFF?style=flat&logo=Vite&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/npm-CB3837?style=flat&logo=npm&logoColor=white"/></a>
+</p>
+
+### Deployment
+
+<img src="https://img.shields.io/badge/GitHub Pages-181717?style=flat&logo=GitHub Pages&logoColor=white"/></a>
+
+### Environment
+
+<p>
+<img src="https://img.shields.io/badge/Visual Studio Code-007ACC?style=flat&logo=Visual Studio Code&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/Git-F05032?style=flat&logo=Git&logoColor=white"/></a>
+<img src="https://img.shields.io/badge/GitHub-181717?style=flat&logo=GitHub&logoColor=white"/></a>
+</p>
+
+### Cowork Tools
+<p>
+<img src="https://img.shields.io/badge/Slack-4A154B?style=flat&logo=Slack&logoColor=white" />
+<img src="https://img.shields.io/badge/Notion-000000?style=flat&logo=Notion&logoColor=white" />
+<img src="https://img.shields.io/badge/Zoom-2D8CFF?style=flat&logo=Zoom&logoColor=white" />
+<img src="https://img.shields.io/badge/discord-5865F2?style=flat&logo=discord&logoColor=white" />
+</p>
+
+<br />
+
+## 프로젝트 테스트
+
+### clone project
+
+```bash
+$ git clone git@github.com:ozazat/moayo.git
 ```
 
- ### 깃허브 브랜치 생성 방법
-+ issue 탭 들어가기
-+ new Issue 작성
-+ assignee에 Issue 맡을 사람 지정(보통 본인)
-+ 우측 바에 create new Branch 클릭
-+ 브랜치 생성 후 로컬에서 fetch
-+ 해당 브랜치에서 작업하기
+### go to project
 
-
-
-
-### Api Docs
-
-
-BaseURL : http://52.78.195.183:3003/api
-
-### 1. 소비 기록 작성 API
-
-Request:
-```javascript
-POST /expenses
-Content-Type: application/json
-
-interface ExpenseReq {
-  amount: number;
-  userId: string;
-  category: string;
-  date: string;
-}
-```
-요청 데이터 예시
-```javascript
-{
-  amount: 100,
-  userId: "user123",
-  category: "food",
-  date: "2023-07-04T10:30:00.000Z"
-}
+```bash
+$ cd moayo
 ```
 
-Response:
-Status: 201 Created
-```typescript
-interface ExpenseRes {
-  message: string;
-}
+### install npm
+
+```bash
+$ npm install
 ```
 
+### start project
 
-```javascript
-{
-  message: "Expense created successfully"
-}
-```
----
-
-### 2. 모든 카테고리 조회 API
-Request:
-
-```javascript
-GET /categories?userId={userId}
-
-요청데이터 : X
-```
-Response: 
-
-Status: 200 OK
-```typescript
-type categoryRes = string[];
-```
-응답데이터 예시
-```javascript
-["food", "clothing", "electronics"]
-```
----
-### 3. 검색어에 해당하는 소비 항목 및 금액 조회 API
-   
-Request:
-```javascript
-GET /expenses/search?q={keyword}&userId={userId}
-//keyword에 빈 문자열을 넣으면 전체 데이터가 조회됨.
-
-요청데이터 : X
+```bash
+$ npm run dev
 ```
 
-Response:
-Status: 200 OK
+<br />
 
-```typescript
-type searchRes = search[];
 
-interface search {
-  _id: string;
-  amount: number;
-  userId: string;
-  category: string;
-  date: string;
-}
-```
 
-```javascript
+## 프로젝트 상세 기능
 
-[
-  {
-    _id: "5321basd12321314123"
-    amount: 100,
-    userId: "user123",
-    category: "food",
-    date: "2023-07-04T10:30:00.000Z"
-  },
-  {
-    _id: "412312ba1231a123"
-    amount: 80,
-    userId: "user456",
-    category: "food",
-    date: "2023-07-03T14:20:00.000Z"
-  }
-]
-```
----
-### 4. 일별, 주별, 월별 소비 조회 API
-Request:
-```javascript 
-GET /expenses/summary?period={period}&userId={userId}
-period : daily, weekly, monthly
 
-요청데이터 : X
-```
-Response:
-Status: 200 OK
 
-```typescript
-export type periodRes = period[];
+## 프로젝트 회고
 
-interface period {
-  _id: string;
-  totalAmount: number;
-}
-```
-응답 데이터 예시
-```javascript
-// daily 일 때
-[
-  {
-    _id: "2023-07-04",
-    totalAmount: 180
-  },
-  {
-    _id: "2023-07-03",
-    totalAmount: 80
-  }
-]
-// weekly 일 때, 해당 년의 주차별 합계가 나옴
-// ex) 2023-22 : 23년의 22주차(5월29~6월 4일까지)
-[
-  {
-    _id: "2023-22',
-    totalAmount: 5500
-  },
-  {
-    _id: "2023-26',
-    totalAmount: 6000
-  }
-]
-// monthly 일 때
-[
-  {
-    _id: "2023-07',
-    totalAmount: 10500
-  },
-  {
-    _id: "2023-06',
-    totalAmount: 6000
-  }
-]
-```
----
-### 5. 소비 기록 수정 API
-Request:
-
-```typescript
-PUT /expenses/${_id} // 가계 상세 id값을 넣어줘야합니다!
-
-Content-Type: application/json
-interface editExpenseReq {
-  amount: number;
-  userId: string;
-  category: string;
-  date: string;
-}
-```
-요청데이터 예시
-```javascript
-
-{
-  amount: 150,
-  userId: "user123",
-  category: "food",
-  date: "2023-07-04T10:30:00.000Z"
-}
-```
-Response:
-Status: 200 OK
-```typescript
-interface editExpenseRes {
-  message: string;
-}
-```
-응답 데이터 예시
-```javascript
-{
-  message: "Expense updated successfully"
-}
-```
----
-### #6. 소비 기록 삭제 API
-Request:
-```javascript
-DELETE /expenses/${_id} // 가계 상세 id값을 넣어줘야합니다!
-
-요청 데이터: X
-```
-
-Response:
-Status: 200 OK
-
-```typescript
-interface removeExpenseRes {
-  message: string;
-}
-```
-응답 데이터 예시
-```javascript
-{
-  message: "Expense deleted successfully"
-}
-```
----
-### 7. 소비 기록 달력 호출 API
-
-Request:
-```typescript
-interface parameter = { 
-  yearNumb : number, // 조회하고싶은 년도
-  monthNumb : number, // 조회하고싶은 달
-  userId : string// 가계 추가(post)할 때 넣었던 userId
-}
-
-GET /expenses/calendar?year=${yearNumb}&month=${monthNumb}&userId={userId}
-
-요청 데이터 : X
-```
-
-Response:
-Status: 200 OK
-```typescript
-interface calendarRes {
-  [key: number]: calendarItem[];
-}
-// key는 해당 월의 사용한 날(일)
-interface calendarItem {
-  _id: string;
-  amount: number;
-  userId: string;
-  category: string;
-  date: string;
-}
-
-```
-응답 데이터 예시
-```javascript
-{
-  1: [
-    {
-    _id: string;
-    amount: number;
-    userId: string;
-    category: string;
-    date: string;
-    }
-  ],
-  4: [
-    {
-    _id: string;
-    amount: number;
-    userId: string;
-    category: string;
-    date: string;
-    }
-  ]
-}
-
-```
-
----
-
-### 8. 카데고리에 해당하는 소비 항목 및 금액 조회 API(정확한 카테고리)
-   
-Request:
-```javascript
-GET /expenses/category?q={keyword}&userId={userId}
-
-요청데이터 : X
-```
-
-Response:
-```typescript
-type searchCategoryRes = search[];
-
-interface search {
-  _id: string;
-  amount: number;
-  userId: string;
-  category: string;
-  date: string;
-}
-```
-응답데이터 예시
-```javascript
-Status: 200 OK
-[
-  {
-    _id: "2312asdf123"
-    amount: 100,
-    userId: "user123",
-    category: "food",
-    date: "2023-07-04T10:30:00.000Z"
-  },
-  {
-    _id: "123124adb1231245w1"
-    amount: 80,
-    userId: "user456",
-    category: "food",
-    date: "2023-07-03T14:20:00.000Z"
-  }
-]
-```
