@@ -33,7 +33,6 @@ const MainContainer = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  top: 40px;
+  top: 10px;
   max-width: 390px;
-  /* background-color: yellow; */
 `;

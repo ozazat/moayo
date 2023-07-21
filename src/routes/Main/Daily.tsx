@@ -99,10 +99,10 @@ const MainDailyContainer = styled.div`
 
 const DailyListContainer = styled.div`
   position: absolute;
-  top: 180px;
+  top: 190px;
   display: flex;
   flex-direction: column;
-  height: 460px;
+  height: 490px;
   overflow-y: scroll;
   div {
     p {

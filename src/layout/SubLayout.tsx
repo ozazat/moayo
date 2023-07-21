@@ -6,9 +6,9 @@ const SubLayout = () => {
   return (
     <Sub>
       <SubContainer>
-        <main>
+        <div>
           <Outlet />
-        </main>
+        </div>
       </SubContainer>
       <NavBar />
     </Sub>
@@ -27,9 +27,9 @@ const Sub = styled.main`
 const SubContainer = styled.div`
   display: flex;
   position: relative;
-  top: 30px;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  top: 10px;
   max-width: 390px;
 `;

@@ -126,15 +126,14 @@ export default MonthlyList;
 
 const Container = styled.div`
   position: relative;
-  top: 70px;
+  top: 100px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   width: 350px;
-  height: 440px;
+  height: 500px;
   max-width: 350px;
-  max-height: 700px;
   overflow: scroll;
   &::-webkit-scrollbar {
     display: none;

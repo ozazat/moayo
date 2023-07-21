@@ -14,7 +14,7 @@ export const PostBtn = () => {
 
 const StyledLink = styled(Link)`
   position: absolute;
-  bottom: 50px;
+  bottom: 20px;
 `;
 
 const PostBtnContainer = styled.div`
