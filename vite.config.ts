@@ -8,5 +8,5 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ["dayjs/plugin/isBetween"]
   },
-  base: "/main/daily"
+  base: "/moayo"
 });
