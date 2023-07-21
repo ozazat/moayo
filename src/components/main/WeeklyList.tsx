@@ -154,7 +154,6 @@ const WeeklyIncome = styled.div`
 `;
 
 const WeeklyDailyListContainer = styled.div`
-  display: none;
   &.active {
     display: flex;
     flex-direction: column;

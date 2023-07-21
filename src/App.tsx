@@ -2,49 +2,50 @@ import GlobalStyles from "@/styles/GlobalStyles.styles";
 import { Route, Routes, Navigate } from "react-router-dom";
 import styled from "styled-components";
 import loadable from "@loadable/component";
+import Loading from "@/components/common/Loading";
 
 const MainLayout = loadable(() => import("@/layout/MainLayout"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 const SubLayout = loadable(() => import("@/layout/SubLayout"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 
 const Add = loadable(() => import("@/routes/Add/Add"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 
 const Edit = loadable(() => import("@/routes/Edit/Edit"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 
 const Search = loadable(() => import("@/routes/Search/Search"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 
 //Main Route
 const Daily = loadable(() => import("@/routes/Main/Daily"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 const Weekly = loadable(() => import("@/routes/Main/Weekly"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 const Monthly = loadable(() => import("@/routes/Main/Monthly"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 const All = loadable(() => import("@/routes/Main/All"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 
 // Sub Layout
 const Calendar = loadable(() => import("@/routes/Calendar/Calendar"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 const Chart = loadable(() => import("@/routes/Chart/Chart"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 const Account = loadable(() => import("@/routes/Account/Account"), {
-  fallback: <div>Loading...</div>
+  fallback: <Loading />
 });
 
 const App = () => {
