@@ -13,14 +13,10 @@ import Add from "@/routes/Add/Add";
 import Edit from "@/routes/Edit/Edit";
 import Search from "@/routes/Search/Search";
 import styled from "styled-components";
-import iphone from "@/assets/iPhone12_Clay_Shadow.png";
 
 const App = () => {
   return (
     <Section>
-      <IPhoneImg>
-        <img src={iphone} alt="iphone" />
-      </IPhoneImg>
       <BrowserRouter>
         <GlobalStyles />
         <Routes>
@@ -52,25 +48,6 @@ const Section = styled.section`
   width: 390px;
   height: 844px;
   background-color: var(--base-color-lightgrey);
-  border: 1.5px solid var(--point-color-green); // 추후 삭제하기!!!!!!
-  border-radius: 50px;
+  border: 1.5px solid var(--base-color-grey);
   z-index: 1;
-`;
-const IPhoneImg = styled.div/*css*/ `
-  position: absolute;
-  top: 0px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  margin: 0 auto;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  opacity: 80%; // 추후 삭제하기!!!!!!!
-  z-index: -1;
-  img {
-    width: 690px;
-    height: auto;
-  }
 `;

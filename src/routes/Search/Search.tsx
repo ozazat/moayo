@@ -1,5 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
+import { searchExpenses } from "@/api";
 import { search } from "@/types/apiTypes";
 import { useUserStore } from "@/store/useUserStore";
 import { Input } from "antd";
@@ -31,11 +31,10 @@ const Search = () => {
   }, [searchResult]);
 
   const onSearch = async () => {
-    if (realSearchText) {
-      const url = "https://chickenlecture.xyz/api/expenses/search?q=" + realSearchText + "&userId=" + userId;
-      const res = await axios.get(url);
-      const data = res.data;
-      setSearchData(data);
+    if (realSearchText && userId) {
+      searchExpenses(realSearchText, userId).then((res) => {
+        setSearchData(res);
+      });
     }
   };
 

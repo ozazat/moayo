@@ -1,6 +1,6 @@
 import { createGlobalStyle } from "styled-components";
 
-const GlobalStyles = createGlobalStyle/* css */ ` 
+const GlobalStyles = createGlobalStyle` 
 	:root {
 		--base-color-white: #f5f5f5;
 		--base-color-lightgrey: #f2f2f2;

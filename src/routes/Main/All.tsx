@@ -28,7 +28,6 @@ const All = () => {
         newDayList[formattedDay] = [list];
       }
     });
-    // console.log("newDayList", newDayList);
     const keysArray: string[] = Object.keys(newDayList);
 
     // 키 값을 내림차순으로 정렬합니다.
@@ -40,7 +39,6 @@ const All = () => {
       sortedData[key] = newDayList[key];
     });
 
-    console.log("sortedData", sortedData);
     setAllLists(sortedData);
   };
 
