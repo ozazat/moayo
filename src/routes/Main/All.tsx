@@ -73,7 +73,7 @@ const AllListContainer = styled.div`
   top: 190px;
   display: flex;
   flex-direction: column;
-  height: 460px;
+  height: 470px;
   overflow-y: scroll;
   div {
     p {

@@ -26,6 +26,7 @@ const Calendar = () => {
 };
 
 const CalendarWrapper = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -51,14 +52,13 @@ const ContentWrapper = styled.div`
   position: relative;
   align-items: center;
   justify-content: center;
-  flex: 1;
   margin-top: -18px;
 `;
 
 const PostBtnWrapper = styled.div`
   position: absolute;
-  bottom: -768px; // 화면에서 수동으로 때려 박음.
-  left: 171px; // 화면에서 수동으로 때려 박음.
+  bottom: -758px; // 화면에서 수동으로 때려 박음.
+  left: 152px; // 화면에서 수동으로 때려 박음.
   z-index: 2;
 `;
 
