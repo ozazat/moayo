@@ -52,13 +52,19 @@ const ContentWrapper = styled.div`
   position: relative;
   align-items: center;
   justify-content: center;
-  margin-top: -18px;
+  width: 390px;
+  height: 680px;
 `;
 
 const PostBtnWrapper = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 46px;
+  height: 46px;
   position: absolute;
-  bottom: -758px; // 화면에서 수동으로 때려 박음.
-  left: 152px; // 화면에서 수동으로 때려 박음.
+  bottom: -60px; // 화면에서 수동으로 때려 박음.
+  left: calc(100% - width / 2); // 화면에서 수동으로 때려 박음
   z-index: 2;
 `;
 

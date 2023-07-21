@@ -43,6 +43,7 @@ const App = () => {
 export default App;
 
 const Section = styled.section`
+  position: relative;
   width: 390px;
   height: 844px;
   background-color: var(--base-color-lightgrey);

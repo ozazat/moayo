@@ -213,12 +213,12 @@ function renderDayCellContent(dayRenderInfo: any) {
 export default CalendarFormFullCalendar;
 
 const CalendarContainer = styled.div`
-  margin-top: 2px;
-  width: 440px;
-  padding: 2px 32px 0;
-  position: absolute; // relative 로 지정해야되는데 억지로 맞춰놨다.
-  top: 170px;
-
+  margin: 0 10px 10px 10px;
+  position: absolute;
+  top: 180px;
+  display: flex;
+  flex-direction: column;
+  height: 550px;
   .fc .fc-toolbar.fc-header-toolbar {
     margin-bottom: 0.5em;
   }
